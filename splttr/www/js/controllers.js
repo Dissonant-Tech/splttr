@@ -3,9 +3,23 @@ angular.module('starter.controllers', [])
 .controller('HomeCtrl', function($scope, Tabs) {
 
   console.log("In home controller");
-  
+
+  $scope.getSquadMemberOutlineColor = function(member){
+    if(member.status === "in_debt"){
+      return "#f04124";
+    }
+    else{
+      return "#43AC6A";
+    }
+  }
+
   $scope.tabs = Tabs.all();
   console.log($scope.tabs);
+
+  // $scope.tabs.forEach(function(tab){
+  //   tab.squad.forEach($scope.getSquadMemberOutlineColor);
+  // });
+
 
 })
 

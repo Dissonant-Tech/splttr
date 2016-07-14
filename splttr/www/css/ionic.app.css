@@ -9869,7 +9869,7 @@ ion-content {
   height: 90%;
   padding: 10px;
   border-radius: 6px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url(../img/tab1-background.jpg);
+  background-color: #bdbdbd;
   background-position: center center;
   background-size: cover;
   overflow: hidden; }
@@ -9884,13 +9884,13 @@ ion-content {
 .tab-content-squad-wrapper li {
   display: inline-block;
   border-radius: 50%;
-  background-image: url(../img/max.png);
   background-position: center center;
   background-size: cover;
   height: 42px;
   width: 42px;
-  background-color: gray;
-  border: 2px solid #f04124; }
+  background-color: white;
+  border: 2px solid #f04124;
+  margin-right: 10px; }
 
 .tab-button-wrapper {
   height: 10%;
@@ -9908,5 +9908,4 @@ ion-content {
   color: #0e0e0e; }
 
 .squad-checked {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/max.png) !important;
   border: 2px solid #43AC6A !important; }

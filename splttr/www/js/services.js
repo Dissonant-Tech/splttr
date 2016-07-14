@@ -54,75 +54,89 @@ angular.module('starter.services', [])
   // Collection of all tabs
 
   var tabs = [{
-    id: 0,
-    title: "New York Trip",
-    balance: "128.45",
-    status: "in_dept",
-    squad: [
-      {
-        user_id: 0,
-        name: "Martin",
-        img: "../img/adam.png",
-        status: "in_debt"
-      },
-      {
-        user_id: 1,
-        name: "Martin",
-        img: "../img/adam.png",
-        status: "in_debt"
-      },
-      {
-        user_id: 2,
-        name: "Martin",
-        img: "../img/adam.png",
-        status: "in_debt"
-      },
-      {
-        user_id: 3,
-        name: "Martin",
-        img: "../img/adam.png",
-        status: "in_debt"
-      },
-      {
-        user_id: 4,
-        name: "Martin",
-        img: "../img/adam.png",
-        status: "in_debt"
-      },
-      {
-        user_id: 5,
-        name: "Martin",
-        img: "../img/adam.png",
-        status: "in_debt"
-      }
-    ]
-  },
-  {
-      id: 1,
+      id: 0,
       title: "Apartment",
       balance: "68.12",
-      status: "in_dept",
+      debt: true,
+      bg_img: "./img/tab2-background.jpg",
       squad: [
         {
           user_id: 0,
           name: "Martin",
-          img: "../img/adam.png",
-          status: "in_debt"
+          img: "./img/max.png",
+          debt: true,
         },
         {
           user_id: 1,
           name: "Martin",
-          img: "../img/adam.png",
-          status: "in_debt"
+          img: "./img/ben.png",
+          debt: false,
         },
         {
           user_id: 2,
           name: "Martin",
-          img: "../img/adam.png",
-          status: "in_debt"
+          img: "./img/adam.jpg",
+          debt: false,
         }
       ]
     },
+    {
+      id: 1,
+      title: "New York Trip",
+      balance: "128.45",
+      debt: true,
+      bg_img: "./img/tab1-background.jpg",
+      squad: [
+        {
+          user_id: 0,
+          name: "Martin",
+          img: "./img/ben.png",
+          debt: true,
+        },
+        {
+          user_id: 1,
+          name: "Martin",
+          img: "./img/adam.jpg",
+          debt: true,
+        },
+        {
+          user_id: 2,
+          name: "Martin",
+          img: "./img/ben.png",
+          debt: false,
+        },
+        {
+          user_id: 3,
+          name: "Martin",
+          img: "./img/mike.png",
+          debt: true,
+        },
+        {
+          user_id: 4,
+          name: "Martin",
+          img: "./img/perry.png",
+          debt: false,
+        },
+        {
+          user_id: 5,
+          name: "Martin",
+          img: "./img/ben.png",
+          debt: false,
+        },
+        {
+          user_id: 6,
+          name: "Martin",
+          img: "./img/adam.jpg",
+          debt: false,
+        },
+        {
+          user_id: 7,
+          name: "Martin",
+          img: "./img/max.png",
+          debt: true,
+        }
+      ]
+    }
   ];
 
   return {
