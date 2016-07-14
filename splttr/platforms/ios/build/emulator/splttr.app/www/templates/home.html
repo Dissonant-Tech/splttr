@@ -1,0 +1,30 @@
+<ion-view view-title="Splttr">
+    <ion-content class="padding">
+        <div class="tab-wrapper" ng-repeat="tab in tabs">
+            <div class="tab-content-wrapper" style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url({{tab.bg_img}})">
+                <div class="tab-content-title">
+                    <h2>{{tab.title}}</h2>
+                </div>
+                <div class="tab-content-balance">
+                    <h4>Balance: ${{tab.balance}}</h4>
+                </div>
+                <span class="tab-content-squad-label">Squad</span>
+                <ion-scroll zooming="false" direction="x" style="width: 2000px;">
+                    <div class="tab-content-squad-wrapper">
+                                <ul class="squad-list">
+                                    <li
+                                    ng-repeat="member in tab.squad | orderBy: 'debt'" 
+                                    style="background-image: url({{member.img}})" 
+                                    ng-class="{'squad-checked': member.debt}">
+                                    </li>
+                                </ul>
+                            </div>
+                </ion-scroll>
+            </div>
+            <div class="tab-button-wrapper">
+                <span class="tab-button-label">View tab</span>
+            </div>
+        </div>
+    </ion-content>
+    <div class="FAB"><i class="icon ion-plus-round"></i></div>
+</ion-view>
