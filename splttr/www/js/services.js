@@ -57,45 +57,73 @@ angular.module('starter.services', [])
     id: 0,
     title: "New York Trip",
     balance: "128.45",
+    status: "in_dept",
     squad: [
       {
         user_id: 0,
         name: "Martin",
         img: "../img/adam.png",
-        status: "debt"
+        status: "in_debt"
       },
       {
         user_id: 1,
         name: "Martin",
         img: "../img/adam.png",
-        status: "debt"
+        status: "in_debt"
       },
       {
         user_id: 2,
         name: "Martin",
         img: "../img/adam.png",
-        status: "debt"
+        status: "in_debt"
       },
       {
         user_id: 3,
         name: "Martin",
         img: "../img/adam.png",
-        status: "debt"
+        status: "in_debt"
       },
       {
         user_id: 4,
         name: "Martin",
         img: "../img/adam.png",
-        status: "debt"
+        status: "in_debt"
       },
       {
         user_id: 5,
         name: "Martin",
         img: "../img/adam.png",
-        status: "debt"
+        status: "in_debt"
       }
     ]
-  }];
+  },
+  {
+      id: 1,
+      title: "Apartment",
+      balance: "68.12",
+      status: "in_dept",
+      squad: [
+        {
+          user_id: 0,
+          name: "Martin",
+          img: "../img/adam.png",
+          status: "in_debt"
+        },
+        {
+          user_id: 1,
+          name: "Martin",
+          img: "../img/adam.png",
+          status: "in_debt"
+        },
+        {
+          user_id: 2,
+          name: "Martin",
+          img: "../img/adam.png",
+          status: "in_debt"
+        }
+      ]
+    },
+  ];
 
   return {
     all: function() {

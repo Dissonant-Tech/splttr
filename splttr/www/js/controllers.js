@@ -3,6 +3,7 @@ angular.module('starter.controllers', [])
 .controller('HomeCtrl', function($scope, Tabs) {
 
   console.log("In home controller");
+  
   $scope.tabs = Tabs.all();
   console.log($scope.tabs);
 

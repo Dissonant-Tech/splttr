@@ -1,7 +1,36 @@
 <ion-view view-title="Splttr">
     <ion-content class="padding">
 
-    <div class="tab-wrapper">
+        <div class="tab-wrapper" ng-repeat="tab in tabs">
+            <div class="tab-content-wrapper">
+                <div class="tab-content-title">
+                    <h2>{{tab.title}}</h2>
+                </div>
+                <div class="tab-content-balance">
+                    <h4>Balance: ${{tab.balance}}</h4>
+                </div>
+                <span class="tab-content-squad-label">Squad</span>
+                <ion-scroll zooming="false" direction="x" style="width: 2000px;">
+                    <div class="tab-content-squad-wrapper">
+                                <ul class="squad-list">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li class="squad-checked"></li>
+                                    <li class="squad-checked"></li>
+                                    <li class="squad-checked"></li>
+                                </ul>
+                            </div>
+                </ion-scroll>
+            </div>
+            <div class="tab-button-wrapper">
+                <span class="tab-button-label">View tab</span>
+            </div>
+        </div>
+
+    <!-- <div class="tab-wrapper">
         <div class="tab-content-wrapper">
             <div class="tab-content-title">
                 <h2>New York Trip</h2>
@@ -28,63 +57,7 @@
         <div class="tab-button-wrapper">
             <span class="tab-button-label">View tab</span>
         </div>
-    </div>
-    <div class="tab-wrapper">
-        <div class="tab-content-wrapper">
-            <div class="tab-content-title">
-                <h2>New York Trip</h2>
-            </div>
-            <div class="tab-content-balance">
-                <h4>Balance: $128.45</h4>
-            </div>
-            <span class="tab-content-squad-label">Squad</span>
-            <ion-scroll zooming="false" direction="x" style="width: 2000px;">
-                <div class="tab-content-squad-wrapper">
-                            <ul class="squad-list">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li class="squad-checked"></li>
-                                <li class="squad-checked"></li>
-                                <li class="squad-checked"></li>
-                            </ul>
-                        </div>
-            </ion-scroll>
-        </div>
-        <div class="tab-button-wrapper">
-            <span class="tab-button-label">View tab</span>
-        </div>
-    </div>
-    <div class="tab-wrapper">
-        <div class="tab-content-wrapper">
-            <div class="tab-content-title">
-                <h2>New York Trip</h2>
-            </div>
-            <div class="tab-content-balance">
-                <h4>Balance: $128.45</h4>
-            </div>
-            <span class="tab-content-squad-label">Squad</span>
-            <ion-scroll zooming="false" direction="x" style="width: 2000px;">
-                <div class="tab-content-squad-wrapper">
-                            <ul class="squad-list">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li class="squad-checked"></li>
-                                <li class="squad-checked"></li>
-                                <li class="squad-checked"></li>
-                            </ul>
-                        </div>
-            </ion-scroll>
-        </div>
-        <div class="tab-button-wrapper">
-            <span class="tab-button-label">View tab</span>
-        </div>
-    </div>
+    </div> -->
     </ion-content>
 
     <div class="FAB"><i class="icon ion-plus-round"></i></div>
