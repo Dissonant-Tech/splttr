@@ -5,10 +5,14 @@
 		background-color: gray;
 		border-radius: 6px;
 		margin: 20px auto;
+		&:first-of-type{
+			margin-top: 0;
+		}
 	}
 	&-content-wrapper{
 		height: 90%;
 		padding: 10px;
+		border-radius: 6px;
 		h2, h4{
 			color: white;
 		}
@@ -48,6 +52,8 @@
 			-webkit-border-radius: 0px 0px 6px 6px;
 			border-radius: 0px 0px 6px 6px;
 			text-align: center;
+			border: 1px solid #cac6c6;
+			border-top: none;
 		}
 		&-label{
 			color: $tab-button-label;

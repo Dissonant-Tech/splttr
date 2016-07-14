@@ -47,4 +47,71 @@ angular.module('starter.services', [])
       return null;
     }
   };
+})
+
+.factory('Tabs', function(){
+
+  // Collection of all tabs
+
+  var tabs = [{
+    id: 0,
+    title: "New York Trip",
+    balance: "128.45",
+    squad: [
+      {
+        user_id: 0,
+        name: "Martin",
+        img: "../img/adam.png",
+        status: "debt"
+      },
+      {
+        user_id: 1,
+        name: "Martin",
+        img: "../img/adam.png",
+        status: "debt"
+      },
+      {
+        user_id: 2,
+        name: "Martin",
+        img: "../img/adam.png",
+        status: "debt"
+      },
+      {
+        user_id: 3,
+        name: "Martin",
+        img: "../img/adam.png",
+        status: "debt"
+      },
+      {
+        user_id: 4,
+        name: "Martin",
+        img: "../img/adam.png",
+        status: "debt"
+      },
+      {
+        user_id: 5,
+        name: "Martin",
+        img: "../img/adam.png",
+        status: "debt"
+      }
+    ]
+  }];
+
+  return {
+    all: function() {
+      return tabs;
+    },
+    remove: function(tab) {
+      tabs.splice(tabs.indexOf(tab), 1);
+    },
+    get: function(tabId) {
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].id === parseInt(tabId)) {
+          return tabs[i];
+        }
+      }
+      return null;
+    }
+  };
+
 });

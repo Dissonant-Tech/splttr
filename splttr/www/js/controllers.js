@@ -1,6 +1,12 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function($scope) {})
+.controller('HomeCtrl', function($scope, Tabs) {
+
+  console.log("In home controller");
+  $scope.tabs = Tabs.all();
+  console.log($scope.tabs);
+
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

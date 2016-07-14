@@ -4,7 +4,8 @@
 
 $splttr-blue: #0D47A1;
 $tab-button-wrapper: #DED9D9;
-$tab-button-label: #959595;
+$tab-button-label: #0e0e0e;
+$background-color: #efefef;	
 $success: #43AC6A;
 $alert: #f04124;
 
@@ -51,4 +52,8 @@ $alert: #f04124;
 .platform-android .FAB{
 	bottom: 30px;
 	background-color: $splttr-blue;
+}
+
+ion-content{
+	background-color: $background-color !important;
 }
