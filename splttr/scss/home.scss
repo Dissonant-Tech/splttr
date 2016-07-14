@@ -1,0 +1,61 @@
+.tab{
+	&-wrapper{
+		position: relative;
+		height: auto;
+		background-color: gray;
+		border-radius: 6px;
+		margin: 20px auto;
+	}
+	&-content-wrapper{
+		height: 90%;
+		padding: 10px;
+		h2, h4{
+			color: white;
+		}
+		background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)),
+							url(../img/tab1-background.jpg);
+		background-position: center center;
+		background-size: cover;
+		overflow: hidden;
+	}
+	&-content-squad{
+		&-label{
+			color: white;
+			padding-bottom: 5px;
+			line-height: 2em;
+		}
+		&-wrapper{
+			li{
+				display: inline-block;
+				border-radius: 50%;
+				background-image: url(../img/max.png);
+				background-position: center center;
+				background-size: cover;
+				height: 42px;
+				width: 42px;
+				background-color: gray;
+				border: 2px solid $alert;
+			}
+		}
+	}
+	&-button{
+		&-wrapper{
+			height: 10%;
+			width: 100%;
+			background-color: $tab-button-wrapper;
+			padding: 3%;
+			-moz-border-radius: 0px 0px 6px 6px;
+			-webkit-border-radius: 0px 0px 6px 6px;
+			border-radius: 0px 0px 6px 6px;
+			text-align: center;
+		}
+		&-label{
+			color: $tab-button-label;
+		}
+	}
+}
+.squad-checked{
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+	url(../img/max.png) !important;
+	border: 2px solid $success !important;
+}
