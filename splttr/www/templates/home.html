@@ -15,13 +15,8 @@
                                     <li
                                     ng-repeat="member in tab.squad | orderBy: 'debt'" 
                                     style="background-image: url({{member.img}})" 
-                                    ng-class="{'squad-checked': !member.debt}">
-                                    </li> -->
-                                    <!-- <li 
-                                    ng-repeat="member in tab.squad | orderBy: 'debt'" 
-                                    style="background-image: url({{member.img}})" 
-                                    ng-class="{'squad-checked': !member.debt}">
-                                    </li> -->
+                                    ng-class="{'squad-checked': member.debt}">
+                                    </li>
                                 </ul>
                             </div>
                 </ion-scroll>
