@@ -9853,16 +9853,22 @@ a.button {
   bottom: 30px;
   background-color: #0D47A1; }
 
+ion-content {
+  background-color: #efefef !important; }
+
 .tab-wrapper {
   position: relative;
   height: auto;
   background-color: gray;
   border-radius: 6px;
   margin: 20px auto; }
+  .tab-wrapper:first-of-type {
+    margin-top: 0; }
 
 .tab-content-wrapper {
   height: 90%;
   padding: 10px;
+  border-radius: 6px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url(../img/tab1-background.jpg);
   background-position: center center;
   background-size: cover;
@@ -9894,10 +9900,12 @@ a.button {
   -moz-border-radius: 0px 0px 6px 6px;
   -webkit-border-radius: 0px 0px 6px 6px;
   border-radius: 0px 0px 6px 6px;
-  text-align: center; }
+  text-align: center;
+  border: 1px solid #cac6c6;
+  border-top: none; }
 
 .tab-button-label {
-  color: #959595; }
+  color: #0e0e0e; }
 
 .squad-checked {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/max.png) !important;
