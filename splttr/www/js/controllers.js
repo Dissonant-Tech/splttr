@@ -2,6 +2,9 @@ angular.module('starter.controllers', [])
 
 .controller('HomeCtrl', function($scope, Tabs) {
 
+
+
+
   console.log("In home controller");
 
   $scope.getSquadMemberOutlineColor = function(member){
@@ -31,8 +34,6 @@ angular.module('starter.controllers', [])
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-
-  $scope.name = "martin";
 
 
   $scope.chats = Chats.all();
