@@ -156,4 +156,20 @@ angular.module('starter.services', [])
     }
   };
 
+})
+
+
+.factory('User', function(){
+
+	var user = {
+		id: "0",
+		img: "./img/alan.jpg",
+    name: "Alan Kopetman"
+	};
+
+	return {
+		get: function() {
+			return user;
+		}
+	};
 });

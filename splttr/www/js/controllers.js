@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
   $scope.tabs = Tabs.all();
   console.log($scope.tabs);
 
-  // 
+  //
 
 })
 
@@ -33,8 +33,10 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('AccountCtrl', function($scope, User) {
+
+  console.log("In account controller");
+  $scope.user = User.get();
+  console.log($scope.user);
+
 });
