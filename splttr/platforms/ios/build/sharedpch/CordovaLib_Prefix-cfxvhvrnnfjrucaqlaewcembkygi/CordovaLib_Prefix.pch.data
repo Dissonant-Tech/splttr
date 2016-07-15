@@ -6,9 +6,9 @@ Environment  LANG=en_US.US-ASCII PATH=/Applications/Xcode.app/Contents/Developer
 BuilderIdent ProcessPCH\ /Users/Martin/Documents/Projects/splttr/splttr/platforms/ios/build/sharedpch/CordovaLib_Prefix-cfxvhvrnnfjrucaqlaewcembkygi/CordovaLib_Prefix.pch.pch\ CordovaLib_Prefix.pch\ normal\ i386\ objective-c\ com.apple.compilers.llvm.clang.1_0.compiler
 InputFile    /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator9.3.sdk/SDKSettings.plist 0 1457133609 1664 33204
 InputFile    /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator9.3.sdk/System/Library/CoreServices/SystemVersion.plist 0 1456989947 414 33188
-InputFile    /Users/Martin/Documents/Projects/splttr/splttr/platforms/ios/CordovaLib/CordovaLib_Prefix.pch 0 1468237220 838 33188
+InputFile    /Users/Martin/Documents/Projects/splttr/splttr/platforms/ios/CordovaLib/CordovaLib_Prefix.pch 0 1468523829 838 33188
 InputFile    /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator9.3.sdk/SDKSettings.plist 0 1457133609 1664 33204
-InputFile    /Users/Martin/Documents/Projects/splttr/splttr/platforms/ios/CordovaLib/CordovaLib_Prefix.pch 0 1468237220 838 33188
+InputFile    /Users/Martin/Documents/Projects/splttr/splttr/platforms/ios/CordovaLib/CordovaLib_Prefix.pch 0 1468523829 838 33188
 InputFile    /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator9.3.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h 0 1443822066 6314 33188
 InputFile    /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator9.3.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CoreFoundation.h 0 1443821516 2959 33188
 InputFile    /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator9.3.sdk/usr/include/sys/types.h 0 1443820879 8057 33188

@@ -53,12 +53,14 @@ angular.module('starter.services', [])
 
   // Collection of all tabs
 
-  var tabs = [{
-      id: 0,
+  var tabs = [
+  {
+      id: 1,
       title: "Apartment",
       balance: "68.12",
       debt: true,
       bg_img: "./img/tab2-background.jpg",
+      desc: "This is tab1's description",
       squad: [
         {
           user_id: 0,
@@ -81,11 +83,12 @@ angular.module('starter.services', [])
       ]
     },
     {
-      id: 1,
+      id: 2,
       title: "New York Trip",
       balance: "128.45",
       debt: true,
       bg_img: "./img/tab1-background.jpg",
+      desc: "This is tab2's description",
       squad: [
         {
           user_id: 0,
@@ -153,6 +156,10 @@ angular.module('starter.services', [])
         }
       }
       return null;
+    },
+    add: function(tab) {
+      tabs.push(tab);
+      console.log(tabs);
     }
   };
 

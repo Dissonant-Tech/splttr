@@ -30,13 +30,28 @@ $alert: #f04124;
 // 	padding-left: 10px;
 // }
 
+.item-floating-label{
+    border-left: none;
+    border-right: none;
+    border-top: none;
+}
+
 .bar.bar-stable{
     background-color: $splttr-blue;
     *{
         color: white !important;
     }
 }
-
+.bar-header{
+    background-color: $splttr-blue;
+    .title{
+        color: white !important;
+    }
+}
+ion-header-bar .buttons button {
+    font-weight: normal !important;
+    color: white !important;
+}
 .FAB{
 	height: 52px;
     width: 52px;
@@ -48,7 +63,7 @@ $alert: #f04124;
     position: fixed;
     bottom: 63px;
     right: 15px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.16), 0 4px 10px 0 rgba(0,0,0,0.12);
     i{
     	display: table-cell;
     	vertical-align: middle;

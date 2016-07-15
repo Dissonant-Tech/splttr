@@ -59,7 +59,25 @@
 		}
 	}
 }
+
+/* MODAL */
 .squad-checked{
 	border: 2px solid $success !important;
 	opacity: 0.4;
+}
+.squad-modal{
+	background-color: #efefef;
+	li{
+		height: 60px;
+		width: 60px;
+		border: 2px solid #ddd;
+	}
+}
+.search{
+	border-radius: 6px;
+	background: #ddd;
+	margin-bottom: 10px;
+}
+.modal-done-button-wrapper{
+	padding-top: 25px;
 }
