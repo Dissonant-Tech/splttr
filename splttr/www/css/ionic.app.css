@@ -9821,6 +9821,9 @@ a.button {
   font-family: "Avenir Next", sans-serif !important; }
 
 /* ===== MODULES ====== */
+pre {
+  padding: 5% 0 3% 5%; }
+
 textarea {
   background: #e8e8e8;
   border-radius: 6px;
@@ -9989,6 +9992,12 @@ ion-content {
 .tab-detail-content {
   margin: 0 auto;
   max-width: 600px; }
+
+.tab-detail-label {
+  border-bottom: 1px solid #dad4d4;
+  padding: 7px 19px 3px 0px;
+  width: 95%;
+  max-width: 95%; }
 
 .tab-detail .detail-squad-list img {
   display: block;
