@@ -9914,7 +9914,7 @@ ion-content {
   height: 42px;
   width: 42px;
   background-color: white;
-  border: 2px solid #f04124;
+  border: 2px solid #c5c5c5;
   margin-right: 10px; }
 
 .tab-button-wrapper {
@@ -9936,8 +9936,8 @@ ion-content {
 
 /* MODAL */
 .squad-checked {
-  border: 2px solid #43AC6A !important;
-  opacity: 0.4; }
+  opacity: 0.5;
+  border: none !important; }
 
 .squad-modal {
   background-color: #efefef; }
@@ -9968,11 +9968,36 @@ ion-content {
   .tab-detail-title h1 {
     color: white; }
 
-.tab-detail .detail-squad-list li {
+.tab-detail-content {
+  margin: 0 auto;
+  max-width: 600px; }
+
+.tab-detail .detail-squad-list img {
   display: block;
   width: 62px;
   height: 62px;
   border-radius: 50%;
   background-size: cover;
   border: 2px soild gray;
-  margin-bottom: 25px; }
+  position: absolute;
+  left: 2px;
+  top: 16px; }
+
+.tab-detail .detail-squad-list .member-owes {
+  opacity: 0.5; }
+
+.tab-detail .detail-squad-member {
+  position: relative;
+  min-height: 80px;
+  padding: 25px 25px 25px 80px; }
+  @media (min-width: 640px) {
+    .tab-detail .detail-squad-member {
+      float: left;
+      width: 50%; } }
+
+.tab-detail .detail-squad-member-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+  .tab-detail .detail-squad-member-content span {
+    font-size: 1.5em; }

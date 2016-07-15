@@ -14,15 +14,14 @@
 			<p>{{tab.desc}}</p>
 			<ion-label stacked>Members</ion-label>
             <ul class="detail-squad-list">
-            	<div class="detail-squad-member" ng-repeat="member in tab.squad | orderBy: 'debt'">
+            	<div class="detail-squad-member" ng-repeat="member in tab.squad | orderBy: '!debt'" ng-class="{'member-owes': !member.debt}">
             		<img ng-src="{{member.img}}" alt="Member profile profile">
-            		
+            		<div class="detail-squad-member-content">
+            			<span>{{member.name}}</span>
+            			<p ng-if="member.debt">Still owes: $45.34</p>
+            			<p ng-if="!member.debt">Does not owe</p>
+        			</div>
             	</div>
-               <!--  <li
-                ng-repeat="member in tab.squad | orderBy: 'debt'" 
-                style="background-image: url({{member.img}})" 
-                ng-class="{'squad-checked': member.debt}">
-                </li> -->
             </ul>
 		</div>
 	</ion-content>
