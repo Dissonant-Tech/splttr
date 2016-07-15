@@ -9877,7 +9877,8 @@ ion-content {
   height: auto;
   background-color: gray;
   border-radius: 6px;
-  margin: 20px auto; }
+  margin: 20px auto;
+  text-align: left; }
   .tab-wrapper:first-of-type {
     margin-top: 0; }
 
@@ -9934,7 +9935,6 @@ ion-content {
 .tab-button-label {
   color: #0e0e0e; }
 
-/* MODAL */
 .squad-checked {
   opacity: 0.5;
   border: none !important; }

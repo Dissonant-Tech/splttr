@@ -11,6 +11,7 @@
 		background-color: gray;
 		border-radius: 6px;
 		margin: 20px auto;
+		text-align: left;
 		&:first-of-type{
 			margin-top: 0;
 		}
@@ -75,18 +76,18 @@
 		}
 	}
 }
-
-/* MODAL */
-.squad-checked{
-	opacity: 0.5;
-	border: none !important;	
-}
-.squad-modal{
-	background-color: #efefef;
-	li{
-		height: 60px;
-		width: 60px;
-		border: 2px solid #ddd;
+.squad{
+	&-checked{
+		opacity: 0.5;
+		border: none !important;	
+	}
+	&-modal{
+		background-color: #efefef;
+		li{
+			height: 60px;
+			width: 60px;
+			border: 2px solid #ddd;
+		}
 	}
 }
 .search{
