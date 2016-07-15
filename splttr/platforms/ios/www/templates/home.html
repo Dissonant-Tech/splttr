@@ -1,6 +1,7 @@
 <ion-view view-title="Splttr">
 
-    <ion-content class="padding">
+    <ion-content class="padding" has-bouncing="true">
+
         <div class="tab-wrapper" ng-repeat="tab in tabs | orderBy: 'id'">
             <div class="tab-content-wrapper" style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url({{tab.bg_img}})">
                 <div class="tab-content-title">
@@ -10,7 +11,8 @@
                     <h4>Balance: ${{tab.balance}}</h4>
                 </div>
                 <span class="tab-content-squad-label">Squad</span>
-                <ion-scroll zooming="false" direction="x" style="width: 2000px;">
+                
+                <ion-scroll zooming="false" direction="x" class="squad-scroll">
                     <div class="tab-content-squad-wrapper">
                                 <ul class="squad-list">
                                     <li
@@ -22,9 +24,9 @@
                             </div>
                 </ion-scroll>
             </div>
-            <div class="tab-button-wrapper">
-                <span class="tab-button-label">View tab</span>
-            </div>
+            <button class="tab-button-wrapper button button-block button-positive">
+              View Tab
+            </button>
         </div>
     </ion-content>
     <div class="FAB" ng-click="openModal()"><i class="icon ion-plus-round"></i></div>

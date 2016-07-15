@@ -9865,6 +9865,7 @@ ion-content {
   background-color: #efefef !important; }
 
 .tab-wrapper {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.6);
   position: relative;
   height: auto;
   background-color: gray;
@@ -9876,7 +9877,7 @@ ion-content {
 .tab-content-wrapper {
   height: 90%;
   padding: 10px;
-  border-radius: 6px;
+  border-radius: 6px 6px 0 0;
   background-color: #bdbdbd;
   background-position: center center;
   background-size: cover;
@@ -9901,6 +9902,8 @@ ion-content {
   margin-right: 10px; }
 
 .tab-button-wrapper {
+  border-radius: 0 0 6px 6px;
+  margin: 0 !important;
   height: 10%;
   width: 100%;
   background-color: #DED9D9;
@@ -9934,3 +9937,17 @@ ion-content {
 
 .modal-done-button-wrapper {
   padding-top: 25px; }
+
+.tab-detail-header {
+  height: 200px;
+  background-size: cover;
+  background-position: center center;
+  display: table;
+  width: 100%;
+  text-align: center; }
+
+.tab-detail-content {
+  display: table-cell;
+  vertical-align: middle; }
+  .tab-detail-content h1 {
+    color: white; }

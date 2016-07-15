@@ -29,7 +29,20 @@ angular.module('starter.controllers', [])
         debt: true,
         bg_img: "./img/tab3-background.jpg",
         desc: "",
-        squad: []
+        squad: [
+          {
+            user_id: 0,
+            name: "Martin",
+            img: "./img/ben.png",
+            debt: false,
+          },
+          {
+            user_id: 1,
+            name: "Martin",
+            img: "./img/adam.jpg",
+            debt: false,
+          }
+        ]
     }
 
 

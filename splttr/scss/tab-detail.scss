@@ -1,0 +1,17 @@
+.tab-detail{
+	&-header{
+		height: 200px;
+		background-size: cover;
+		background-position: center center;
+		display: table;
+		width: 100%;
+		text-align: center;
+	}
+	&-content{
+		display: table-cell;
+		vertical-align: middle;
+		h1{
+			color: white;
+		}
+	}
+}
