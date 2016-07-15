@@ -7,11 +7,20 @@
 		width: 100%;
 		text-align: center;
 	}
-	&-content{
+	&-title{
 		display: table-cell;
 		vertical-align: middle;
 		h1{
 			color: white;
 		}
+	}
+	.detail-squad-list li{
+		display: block;
+	    width: 62px;
+	    height: 62px;
+	    border-radius: 50%;
+	    background-size: cover;
+	    border: 2px soild gray;
+	    margin-bottom: 25px; 
 	}
 }

@@ -9962,8 +9962,17 @@ ion-content {
   width: 100%;
   text-align: center; }
 
-.tab-detail-content {
+.tab-detail-title {
   display: table-cell;
   vertical-align: middle; }
-  .tab-detail-content h1 {
+  .tab-detail-title h1 {
     color: white; }
+
+.tab-detail .detail-squad-list li {
+  display: block;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background-size: cover;
+  border: 2px soild gray;
+  margin-bottom: 25px; }

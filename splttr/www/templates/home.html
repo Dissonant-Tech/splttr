@@ -11,15 +11,17 @@
                     <h4>Balance: ${{tab.balance}}</h4>
                 </div>
                 <span class="tab-content-squad-label">Members</span>
-                <div class="tab-content-squad-wrapper">
-                    <ul class="squad-list">
-                        <li
-                        ng-repeat="member in tab.squad | orderBy: 'debt'" 
-                        style="background-image: url({{member.img}})" 
-                        ng-class="{'squad-checked': member.debt}">
-                        </li>
-                    </ul>
-                </div>
+                <ion-scroll zooming="false" direction="x" style="width: 1000px;">
+                    <div class="tab-content-squad-wrapper">
+                        <ul class="squad-list">
+                            <li
+                            ng-repeat="member in tab.squad | orderBy: 'debt'" 
+                            style="background-image: url({{member.img}})" 
+                            ng-class="{'squad-checked': member.debt}">
+                            </li>
+                        </ul>
+                    </div>
+                </ion-scroll>
             </div>
 
             <!-- TAB BUTTON -->
