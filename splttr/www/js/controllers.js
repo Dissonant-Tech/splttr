@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function($scope, Tabs) {
+.controller('HomeCtrl', function($scope, $ionicModal, $state, Tabs) {
 
   console.log("In home controller");
 
@@ -8,7 +8,66 @@ angular.module('starter.controllers', [])
   $scope.tabs = Tabs.all();
   console.log($scope.tabs);
 
-  //
+  // setup modal for creating tab
+  $ionicModal.fromTemplateUrl('templates/home-tab-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+    console.log("Modal loaded");
+  });
+
+  // modal functions
+  $scope.openModal = function() {
+    $scope.modal.show();
+    console.log("Modal opened");
+
+    $scope.newTab = {
+        id: 0,
+        title: "",
+        balance: "",
+        debt: true,
+        bg_img: "./img/tab3-background.jpg",
+        desc: "",
+        squad: [
+          {
+            user_id: 0,
+            name: "Martin",
+            img: "./img/ben.png",
+            debt: false,
+          },
+          {
+            user_id: 1,
+            name: "Martin",
+            img: "./img/adam.jpg",
+            debt: false,
+          }
+        ]
+    }
+  };
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+    console.log("Modal closed");
+  };
+
+  $scope.saveNewTab = function(){
+    console.log("Saving new tab");
+    Tabs.add($scope.newTab);
+    $scope.closeModal();
+  }
+
+})
+
+.controller('TabDetailViewCtrl', function($scope, $stateParams, Tabs) {
+  
+  console.log("In tab detail view controller");
+  $scope.tab = Tabs.get($stateParams.tabId);
+  console.log($scope.tab);
+
+  $scope.getImageUrl = function() {
+    return "url(" + $scope.tab.bg_img + ")";
+  }
 
 })
 
@@ -22,11 +81,11 @@ angular.module('starter.controllers', [])
   //});
 
 
-  $scope.chats = Chats.all();
+$scope.chats = Chats.all();
 
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+$scope.remove = function(chat) {
+  Chats.remove(chat);
+};
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {

@@ -1,0 +1,62 @@
+.tab-detail{
+	&-header{
+		height: 200px;
+		background-size: cover;
+		background-position: center center;
+		display: table;
+		width: 100%;
+		text-align: center;
+	}
+	&-title{
+		display: table-cell;
+		vertical-align: middle;
+		h1{
+			color: white;
+		}
+	}
+	&-content{
+		margin: 0 auto;
+		max-width: 600px;
+	}
+	&-label{
+		border-bottom: 1px solid #dad4d4;
+		padding: 7px 19px 3px 0px;
+		width: 95%;
+		max-width: 95%;
+	}
+	.detail-squad{
+		&-list{
+			img{
+				display: block;
+			    width: 62px;
+			    height: 62px;
+			    border-radius: 50%;
+			    background-size: cover;
+			    border: 2px soild gray;
+			    position: absolute;
+			    left: 2px;
+			    top: 16px;
+			}
+			.member-owes{
+				opacity: 0.5;
+			}
+		}
+		&-member{
+		    position: relative;
+		    min-height: 80px;
+		    padding: 25px 25px 25px 80px;
+		    @include tablet-up{
+		    	float: left;
+		    	width: 50%;
+		    }
+		}
+		&-member-content{
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			span{
+				font-size: 1.5em;
+			}
+		}	
+	}
+}
