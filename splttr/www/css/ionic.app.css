@@ -9821,6 +9821,27 @@ a.button {
   font-family: "Avenir Next", sans-serif !important; }
 
 /* ===== MODULES ====== */
+pre {
+  padding: 5% 0 3% 5%; }
+
+textarea {
+  background: #e8e8e8;
+  border-radius: 6px;
+  min-height: 100px;
+  padding: 5%; }
+
+.textarea-wrapper {
+  border: none;
+  background: #efefef;
+  padding: 5px 0 0 0; }
+
+.textarea-label {
+  padding-top: 20px;
+  padding-bottom: 0; }
+
+.modal-input {
+  padding: 0 10px 10px 10px; }
+
 ion-modal-view {
   border-radius: 6px; }
 
@@ -9951,9 +9972,6 @@ ion-content {
   background: #ddd;
   margin-bottom: 10px; }
 
-.modal-done-button-wrapper {
-  padding-top: 25px; }
-
 .tab-detail-header {
   height: 200px;
   background-size: cover;
@@ -9971,6 +9989,12 @@ ion-content {
 .tab-detail-content {
   margin: 0 auto;
   max-width: 600px; }
+
+.tab-detail-label {
+  border-bottom: 1px solid #dad4d4;
+  padding: 7px 19px 3px 0px;
+  width: 95%;
+  max-width: 95%; }
 
 .tab-detail .detail-squad-list img {
   display: block;

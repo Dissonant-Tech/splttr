@@ -6,24 +6,9 @@
 		    <button class="button button-clear button-positive" ng-click="closeModal()">Close</button>
 		  </div>
 	</ion-header-bar>
-	<ion-content>
+	<ion-content class="">
 		<form name="newTabForm" novalidate>
 			<div class="list">
-
-				<label class="item item-input item-floating-label">
-					<span class="input-label">Title</span>
-					<input type="text" placeholder="Title" ng-model="newTab.title" required>
-				</label>
-
-				<label class="item item-input item-floating-label">
-					<span class="input-label">Description</span>
-					<input type="text" placeholder="Description" ng-model="newTab.desc" required>
-				</label>
-
-				<label class="item item-input item-floating-label">
-					<span class="input-label">Balance</span>
-					<input type="number" placeholder="Balance" ng-model="newTab.balance" required>
-				</label>
 
 				<label class="item squad-modal">
 					<span class="input-label">Invite to tab</span>
@@ -46,7 +31,27 @@
 					            </div>
 					</ion-scroll>
 				</label>
-				<div class="padding modal-done-button-wrapper">
+
+				<div class="modal-input padding">
+
+					<label class="item item-input item-floating-label modal-label">
+						<span class="input-label">Title</span>
+						<input type="text" placeholder="Title" ng-model="newTab.title" required>
+					</label>
+
+					<label class="item item-input item-floating-label modal-label">
+						<span class="input-label">Balance</span>
+						<input type="number" placeholder="Balance" ng-model="newTab.balance" required>
+					</label>
+
+					<span class="input-label padding modal-label textarea-label">Description</span>
+					<label class="item item-input textarea-wrapper">	
+					    <textarea placeholder="Road trip, gas money, lunch, etc..." ng-model="newTab.desc" required></textarea>
+				  	</label>
+
+			  	</div>
+
+				<div class="padding">
 					<button type="button" class="button button-block button-balanced" ng-disabled="newTabForm.$invalid" ng-click="saveNewTab()">
 					  	Done
 					</button>

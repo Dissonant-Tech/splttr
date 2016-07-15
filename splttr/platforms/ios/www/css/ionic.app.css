@@ -9821,6 +9821,24 @@ a.button {
   font-family: "Avenir Next", sans-serif !important; }
 
 /* ===== MODULES ====== */
+textarea {
+  background: #e8e8e8;
+  border-radius: 6px;
+  min-height: 100px;
+  padding: 5%; }
+
+.textarea-wrapper {
+  border: none;
+  background: #efefef;
+  padding: 5px 0 0 0; }
+
+.textarea-label {
+  padding-top: 20px;
+  padding-bottom: 0; }
+
+.modal-input {
+  padding: 0 10px 10px 10px; }
+
 ion-modal-view {
   border-radius: 6px; }
 
