@@ -1,12 +1,60 @@
-<ion-view view-title="Account">
-  <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
-    <button class="button" tappable>
-      <i class="icon ion-loading-c"></i> Loading...
-    </button>
+<ion-view view-title="Profile">
+	<ion-content>
+		<div class="user-wrapper">
+			<div class="user-profile-wrapper">
+
+				<!-- PROFILE DETAILS -->
+				<div class="user-profile-details">
+					<div class="item item-image user-profile-image">
+						<img ng-src={{user.img}} alt="profile-picture">
+					</div>
+					<div class="user-name-wrapper">
+						<h1>{{user.name}}</h1>
+					</div>
+				</div>
+
+				<!-- SETTING TILES -->
+				<div>
+				<div class="user-setting-row-wrapper">
+					<div class="user-setting-wrapper">
+						<div class="item item-image">
+							<img src="/img/Settings.svg" alt="settings-image">
+							<div class="user-setting-title">
+								Settings
+							</div>
+							<div id="borderLeft"></div>
+						</div>
+					</div>
+					<div class="user-setting-wrapper">
+						<div class="item item-image">
+							<img src="/img/Edit.svg" alt="edit-image">
+							<div class="user-setting-title">
+								Edit
+							</div>
+							<div id="borderLeft"></div>
+						</div>
+					</div>
+				</div>
+				<div class="user-setting-row-wrapper">
+					<div class="user-setting-wrapper">
+						<div class="item item-image">
+							<img src="/img/Checked.svg" alt="checked-image">
+							<div class="user-setting-title">
+								Payment
+							</div>
+						</div>
+					</div>
+					<div class="user-setting-wrapper">
+						<div class="item item-image">
+							<img src="/img/About.svg" alt="about-image">
+							<div class="user-setting-title">
+								About
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
   </ion-content>
 </ion-view>

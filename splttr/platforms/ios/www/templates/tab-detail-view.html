@@ -10,9 +10,9 @@
 
 		<!-- TAB CONTENT -->
 		<div class="tab-detail-content padding">
-			<ion-label stacked>Description</ion-label>
-			<p>{{tab.desc}}</p>
-			<ion-label stacked>Members</ion-label>
+			<ion-label stacked class="tab-detail-label">Description</ion-label>
+			<pre>{{tab.desc}}</pre>
+			<ion-label stacked class="tab-detail-label">Members</ion-label>
             <ul class="detail-squad-list">
             	<div class="detail-squad-member" ng-repeat="member in tab.squad | orderBy: '!debt'" ng-class="{'member-owes': !member.debt}">
             		<img ng-src="{{member.img}}" alt="Member profile profile">

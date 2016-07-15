@@ -69,7 +69,6 @@ angular.module('starter.controllers', [])
     return "url(" + $scope.tab.bg_img + ")";
   }
 
-
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {
@@ -93,8 +92,10 @@ $scope.remove = function(chat) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('AccountCtrl', function($scope, User) {
+
+  console.log("In account controller");
+  $scope.user = User.get();
+  console.log($scope.user);
+
 });
