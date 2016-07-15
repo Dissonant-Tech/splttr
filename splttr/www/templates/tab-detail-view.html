@@ -1,12 +1,26 @@
 <ion-view view-title="{{tab.title}}">
-	<ion-content>
+	<ion-content class="tab-detail">
 		<div 
 		class="tab-detail-header" ng-style="{ 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)),' + getImageUrl() }">
-
 			<div class="tab-detail-content">
 				<h1>${{tab.balance}}</h1>
 			</div>
-
+		</div>
+		<div class="tab-detail-content padding">
+			<ion-label stacked>Description</ion-label>
+			<p>{{tab.desc}}</p>
+			<ion-label stacked>Members</ion-label>
+			<ion-scroll zooming="false" direction="x" style="width: 1000px;">
+			    <div class="tab-content-squad-wrapper">
+			                <ul class="squad-list">
+			                    <li
+			                    ng-repeat="member in tab.squad | orderBy: 'debt'" 
+			                    style="background-image: url({{member.img}})" 
+			                    ng-class="{'squad-checked': member.debt}">
+			                    </li>
+			                </ul>
+			            </div>
+			</ion-scroll>
 		</div>
 	</ion-content>
 </ion-view>

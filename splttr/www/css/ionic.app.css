@@ -9821,6 +9821,9 @@ a.button {
   font-family: "Avenir Next", sans-serif !important; }
 
 /* ===== MODULES ====== */
+ion-modal-view {
+  border-radius: 6px; }
+
 .item-floating-label {
   border-left: none;
   border-right: none;
@@ -9864,6 +9867,10 @@ ion-header-bar .buttons button {
 ion-content {
   background-color: #efefef !important; }
 
+@media (min-width: 640px) and (max-width: 1023px) {
+  .tab-home {
+    text-align: center; } }
+
 .tab-wrapper {
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.6);
   position: relative;
@@ -9873,6 +9880,15 @@ ion-content {
   margin: 20px auto; }
   .tab-wrapper:first-of-type {
     margin-top: 0; }
+
+@include-tablet {
+  .tab-wrapper {
+    max-width: 200px; } }
+  @media (min-width: 640px) {
+    .tab-wrapper {
+      max-width: 300px;
+      margin-right: 25px;
+      display: inline-block; } }
 
 .tab-content-wrapper {
   height: 90%;
