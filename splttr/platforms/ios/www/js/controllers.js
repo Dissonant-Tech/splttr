@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function($scope, $ionicModal, Tabs) {
+.controller('HomeCtrl', function($scope, $ionicModal, $state, Tabs) {
 
   console.log("In home controller");
 
@@ -29,10 +29,21 @@ angular.module('starter.controllers', [])
         debt: true,
         bg_img: "./img/tab3-background.jpg",
         desc: "",
-        squad: []
+        squad: [
+          {
+            user_id: 0,
+            name: "Martin",
+            img: "./img/ben.png",
+            debt: false,
+          },
+          {
+            user_id: 1,
+            name: "Martin",
+            img: "./img/adam.jpg",
+            debt: false,
+          }
+        ]
     }
-
-
   };
 
   $scope.closeModal = function() {
@@ -46,21 +57,20 @@ angular.module('starter.controllers', [])
     $scope.closeModal();
   }
 
+})
 
-  // Cleanup the modal when we're done with it!
-  // $scope.$on('$destroy', function() {
-  //   $scope.modal.remove();
-  // });
-  // // Execute action on hide modal
-  // $scope.$on('modal.hidden', function() {
-  //   // Execute action
-  // });
-  // // Execute action on remove modal
-  // $scope.$on('modal.removed', function() {
-  //   // Execute action
-  // });
+.controller('TabDetailViewCtrl', function($scope, $stateParams, Tabs) {
+  
+  console.log("In tab detail view controller");
+  $scope.tab = Tabs.get($stateParams.tabId);
+  console.log($scope.tab);
 
-  })
+  $scope.getImageUrl = function() {
+    return "url(" + $scope.tab.bg_img + ")";
+  }
+
+
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

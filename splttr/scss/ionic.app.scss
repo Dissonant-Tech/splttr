@@ -18,8 +18,34 @@ $dark:                            #444 !default;
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
+
+$desktop: "(min-width: 1024px)";
+$tablet: "(min-width: 640px) and (max-width: 1023px)"; 
+$tablet-up: "(min-width: 640px)"; 
+
+
+// Custom mixins
+@mixin tablet-up{
+	@media #{$tablet-up}{
+		@content;
+	}
+}
+
+@mixin tablet{
+	@media #{$tablet}{
+		@content;
+	}
+}
+
+@mixin desktop{
+	@media #{$desktop}{
+		@content;
+	}
+}
+
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 @import "_app";
-@import "home"
+@import "home";
+@import "tab-detail";
 

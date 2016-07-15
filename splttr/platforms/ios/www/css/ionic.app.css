@@ -9821,6 +9821,9 @@ a.button {
   font-family: "Avenir Next", sans-serif !important; }
 
 /* ===== MODULES ====== */
+ion-modal-view {
+  border-radius: 6px; }
+
 .item-floating-label {
   border-left: none;
   border-right: none;
@@ -9864,19 +9867,34 @@ ion-header-bar .buttons button {
 ion-content {
   background-color: #efefef !important; }
 
+@media (min-width: 640px) and (max-width: 1023px) {
+  .tab-home {
+    text-align: center; } }
+
 .tab-wrapper {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.6);
   position: relative;
   height: auto;
   background-color: gray;
   border-radius: 6px;
-  margin: 20px auto; }
+  margin: 20px auto;
+  text-align: left; }
   .tab-wrapper:first-of-type {
     margin-top: 0; }
+
+@include-tablet {
+  .tab-wrapper {
+    max-width: 200px; } }
+  @media (min-width: 640px) {
+    .tab-wrapper {
+      max-width: 300px;
+      margin-right: 25px;
+      display: inline-block; } }
 
 .tab-content-wrapper {
   height: 90%;
   padding: 10px;
-  border-radius: 6px;
+  border-radius: 6px 6px 0 0;
   background-color: #bdbdbd;
   background-position: center center;
   background-size: cover;
@@ -9897,10 +9915,12 @@ ion-content {
   height: 42px;
   width: 42px;
   background-color: white;
-  border: 2px solid #f04124;
+  border: 2px solid #c5c5c5;
   margin-right: 10px; }
 
 .tab-button-wrapper {
+  border-radius: 0 0 6px 6px;
+  margin: 0 !important;
   height: 10%;
   width: 100%;
   background-color: #DED9D9;
@@ -9915,10 +9935,9 @@ ion-content {
 .tab-button-label {
   color: #0e0e0e; }
 
-/* MODAL */
 .squad-checked {
-  border: 2px solid #43AC6A !important;
-  opacity: 0.4; }
+  opacity: 0.5;
+  border: none !important; }
 
 .squad-modal {
   background-color: #efefef; }
@@ -9934,3 +9953,51 @@ ion-content {
 
 .modal-done-button-wrapper {
   padding-top: 25px; }
+
+.tab-detail-header {
+  height: 200px;
+  background-size: cover;
+  background-position: center center;
+  display: table;
+  width: 100%;
+  text-align: center; }
+
+.tab-detail-title {
+  display: table-cell;
+  vertical-align: middle; }
+  .tab-detail-title h1 {
+    color: white; }
+
+.tab-detail-content {
+  margin: 0 auto;
+  max-width: 600px; }
+
+.tab-detail .detail-squad-list img {
+  display: block;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background-size: cover;
+  border: 2px soild gray;
+  position: absolute;
+  left: 2px;
+  top: 16px; }
+
+.tab-detail .detail-squad-list .member-owes {
+  opacity: 0.5; }
+
+.tab-detail .detail-squad-member {
+  position: relative;
+  min-height: 80px;
+  padding: 25px 25px 25px 80px; }
+  @media (min-width: 640px) {
+    .tab-detail .detail-squad-member {
+      float: left;
+      width: 50%; } }
+
+.tab-detail .detail-squad-member-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+  .tab-detail .detail-squad-member-content span {
+    font-size: 1.5em; }
