@@ -9821,10 +9821,24 @@ a.button {
   font-family: "Avenir Next", sans-serif !important; }
 
 /* ===== MODULES ====== */
+.item-floating-label {
+  border-left: none;
+  border-right: none;
+  border-top: none; }
+
 .bar.bar-stable {
   background-color: #0D47A1; }
   .bar.bar-stable * {
     color: white !important; }
+
+.bar-header {
+  background-color: #0D47A1; }
+  .bar-header .title {
+    color: white !important; }
+
+ion-header-bar .buttons button {
+  font-weight: normal !important;
+  color: white !important; }
 
 .FAB {
   height: 52px;
@@ -9837,7 +9851,7 @@ a.button {
   position: fixed;
   bottom: 63px;
   right: 15px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.16), 0 4px 10px 0 rgba(0, 0, 0, 0.12); }
   .FAB i {
     display: table-cell;
     vertical-align: middle;
@@ -9901,6 +9915,22 @@ ion-content {
 .tab-button-label {
   color: #0e0e0e; }
 
+/* MODAL */
 .squad-checked {
   border: 2px solid #43AC6A !important;
   opacity: 0.4; }
+
+.squad-modal {
+  background-color: #efefef; }
+  .squad-modal li {
+    height: 60px;
+    width: 60px;
+    border: 2px solid #ddd; }
+
+.search {
+  border-radius: 6px;
+  background: #ddd;
+  margin-bottom: 10px; }
+
+.modal-done-button-wrapper {
+  padding-top: 25px; }
