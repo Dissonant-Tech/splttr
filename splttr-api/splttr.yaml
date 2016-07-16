@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-master
+  labels:
+    app: postgres
+    role: master
+    tier: backend
+spec:
+  ports:
+  - port: 5432
+    targetPort: 5432
+  selector:
+    app: postgres
+    role: master
+    tier: backend
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-master
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+        role: master
+        tier: backend
+    spec:
+      containers:
+      - name: master
+        image: postgres
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: splttr
+  labels:
+    app: splttr
+    tier: frontend
+spec:
+  type: NodePort
+  ports:
+  - port: 8011
+    nodePort: 30011
+    targetPort: 8011
+    name: splttr
+  selector:
+    app: splttr
+    tier: frontend
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: splttr
+  # these labels can be applied automatically
+  # from the labels in the pod template if not set
+  # labels:
+  #   app: guestbook
+  #   tier: frontend
+spec:
+  # this replicas value is default
+  # modify it according to your case
+  replicas: 2
+  # selector can be applied automatically
+  # from the labels in the pod template if not set
+  # selector:
+  #   matchLabels:
+  #     app: guestbook
+  #     tier: frontend
+  template:
+    metadata:
+      labels:
+        app: splttr
+        tier: frontend
+    spec:
+      containers:
+      - name: splttr
+        image: registry.davidrodriguez.io/proj/splttr
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+          # If your cluster config does not include a dns service, then to
+          # instead access environment variables to find service host
+          # info, comment out the 'value: dns' line above, and uncomment the
+          # line below.
+          # value: env
+        ports:
+        - containerPort: 8050
+      imagePullSecrets:
+         - name: registry.davidrodriguez.io

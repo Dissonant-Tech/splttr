@@ -1,0 +1,7 @@
+version: '2'
+services:
+  splttr-api:
+    environment:
+      - DEBUG=True
+    restart: always
+    build: .
