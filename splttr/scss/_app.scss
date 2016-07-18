@@ -38,6 +38,9 @@ textarea{
     min-height: 100px;
     padding: 5%;
 }
+.button.button-positive.active, .button.button-positive.activated{
+    border-color: #0c60ee;
+}
 .textarea{
     &-wrapper{
         border: none;

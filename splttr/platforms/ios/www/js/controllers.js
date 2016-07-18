@@ -4,11 +4,24 @@ angular.module('starter.controllers', [])
 
   console.log("In home controller");
 
+  $scope.newTab = {
+    id: 1,
+    title: "",
+    balance: "",
+    debt: false,
+    bg_img: "./img/tab2-background.jpg",
+    desc: "",
+    squad: []
+  };
+
   // get all tabs
   $scope.tabs = Tabs.all();
   console.log($scope.tabs);
 
-  // setup modal for creating tab
+
+  // =======  MODAL FUNCTIONS =======
+
+  // load modal
   $ionicModal.fromTemplateUrl('templates/home-tab-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -17,7 +30,6 @@ angular.module('starter.controllers', [])
     console.log("Modal loaded");
   });
 
-  // modal functions
   $scope.openModal = function() {
     $scope.modal.show();
     console.log("Modal opened");
@@ -50,6 +62,11 @@ angular.module('starter.controllers', [])
     $scope.modal.hide();
     console.log("Modal closed");
   };
+
+  $scope.addMemberToTab = function(member) {
+    console.log("Member added");
+
+  }
 
   $scope.saveNewTab = function(){
     console.log("Saving new tab");
