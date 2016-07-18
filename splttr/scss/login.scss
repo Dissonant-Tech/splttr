@@ -1,0 +1,28 @@
+.login{
+	background: linear-gradient(black, $splttr-blue);
+	height: 100%;
+	width: 100%;
+	display: table;
+	&-wrapper{
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		width: 100%;
+	}
+	&-title-wrapper{
+		h1{
+			color: white;
+			font-weight: 100;
+		}
+	}
+	&-options-wrapper{
+		text-align: left;
+		background: none;
+	}
+	input{
+		color: white; 
+	}
+	span#_label-0 {
+	    color: rgba(255,255,255,0.7);
+	}
+}

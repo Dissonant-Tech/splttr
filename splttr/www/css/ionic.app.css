@@ -10064,3 +10064,24 @@ ion-content {
   white-space: nowrap; }
   .tab-detail .detail-squad-member-content span {
     font-size: 1.5em; }
+
+.login {
+  background: linear-gradient(black, #0D47A1);
+  height: 100%;
+  width: 100%;
+  display: table; }
+  .login-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 100%; }
+  .login-title-wrapper h1 {
+    color: white;
+    font-weight: 100; }
+  .login-options-wrapper {
+    text-align: left;
+    background: none; }
+  .login input {
+    color: white; }
+  .login span#_label-0 {
+    color: rgba(255, 255, 255, 0.7); }
