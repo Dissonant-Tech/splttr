@@ -1,23 +1,25 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function($scope, $ionicModal, $state, Tabs) {
+.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, Tabs) {
 
   console.log("In home controller");
-
-  $scope.newTab = {
-    id: 1,
-    title: "",
-    balance: "",
-    debt: false,
-    bg_img: "./img/tab2-background.jpg",
-    desc: "",
-    squad: []
-  };
 
   // get all tabs
   $scope.tabs = Tabs.all();
   console.log($scope.tabs);
 
+  $scope.getUsers = function() {
+    $http.get("http://localhost:8888/users/", { params: {"key1" : "value1", "key2" : "value2"} })
+      .success(function(data) {
+        console.log(data);
+        $scope.username = data.username;
+        console.log($scope.username);
+        $scope.username = data[0].username;
+      })
+      .error(function(data) {
+        alert("Could not retrieve users");
+      })
+  };
 
   // =======  MODAL FUNCTIONS =======
 
