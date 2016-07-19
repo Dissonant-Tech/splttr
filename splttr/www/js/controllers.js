@@ -12,7 +12,6 @@ angular.module('starter.controllers', [])
     $http.get("http://localhost:8888/users/", { params: {"key1" : "value1", "key2" : "value2"} })
       .success(function(data) {
         console.log(data);
-        $scope.username = data[0].username;
       })
       .error(function(data) {
         alert("Could not retrieve users");
@@ -83,9 +82,27 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SignupCtrl', function($scope) {
+.controller('SignupCtrl', function($scope, $http) {
   
   console.log("In signup controller");
+
+  $scope.signupPostParams = {
+      name: "",
+      email: "",
+      username: "",
+      password: ""
+  }
+
+  $scope.signupUser = function() {
+    console.log("Signing up...");
+    $http.post("http://localhost:8888/users/", $scope.signupPostParams)
+      .success(function(data) {
+        console.log(data);
+      })
+      .error(function(data) {
+        alert("Could not create account");
+      })
+  };
 
 })
 
