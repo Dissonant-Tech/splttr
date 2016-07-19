@@ -76,6 +76,12 @@ angular.module('starter.controllers', [])
 
 })
 
+.controller('LoginCtrl', function($scope) {
+  
+  console.log("In login controller");
+
+})
+
 .controller('TabDetailViewCtrl', function($scope, $stateParams, Tabs) {
   
   console.log("In tab detail view controller");
