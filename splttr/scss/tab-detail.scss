@@ -24,6 +24,16 @@
 		width: 95%;
 		max-width: 95%;
 	}
+	&-button{
+		width: 40%;
+		max-width: 250px;
+		display: inline-block;
+		margin: 0 5px;
+		&-wrapper{
+			text-align: center;
+			padding: 10px 0;
+		}
+	}
 	.detail-squad{
 		&-list{
 			img{

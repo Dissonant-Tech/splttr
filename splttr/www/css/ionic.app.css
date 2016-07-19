@@ -10035,6 +10035,15 @@ ion-content {
   width: 95%;
   max-width: 95%; }
 
+.tab-detail-button {
+  width: 40%;
+  max-width: 250px;
+  display: inline-block;
+  margin: 0 5px; }
+  .tab-detail-button-wrapper {
+    text-align: center;
+    padding: 10px 0; }
+
 .tab-detail .detail-squad-list img {
   display: block;
   width: 62px;
