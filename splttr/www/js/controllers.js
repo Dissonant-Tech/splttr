@@ -115,7 +115,7 @@ angular.module('starter.controllers', [])
     return "url(" + $scope.tab.bg_img + ")";
   }
 
-  // load modal
+  // load expense modal
   $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -123,6 +123,25 @@ angular.module('starter.controllers', [])
     $scope.expenseModal = expenseModal;
     console.log("Expense Modal loaded");
   });
+
+  // load Payment modal
+  $ionicModal.fromTemplateUrl('templates/add-payment-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(PaymentModal) {
+    $scope.PaymentModal = PaymentModal;
+    console.log("Payment Modal loaded");
+  });
+
+  $scope.openPaymentModal = function() {
+    $scope.PaymentModal.show();
+    console.log("Payment Modal opened");
+  };
+
+  $scope.closePaymentModal = function() {
+    $scope.PaymentModal.hide();
+    console.log("Payment Modal closed");
+  };
 
   $scope.openExpenseModal = function() {
     $scope.expenseModal.show();
