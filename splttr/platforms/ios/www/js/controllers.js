@@ -86,13 +86,16 @@ angular.module('starter.controllers', [])
   
   console.log("In signup controller");
 
-  $scope.singupPostParams = {
-      username: "alan",
-      email: "test@email.com"
+  $scope.signupPostParams = {
+      name: "",
+      email: "",
+      username: "",
+      password: ""
   }
 
   $scope.signupUser = function() {
-    $http.post("http://localhost:8888/users/", signupPostParams)
+    console.log("Signing up...");
+    $http.post("http://localhost:8888/users/", $scope.signupPostParams)
       .success(function(data) {
         console.log(data);
       })
