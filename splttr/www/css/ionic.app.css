@@ -10066,7 +10066,7 @@ ion-content {
     font-size: 1.5em; }
 
 .login {
-  background: linear-gradient(black, #0D47A1);
+  background: linear-gradient(black, #1c488e);
   height: 100%;
   width: 100%;
   display: table; }
@@ -10077,11 +10077,27 @@ ion-content {
     width: 100%; }
   .login-title-wrapper h1 {
     color: white;
-    font-weight: 100; }
+    font-weight: 100;
+    font-size: 4em; }
+  .login-title-wrapper span {
+    color: white;
+    font-size: 1.3em; }
   .login-options-wrapper {
     text-align: left;
-    background: none; }
+    background: none;
+    margin-top: 0; }
+  .login-button-wrapper {
+    padding-top: 10px; }
+  .login-button {
+    margin-bottom: 15px !important;
+    border-radius: 6px;
+    width: 80%; }
   .login input {
     color: white; }
-  .login span#_label-0 {
+  .login span#_label-0, .login span#_label-1 {
     color: rgba(255, 255, 255, 0.7); }
+  .login a {
+    display: block;
+    color: white;
+    margin-bottom: 10px;
+    text-decoration: none; }

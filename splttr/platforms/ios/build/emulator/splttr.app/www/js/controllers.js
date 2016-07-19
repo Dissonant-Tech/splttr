@@ -12,8 +12,6 @@ angular.module('starter.controllers', [])
     $http.get("http://localhost:8888/users/", { params: {"key1" : "value1", "key2" : "value2"} })
       .success(function(data) {
         console.log(data);
-        $scope.username = data.username;
-        console.log($scope.username);
         $scope.username = data[0].username;
       })
       .error(function(data) {
@@ -75,6 +73,12 @@ angular.module('starter.controllers', [])
     Tabs.add($scope.newTab);
     $scope.closeModal();
   }
+
+})
+
+.controller('LoginCtrl', function($scope, $stateParams, Tabs) {
+  
+  console.log("In login controller");
 
 })
 
