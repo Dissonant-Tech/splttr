@@ -10094,7 +10094,7 @@ ion-content {
     width: 80%; }
   .login input {
     color: white; }
-  .login span#_label-0, .login span#_label-1 {
+  .login span {
     color: rgba(255, 255, 255, 0.7); }
   .login a {
     display: block;
