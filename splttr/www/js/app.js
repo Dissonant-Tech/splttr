@@ -53,7 +53,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
-    contoller: 'LoginCtrl'
+    controller: 'LoginCtrl'
+  })
+
+  .state('signup', {
+    url: '/signup',
+    templateUrl: 'templates/signup.html',
+    controller: 'SignupCtrl'
   })
 
   .state('tab.tab-detail-view', {
