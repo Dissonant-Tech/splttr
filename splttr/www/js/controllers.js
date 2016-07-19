@@ -105,7 +105,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $stateParams, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, Tabs) {
   
   console.log("In tab detail view controller");
   $scope.tab = Tabs.get($stateParams.tabId);
@@ -114,6 +114,27 @@ angular.module('starter.controllers', [])
   $scope.getImageUrl = function() {
     return "url(" + $scope.tab.bg_img + ")";
   }
+
+  // load modal
+  $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(expenseModal) {
+    $scope.expenseModal = expenseModal;
+    console.log("Expense Modal loaded");
+  });
+
+  $scope.openExpenseModal = function() {
+    $scope.expenseModal.show();
+    console.log("Expense Modal opened");
+  };
+
+  $scope.closeExpenseModal = function() {
+    $scope.expenseModal.hide();
+    console.log("Expence Modal closed");
+  };
+
+
 
 })
 

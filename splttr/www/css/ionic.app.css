@@ -10042,7 +10042,7 @@ ion-content {
   margin: 0 5px; }
   .tab-detail-button-wrapper {
     text-align: center;
-    padding: 10px 0; }
+    padding-top: 20px; }
 
 .tab-detail .detail-squad-list img {
   display: block;
