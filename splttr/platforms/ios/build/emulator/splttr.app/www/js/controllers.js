@@ -76,9 +76,16 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('LoginCtrl', function($scope, $stateParams, Tabs) {
+
+.controller('LoginCtrl', function($scope) {
   
   console.log("In login controller");
+
+})
+
+.controller('SignupCtrl', function($scope) {
+  
+  console.log("In signup controller");
 
 })
 
@@ -103,12 +110,12 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
+  $scope.chats = Chats.all();
 
-$scope.chats = Chats.all();
+  $scope.remove = function(chat) {
+    Chats.remove(chat);
+  };
 
-$scope.remove = function(chat) {
-  Chats.remove(chat);
-};
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
