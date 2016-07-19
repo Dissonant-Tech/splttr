@@ -76,8 +76,7 @@ angular.module('starter.controllers', [])
 
 })
 
-
-.controller('LoginCtrl', function($scope) {
+.controller('LoginCtrl', function($scope, $stateParams, Tabs) {
   
   console.log("In login controller");
 

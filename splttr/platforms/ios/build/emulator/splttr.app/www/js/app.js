@@ -40,6 +40,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/tabs.html'
   })
 
+   .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
+  })    
+
   .state('tab.home', {
     url: '/home',
     views: {
@@ -48,12 +54,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller: 'HomeCtrl'
       }
     }
-  })
-
-  .state('login', {
-    url: '/login',
-    templateUrl: 'templates/login.html',
-    contoller: 'LoginCtrl'
   })
 
   .state('tab.tab-detail-view', {

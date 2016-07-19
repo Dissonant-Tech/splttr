@@ -10090,6 +10090,9 @@ ion-content {
     padding-top: 10px; }
   .login-button {
     margin-bottom: 15px !important;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
     border-radius: 6px;
     width: 80%; }
   .login input {
@@ -10099,5 +10102,4 @@ ion-content {
   .login a {
     display: block;
     color: white;
-    margin-bottom: 10px;
-    text-decoration: none; }
+    margin-bottom: 10px; }
