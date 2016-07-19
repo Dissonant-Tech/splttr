@@ -56,6 +56,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     contoller: 'LoginCtrl'
   })
 
+  .state('signup', {
+    url: '/signup',
+    templateUrl: 'templates/signup.html',
+    contoller: 'LoginCtrl'
+  })
+
   .state('tab.tab-detail-view', {
     url: '/home/:tabId',
     views: {
