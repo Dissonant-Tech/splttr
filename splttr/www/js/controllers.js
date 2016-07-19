@@ -121,15 +121,12 @@ angular.module('starter.controllers', [])
   
   console.log("In analytics controller");
 
-  $scope.graph = {};
-   $scope.graph.data = [
-     //Awake
-     [16, 15, 20, 12, 16, 12, 8],
-     //Asleep
-     [8, 9, 4, 12, 8, 12, 14]
-   ];
-   $scope.graph.labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-   $scope.graph.series = ['Awake', 'Asleep'];
+  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    $scope.series = ['Series A', 'Series B'];
+    $scope.data = [
+        [65, 59, 80, 81, 56, 55, 40],
+        [28, 48, 40, 19, 86, 27, 90]
+    ];
 })
 
 .controller('AccountCtrl', function($scope, User) {
