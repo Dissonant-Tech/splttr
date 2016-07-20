@@ -148,9 +148,37 @@ angular.module('starter.services', [])
       }
       return null;
     },
-    add: function(tab) {
+    addTab: function(tab) {
       tabs.push(tab);
       console.log(tabs);
+    },
+    addExpense: function(tabId, expense) {
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].id === parseInt(tabId)) {
+          var tab = tabs[i];
+        }
+      }
+
+      tab.expenses.push(expense);
+    },
+    getTotalBalance: function(tabId) {
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].id === parseInt(tabId)) {
+          var tab = tabs[i];
+          var totalBalance = 0;
+          tab.expenses.forEach(function(expense) {
+            totalBalance += expense.balance;
+          });
+          tab.balance = totalBalance;
+        }
+      }
+      // $scope.tabs.forEach(function(tab) {
+      //   var totalBalance = 0;
+      //   tab.expenses.forEach(function(expense) {
+      //     totalBalance += expense.balance;
+      //   });
+      //   tab.balance = totalBalance;
+      // });
     }
   };
 

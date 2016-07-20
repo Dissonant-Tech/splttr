@@ -10052,6 +10052,10 @@ ion-content {
     .tab-detail-expense-wrapper .list {
       padding: 10px 0; }
 
+.tab-detail-noexpense {
+  padding-top: 25px;
+  text-align: center; }
+
 .tab-detail .detail-squad-list img {
   display: block;
   width: 62px;
