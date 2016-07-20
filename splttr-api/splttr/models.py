@@ -13,11 +13,7 @@ class Tab(models.Model):
     created = models.DateField(
             auto_now_add=True
             )
-    members = models.ForeignKey(
-            User,
-            on_delete=models.SET_NULL,
-            null=True
-            )
+    members = models.ManyToManyField(User)
 
 
 class Event(models.Model):
@@ -36,6 +32,7 @@ class Event(models.Model):
             on_delete=models.CASCADE
             )
 
+
 class Bill(models.Model):
 
     creditor = models.ForeignKey(
@@ -46,5 +43,9 @@ class Bill(models.Model):
     debtor = models.ForeignKey(
             User,
             on_delete=models.DO_NOTHING
+            )
+    event = models.ForeignKey(
+            Event,
+            on_delete=models.CASCADE
             )
     amount = models.DecimalField(max_digits=6, decimal_places=2)
