@@ -38,7 +38,19 @@ angular.module('starter.controllers', [])
     console.log("Signing up...");
     $http.post("http://localhost:8000/users/", $scope.signupPostParams)
       .success(function(data) {
-        console.log(data);
+        console.log("Successfully signed up user", data);
+
+        // On successful signup, login user
+        $http.post("http://localhost:8000/users/login/", {username: $scope.signupPostParams.username, password: $scope.signupPostParams.password})
+          .success(function(data) {
+            console.log("Successfully logged in");
+            $state.go("tab.home")
+          })
+
+          .error(function(data) {
+            console.log("Invalid login");
+            Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
+          })
       })
       .error(function(data) {
         Popups.showPopup("Error", "Could not create account. Try again later.")
@@ -58,7 +70,6 @@ angular.module('starter.controllers', [])
   $scope.forgotPassword = function() {
     console.log("User forogt password", $scope.user.username);
   }
-
 
 })
 
