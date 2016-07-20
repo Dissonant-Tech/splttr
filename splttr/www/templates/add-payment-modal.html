@@ -6,7 +6,7 @@
 		  </div>
 	</ion-header-bar>
 	<ion-content>
-		<form name="newTabForm" novalidate>
+		<form name="newPaymentForm" novalidate>
 			<div class="list">
 
 				<!-- MODAL MEMBER SEARCH -->
@@ -42,7 +42,7 @@
 					    <div class="input-label">
 					      Expense
 					    </div>
-					    <select ng-model="expenseType">
+					    <select ng-model="newPayment.expense" required>
 					      <option>Hotel</option>
 					      <option>Food</option>
 					      <option>Gas</option>
@@ -51,7 +51,7 @@
 
 					<label class="item item-input item-floating-label modal-label">
 						<span class="input-label">Amount</span>
-						<input type="number" placeholder="Amount" required>
+						<input type="number" placeholder="Amount" ng-model="newPayment.ammount_paid" required>
 					</label>
 
 					<div class="modal-tip-wrapper" ng-if="expenseType">
@@ -62,7 +62,7 @@
 
 			  	<!-- MODAL BUTTON -->
 				<div class="padding">
-					<button type="button" class="button button-block button-balanced" ng-disabled="newTabForm.$invalid" ng-click="saveNewTab()">
+					<button type="button" class="button button-block button-balanced" ng-disabled="newPaymentForm.$invalid" ng-click="addPayment()">
 					  	Add Payment
 					</button>
 				</div>

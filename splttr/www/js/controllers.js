@@ -116,10 +116,6 @@ angular.module('starter.controllers', [])
   }
 
 
-  $scope.expenseType;
-
-
-
   // load expense modal
   $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
     scope: $scope,
@@ -142,6 +138,11 @@ angular.module('starter.controllers', [])
   $scope.openPaymentModal = function() {
     $scope.PaymentModal.show();
     console.log("Payment Modal opened");
+    $scope.newPayment = {
+      member_id: 0,
+      expense: "",
+      ammount_paid: ""
+    }
   };
 
   $scope.closePaymentModal = function() {
@@ -159,7 +160,11 @@ angular.module('starter.controllers', [])
     console.log("Expence Modal closed");
   };
 
-
+  $scope.addPayment = function() {
+    console.log($scope.newPayment.member_id + " paid $" + $scope.newPayment.ammount_paid + " for: " + $scope.newPayment.expense);
+    $scope.tab.balance = ($scope.tab.balance - $scope.newPayment.ammount_paid).toFixed(2);
+    $scope.closePaymentModal();
+  }
 
 })
 
