@@ -9843,7 +9843,7 @@ textarea {
   padding-bottom: 0; }
 
 .modal-input {
-  padding: 0 10px 10px 10px; }
+  padding: 10px; }
 
 ion-modal-view {
   border-radius: 6px; }
@@ -10108,7 +10108,10 @@ ion-content {
     text-decoration: none; }
 
 .modal-tip {
-  font-size: 0.75em; }
+  font-size: 12px;
+  color: #444; }
+  .modal-tip-wrapper {
+    text-align: center; }
 
 .modal-members-list {
   text-align: center;
@@ -10118,6 +10121,20 @@ ion-content {
     width: 60px;
     border: 2px solid #ddd; }
 
-.member-selected {
+.modal ion-scroll {
+  padding-bottom: 10px; }
+
+.modal .member-selected {
   border: 2px solid #0D47A1 !important;
   transform: scale(0.8); }
+
+.modal .modal-label {
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  display: block;
+  background-color: transparent;
+  margin-bottom: 10px; }
+
+.modal select {
+  background: transparent; }

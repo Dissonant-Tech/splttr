@@ -115,6 +115,11 @@ angular.module('starter.controllers', [])
     return "url(" + $scope.tab.bg_img + ")";
   }
 
+
+  $scope.expenseType;
+
+
+
   // load expense modal
   $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
     scope: $scope,
@@ -133,6 +138,7 @@ angular.module('starter.controllers', [])
     console.log("Payment Modal loaded");
   });
 
+  // modal functions
   $scope.openPaymentModal = function() {
     $scope.PaymentModal.show();
     console.log("Payment Modal opened");
