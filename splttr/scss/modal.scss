@@ -1,0 +1,37 @@
+.modal{
+	&-tip{
+		font-size: 12px;
+		color: #444;
+		&-wrapper{
+			text-align: center;
+		}
+	}
+	&-members-list{
+		
+		background-color: #efefef;
+		li{
+			height: 60px;
+			width: 60px;
+			border: 2px solid #ddd;
+		}
+	}
+	ion-scroll{
+		padding-bottom: 10px;
+	}
+	.member-selected{
+		border: 2px solid $splttr-blue !important;
+		transform: scale(0.8);
+	}
+	.modal-label{
+		border-left: none;
+		border-right: none;
+		border-top: none;
+		display: block;
+	    background-color: transparent;
+	    margin-bottom: 10px;
+	}
+	select{
+		background: transparent;
+	}
+
+}

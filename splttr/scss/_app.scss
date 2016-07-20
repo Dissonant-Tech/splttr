@@ -38,6 +38,10 @@ textarea{
     min-height: 100px;
     padding: 5%;
 }
+.popup{
+    border-radius: 6px !important;
+    text-align: center;
+}
 .button.button-positive.active, .button.button-positive.activated{
     border-color: #0c60ee;
 }
@@ -53,7 +57,7 @@ textarea{
     }
 }
 .modal-input{
-    padding: 0 10px 10px 10px;
+    padding: 10px;
 }
 ion-modal-view{
     border-radius: 6px;
@@ -64,6 +68,7 @@ ion-modal-view{
     border-right: none;
     border-top: none;
 }
+
 
 .bar.bar-stable{
     background-color: $splttr-blue;
@@ -99,7 +104,9 @@ ion-header-bar .buttons button {
     	font-size: 1.5em;
     }
 }
-
+.member-list-scroll{
+    text-align: left;
+}
 .platform-android .FAB{
 	bottom: 30px;
 	background-color: $splttr-blue;
