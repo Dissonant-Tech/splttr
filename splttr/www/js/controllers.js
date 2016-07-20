@@ -239,16 +239,35 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('AnalyticsCtrl', function($scope) {
+.controller('AnalyticsCtrl', function($scope, Tabs) {
+
   
   console.log("In analytics controller");
+  $scope.tabs = Tabs.all();
 
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    $scope.series = ['Series A', 'Series B'];
-    $scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-    ];
+  // for chart legends
+  $scope.labels = [];
+  $scope.data = [
+    []
+  ];
+  $scope.series = ['Expenses'];
+
+  $scope.tabs.forEach(function(tab) {
+    tab.expenses.forEach(function(expense) {
+      $scope.labels.push(expense.title);
+      $scope.data[0].push(expense.balance);
+    });
+  });
+
+
+
+  console.log($scope.labels, $scope.data);
+
+//   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    
+//     $scope.data = [
+//         [65, 59, 80, 81, 56, 55, 40]
+//     ];
 })
 
 .controller('AccountCtrl', function($scope, User) {

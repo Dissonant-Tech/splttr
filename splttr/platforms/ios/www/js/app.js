@@ -78,6 +78,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('tab.expense-detail-view', {
+    url: '/home/:tabId/:expenseId',
+    views: {
+      'tab-home': {
+        templateUrl: 'templates/expense-detail.html',
+        controller: 'ExpenseDetailCtrl'
+      }
+    }
+  })
+
   .state('tab.analytics', {
       url: '/analytics',
       views: {
@@ -108,6 +118,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/home');
+  $urlRouterProvider.otherwise('/login');
 
 });
