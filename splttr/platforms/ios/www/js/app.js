@@ -62,6 +62,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     controller: 'SignupCtrl'
   })
 
+  .state('forgot-password', {
+    url: '/forgot-password',
+    templateUrl: 'templates/forgot-password.html',
+    controller: 'ForgotPasswordCtrl'
+  })
+
   .state('tab.tab-detail-view', {
     url: '/home/:tabId',
     views: {

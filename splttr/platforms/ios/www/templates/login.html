@@ -7,20 +7,22 @@
                 <span>Spliting tabs made easy</span>
             </div>
             <div class="list list-inset padding login-options-wrapper">
-                <label class="item item-input item-floating-label">
-                  <span class="input-label">Username</span>
-                  <input type="text" placeholder="Username" required>
-                </label>
-                <label class="item item-input item-floating-label">
-                  <span class="input-label">Password</span>
-                  <input type="password" placeholder="Password" required>
-                </label>
+                <form name="loginForm" novalidate>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Username</span>
+                        <input type="text" placeholder="Username" ng-model="loginParams.username" required>
+                    </label>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Password</span>
+                        <input type="password" placeholder="Password" ng-model="loginParams.password" required>
+                    </label>
+                </form>
             </div>
             <div class="login-button-wrapper">
-                <button class="button button-outline button-light login-button">
+                <button type="submit" class="button button-outline button-light login-button" ng-disabled="loginForm.$invalid" ng-click="loginUser()">
                     Login
                 </button>
-                <a href="#" title="Sign up for an account">Forgot password?</a>
+                <a href="#/forgot-password" title="Sign up for an account">Forgot password?</a>
                 <a href="#/signup" title="Sign up for an account">Don't have an account?</a>
             </div>
         </div>
