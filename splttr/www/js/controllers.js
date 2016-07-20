@@ -153,6 +153,11 @@ angular.module('starter.controllers', [])
   $scope.openExpenseModal = function() {
     $scope.expenseModal.show();
     console.log("Expense Modal opened");
+    $scope.newExpense = {
+      member_ids: [],
+      expense_title: "",
+      expense_ammount: ""
+    }
   };
 
   $scope.closeExpenseModal = function() {
@@ -161,9 +166,17 @@ angular.module('starter.controllers', [])
   };
 
   $scope.addPayment = function() {
-    console.log($scope.newPayment.member_id + " paid $" + $scope.newPayment.ammount_paid + " for: " + $scope.newPayment.expense);
+    console.log("New payment added");
+    console.log($scope.newPayment);
     $scope.tab.balance = ($scope.tab.balance - $scope.newPayment.ammount_paid).toFixed(2);
     $scope.closePaymentModal();
+  }
+
+  $scope.addExpense = function() {
+    console.log("New expense added");
+    console.log($scope.newExpense);
+    $scope.tab.balance = (parseFloat($scope.tab.balance) + parseFloat($scope.newExpense.expense_ammount)).toFixed(2);
+    $scope.closeExpenseModal();
   }
 
 })
