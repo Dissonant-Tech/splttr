@@ -1,8 +1,16 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope) {
+.controller('LoginCtrl', function($scope, $http) {
   
   console.log("In login controller");
+  $scope.loginParams = {
+    username: "",
+    password: ""
+  }
+
+  $scope.loginUser = function(){
+    console.log("Loging in...", $scope.loginParams);
+  }
 
 })
 
@@ -30,9 +38,18 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ForgotPasswordCtrl', function($scope) {
+.controller('ForgotPasswordCtrl', function($scope, $http) {
   
   console.log("In forgot password controller");
+
+  $scope.user = {
+    username: ""
+  }
+
+  $scope.forgotPassword = function() {
+    console.log("User forogt password", $scope.user.username);
+  }
+
 
 })
 
