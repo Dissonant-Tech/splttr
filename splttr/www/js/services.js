@@ -1,54 +1,5 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
-
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
-    }
-  };
-})
-
 .factory('Tabs', function(){
 
   // Collection of all tabs
@@ -63,18 +14,18 @@ angular.module('starter.services', [])
       desc: "This is tab1's description",
       expenses: [
         {
-          title: "Hotel",
-          balance: 145.23,
+          title: "Groceries",
+          balance: 68.98,
           members: []
         },
         {
-          title: "Food",
-          balance: 83.12,
+          title: "Utilities",
+          balance: 90.12,
           members: []
         },
         {
-          title: "Gas",
-          balance: 65.21,
+          title: "New TV",
+          balance: 502.23,
           members: []
         }
       ],
@@ -175,17 +126,6 @@ angular.module('starter.services', [])
       ]
     }
   ];
-
-  // calculate total balance for each tab based on expenses
-  tabs.forEach(function(tab) {
-    var totalBalance = 0;
-    tab.expenses.forEach(function(expense) {
-      totalBalance += expense.balance;
-    });
-    tab.balance = totalBalance;
-  });
-  
-
 
   return {
     all: function() {

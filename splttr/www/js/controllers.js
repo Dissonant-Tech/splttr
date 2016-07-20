@@ -81,6 +81,15 @@ angular.module('starter.controllers', [])
   $scope.tabs = Tabs.all();
   console.log($scope.tabs);
 
+  // calculate total balance for each tab based on expense balances
+  $scope.tabs.forEach(function(tab) {
+    var totalBalance = 0;
+    tab.expenses.forEach(function(expense) {
+      totalBalance += expense.balance;
+    });
+    tab.balance = totalBalance;
+  });
+
   $scope.getUsers = function() {
     $http.get("http://localhost:8888/users/", { params: {"key1" : "value1", "key2" : "value2"} })
       .success(function(data) {

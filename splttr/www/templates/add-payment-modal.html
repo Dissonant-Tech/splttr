@@ -43,9 +43,7 @@
 					      Expense
 					    </div>
 					    <select ng-model="newPayment.expense" required>
-					      <option>Hotel</option>
-					      <option>Food</option>
-					      <option>Gas</option>
+					      <option ng-repeat="expense in tab.expenses">{{expense.title}}</option>
 					    </select>
 					  </label>
 
