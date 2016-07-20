@@ -165,6 +165,22 @@ angular.module('starter.services', [])
 
 })
 
+.factory('Popups', function($ionicPopup){
+
+  return {
+    showPopup: function(title, message) {
+      var alertPopup = $ionicPopup.alert({
+        title: title,
+        template: message
+      });
+
+      alertPopup.then(function(res) {
+        console.log('User acknoloedged popup');
+      });
+    }
+  };
+
+})
 
 .factory('User', function(){
 

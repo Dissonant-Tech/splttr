@@ -1,23 +1,12 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $state, $ionicPopup, $http) {
+.controller('LoginCtrl', function($scope, $state, $http, Popups) {
   
   console.log("In login controller");
   $scope.loginParams = {
     username: "",
     password: ""
   }
-
-  $scope.showInvalidLoginAttemptAlert = function() {
-     var alertPopup = $ionicPopup.alert({
-       title: 'Invalid Login',
-       template: 'Sorry, an account with the provided username and password was not found'
-     });
-
-     alertPopup.then(function(res) {
-       console.log('User acknoloedged invalid login attempt popup');
-     });
-   };
 
   $scope.loginUser = function(){
     console.log("Loging in...", $scope.loginParams);
@@ -27,13 +16,14 @@ angular.module('starter.controllers', [])
         $state.go("tab.home")
       })
       .error(function(data) {
-        $scope.showInvalidLoginAttemptAlert();
+        console.log("Invalid login");
+        Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
       })
   };
 
 })
 
-.controller('SignupCtrl', function($scope, $http) {
+.controller('SignupCtrl', function($scope, $state, Popups, $http) {
   
   console.log("In signup controller");
 
@@ -51,7 +41,7 @@ angular.module('starter.controllers', [])
         console.log(data);
       })
       .error(function(data) {
-        alert("Could not create account");
+        Popups.showPopup("Error", "Could not create account. Try again later.")
       })
   };
 
@@ -147,22 +137,11 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, $ionicPopup, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, Popups, Tabs) {
   
   console.log("In tab detail view controller");
   $scope.tab = Tabs.get($stateParams.tabId);
   console.log($scope.tab);
-
-  $scope.showInvalidPaymentAlert = function() {
-     var alertPopup = $ionicPopup.alert({
-       title: 'Whoops!',
-       template: 'This tab currently has an empty balance. Try adding an expense first!'
-     });
-
-     alertPopup.then(function(res) {
-       console.log('User acknoloedged invalid payment popup');
-     });
-   };
 
   $scope.getImageUrl = function() {
     return "url(" + $scope.tab.bg_img + ")";
@@ -190,7 +169,7 @@ angular.module('starter.controllers', [])
   // modal functions
   $scope.openPaymentModal = function() {
     if($scope.tab.balance <= 0){
-      $scope.showInvalidPaymentAlert();
+      Popups.showPopup("Whoops!", "This tab currently has an empty balance. Try adding an expense first!");
       return;
     }
     $scope.PaymentModal.show();
