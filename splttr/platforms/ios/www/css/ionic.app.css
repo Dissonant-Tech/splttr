@@ -10044,6 +10044,18 @@ ion-content {
     text-align: center;
     padding-top: 20px; }
 
+.tab-detail-expense {
+  margin: 4px 0;
+  border-radius: 6px; }
+  .tab-detail-expense-wrapper {
+    min-height: 45px; }
+    .tab-detail-expense-wrapper .list {
+      padding: 10px 0; }
+
+.tab-detail-noexpense {
+  padding-top: 25px;
+  text-align: center; }
+
 .tab-detail .detail-squad-list img {
   display: block;
   width: 62px;

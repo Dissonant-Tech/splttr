@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $http) {
+.controller('LoginCtrl', function($scope, $state, $http, Popups) {
   
   console.log("In login controller");
   $scope.loginParams = {
@@ -10,11 +10,20 @@ angular.module('starter.controllers', [])
 
   $scope.loginUser = function(){
     console.log("Loging in...", $scope.loginParams);
-  }
+    $http.post("http://localhost:8000/users/login/", $scope.loginParams)
+      .success(function(data) {
+        console.log("Successfully logged in");
+        $state.go("tab.home")
+      })
+      .error(function(data) {
+        console.log("Invalid login");
+        Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
+      })
+  };
 
 })
 
-.controller('SignupCtrl', function($scope, $http) {
+.controller('SignupCtrl', function($scope, $state, Popups, $http) {
   
   console.log("In signup controller");
 
@@ -27,12 +36,24 @@ angular.module('starter.controllers', [])
 
   $scope.signupUser = function() {
     console.log("Signing up...");
-    $http.post("http://localhost:8888/users/", $scope.signupPostParams)
+    $http.post("http://localhost:8000/users/", $scope.signupPostParams)
       .success(function(data) {
-        console.log(data);
+        console.log("Successfully signed up user", data);
+
+        // On successful signup, login user
+        $http.post("http://localhost:8000/users/login/", {username: $scope.signupPostParams.username, password: $scope.signupPostParams.password})
+          .success(function(data) {
+            console.log("Successfully logged in");
+            $state.go("tab.home")
+          })
+
+          .error(function(data) {
+            console.log("Invalid login");
+            Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
+          })
       })
       .error(function(data) {
-        alert("Could not create account");
+        Popups.showPopup("Error", "Could not create account. Try again later.")
       })
   };
 
@@ -50,7 +71,6 @@ angular.module('starter.controllers', [])
     console.log("User forogt password", $scope.user.username);
   }
 
-
 })
 
 .controller('HomeCtrl', function($scope, $ionicModal, $state, $http, Tabs) {
@@ -60,6 +80,11 @@ angular.module('starter.controllers', [])
   // get all tabs
   $scope.tabs = Tabs.all();
   console.log($scope.tabs);
+
+  // calculate total balance for each tab based on expense balances
+  $scope.tabs.forEach(function(tab) {
+    Tabs.getTotalBalance(tab.id);
+  });
 
   $scope.getUsers = function() {
     $http.get("http://localhost:8888/users/", { params: {"key1" : "value1", "key2" : "value2"} })
@@ -122,28 +147,17 @@ angular.module('starter.controllers', [])
 
   $scope.saveNewTab = function(){
     console.log("Saving new tab");
-    Tabs.add($scope.newTab);
+    Tabs.addTab($scope.newTab);
     $scope.closeModal();
   }
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, $ionicPopup, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, Popups, Tabs) {
   
   console.log("In tab detail view controller");
   $scope.tab = Tabs.get($stateParams.tabId);
   console.log($scope.tab);
-
-  $scope.showInvalidPaymentAlert = function() {
-     var alertPopup = $ionicPopup.alert({
-       title: 'Whoops!',
-       template: 'This tab currently has an empty balance. Try adding an expense first!'
-     });
-
-     alertPopup.then(function(res) {
-       console.log('User acknoloedged invalid payment popup');
-     });
-   };
 
   $scope.getImageUrl = function() {
     return "url(" + $scope.tab.bg_img + ")";
@@ -171,7 +185,7 @@ angular.module('starter.controllers', [])
   // modal functions
   $scope.openPaymentModal = function() {
     if($scope.tab.balance <= 0){
-      $scope.showInvalidPaymentAlert();
+      Popups.showPopup("Whoops!", "This tab currently has an empty balance. Try adding an expense first!");
       return;
     }
     $scope.PaymentModal.show();
@@ -192,9 +206,8 @@ angular.module('starter.controllers', [])
     $scope.expenseModal.show();
     console.log("Expense Modal opened");
     $scope.newExpense = {
-      member_ids: [],
-      expense_title: "",
-      expense_ammount: ""
+      title: "",
+      balance: ""
     }
   };
 
@@ -211,11 +224,18 @@ angular.module('starter.controllers', [])
   }
 
   $scope.addExpense = function() {
+    Tabs.addExpense($scope.tab.id, $scope.newExpense);
     console.log("New expense added");
-    console.log($scope.newExpense);
-    $scope.tab.balance = (parseFloat($scope.tab.balance) + parseFloat($scope.newExpense.expense_ammount)).toFixed(2);
+    Tabs.getTotalBalance($scope.tab.id);
+    // $scope.tab.balance = (parseFloat($scope.tab.balance) + parseFloat($scope.newExpense.expense_ammount)).toFixed(2);
     $scope.closeExpenseModal();
   }
+
+})
+
+.controller('ExpenseDetailCtrl', function($scope, $stateParams) {
+  
+  console.log("In expense controller", $stateParams);
 
 })
 
