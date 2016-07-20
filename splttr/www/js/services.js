@@ -57,10 +57,27 @@ angular.module('starter.services', [])
   {
       id: 1,
       title: "Apartment",
-      balance: "68.12",
+      balance: 0,
       debt: true,
       bg_img: "./img/tab2-background.jpg",
       desc: "This is tab1's description",
+      expenses: [
+        {
+          title: "Hotel",
+          balance: 145.23,
+          members: []
+        },
+        {
+          title: "Food",
+          balance: 83.12,
+          members: []
+        },
+        {
+          title: "Gas",
+          balance: 65.21,
+          members: []
+        }
+      ],
       squad: [
         {
           user_id: 0,
@@ -85,10 +102,27 @@ angular.module('starter.services', [])
     {
       id: 2,
       title: "New York Trip",
-      balance: "128.45",
+      balance: 0,
       debt: true,
       bg_img: "./img/tab1-background.jpg",
       desc: "This is tab2's description",
+      expenses: [
+        {
+          title: "Hotel",
+          balance: 145.23,
+          members: []
+        },
+        {
+          title: "Food",
+          balance: 83.12,
+          members: []
+        },
+        {
+          title: "Gas",
+          balance: 65.21,
+          members: []
+        }
+      ],
       squad: [
         {
           user_id: 0,
@@ -141,6 +175,17 @@ angular.module('starter.services', [])
       ]
     }
   ];
+
+  // calculate total balance for each tab based on expenses
+  tabs.forEach(function(tab) {
+    var totalBalance = 0;
+    tab.expenses.forEach(function(expense) {
+      totalBalance += expense.balance;
+    });
+    tab.balance = totalBalance;
+  });
+  
+
 
   return {
     all: function() {
