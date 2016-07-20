@@ -16,6 +16,7 @@ class Tab(models.Model):
     members = models.ManyToManyField(User)
 
 
+
 class Event(models.Model):
 
     name = models.CharField(
