@@ -30,7 +30,7 @@
 				</div>
 
 				<ion-list>
-				      <ion-item class="item-remove-animate item-icon-right tab-detail-expense" ng-repeat="expense in tab.expenses" type="item-text-wrap" href="#/tab/home">
+				      <ion-item class="item-remove-animate item-icon-right tab-detail-expense" ng-repeat="expense in tab.expenses" type="item-text-wrap" href="#/tab/home/{{tab.id}}/{{expense.id}}">
 				        <h2>{{expense.title}}</h2>
 				        <p>${{expense.balance}}</p>
 				        <i class="icon ion-chevron-right icon-accessory"></i>

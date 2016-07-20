@@ -14,16 +14,19 @@ angular.module('starter.services', [])
       desc: "This is tab1's description",
       expenses: [
         {
+          id: 0,
           title: "Groceries",
           balance: 68.98,
           members: []
         },
         {
+          id: 1,
           title: "Utilities",
           balance: 90.12,
           members: []
         },
         {
+          id: 2,
           title: "New TV",
           balance: 502.23,
           members: []
@@ -59,16 +62,19 @@ angular.module('starter.services', [])
       desc: "This is tab2's description",
       expenses: [
         {
+          id: 0,
           title: "Hotel",
           balance: 145.23,
           members: []
         },
         {
+          id: 1,
           title: "Food",
           balance: 83.12,
           members: []
         },
         {
+          id: 2,
           title: "Gas",
           balance: 65.21,
           members: []

@@ -237,6 +237,12 @@ angular.module('starter.controllers', [])
 
 })
 
+.controller('ExpenseDetailCtrl', function($scope, $stateParams) {
+  
+  console.log("In expense controller", $stateParams);
+
+})
+
 .controller('AnalyticsCtrl', function($scope) {
   
   console.log("In analytics controller");
