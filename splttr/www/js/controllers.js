@@ -66,7 +66,7 @@ angular.module('starter.controllers', [])
     $scope.newTab = {
         id: 0,
         title: "",
-        balance: "",
+        balance: 0,
         debt: true,
         bg_img: "./img/tab3-background.jpg",
         desc: "",
@@ -105,11 +105,22 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, $ionicPopup, Tabs) {
   
   console.log("In tab detail view controller");
   $scope.tab = Tabs.get($stateParams.tabId);
   console.log($scope.tab);
+
+  $scope.showInvalidPaymentAlert = function() {
+     var alertPopup = $ionicPopup.alert({
+       title: 'Whoops!',
+       template: 'There is currently no balance due. Try adding an expense first!'
+     });
+
+     alertPopup.then(function(res) {
+       console.log('User acknoloedged invalid payment popup');
+     });
+   };
 
   $scope.getImageUrl = function() {
     return "url(" + $scope.tab.bg_img + ")";
@@ -136,6 +147,10 @@ angular.module('starter.controllers', [])
 
   // modal functions
   $scope.openPaymentModal = function() {
+    if($scope.tab.balance <= 0){
+      $scope.showInvalidPaymentAlert();
+      return;
+    }
     $scope.PaymentModal.show();
     console.log("Payment Modal opened");
     $scope.newPayment = {
