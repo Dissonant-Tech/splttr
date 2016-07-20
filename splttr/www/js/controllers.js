@@ -66,7 +66,7 @@ angular.module('starter.controllers', [])
     $scope.newTab = {
         id: 0,
         title: "",
-        balance: "",
+        balance: 0,
         debt: true,
         bg_img: "./img/tab3-background.jpg",
         desc: "",
@@ -105,14 +105,93 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $stateParams, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, $ionicPopup, Tabs) {
   
   console.log("In tab detail view controller");
   $scope.tab = Tabs.get($stateParams.tabId);
   console.log($scope.tab);
 
+  $scope.showInvalidPaymentAlert = function() {
+     var alertPopup = $ionicPopup.alert({
+       title: 'Whoops!',
+       template: 'There is currently no balance due. Try adding an expense first!'
+     });
+
+     alertPopup.then(function(res) {
+       console.log('User acknoloedged invalid payment popup');
+     });
+   };
+
   $scope.getImageUrl = function() {
     return "url(" + $scope.tab.bg_img + ")";
+  }
+
+
+  // load expense modal
+  $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(expenseModal) {
+    $scope.expenseModal = expenseModal;
+    console.log("Expense Modal loaded");
+  });
+
+  // load Payment modal
+  $ionicModal.fromTemplateUrl('templates/add-payment-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(PaymentModal) {
+    $scope.PaymentModal = PaymentModal;
+    console.log("Payment Modal loaded");
+  });
+
+  // modal functions
+  $scope.openPaymentModal = function() {
+    if($scope.tab.balance <= 0){
+      $scope.showInvalidPaymentAlert();
+      return;
+    }
+    $scope.PaymentModal.show();
+    console.log("Payment Modal opened");
+    $scope.newPayment = {
+      member_id: 0,
+      expense: "",
+      ammount_paid: ""
+    }
+  };
+
+  $scope.closePaymentModal = function() {
+    $scope.PaymentModal.hide();
+    console.log("Payment Modal closed");
+  };
+
+  $scope.openExpenseModal = function() {
+    $scope.expenseModal.show();
+    console.log("Expense Modal opened");
+    $scope.newExpense = {
+      member_ids: [],
+      expense_title: "",
+      expense_ammount: ""
+    }
+  };
+
+  $scope.closeExpenseModal = function() {
+    $scope.expenseModal.hide();
+    console.log("Expence Modal closed");
+  };
+
+  $scope.addPayment = function() {
+    console.log("New payment added");
+    console.log($scope.newPayment);
+    $scope.tab.balance = ($scope.tab.balance - $scope.newPayment.ammount_paid).toFixed(2);
+    $scope.closePaymentModal();
+  }
+
+  $scope.addExpense = function() {
+    console.log("New expense added");
+    console.log($scope.newExpense);
+    $scope.tab.balance = (parseFloat($scope.tab.balance) + parseFloat($scope.newExpense.expense_ammount)).toFixed(2);
+    $scope.closeExpenseModal();
   }
 
 })

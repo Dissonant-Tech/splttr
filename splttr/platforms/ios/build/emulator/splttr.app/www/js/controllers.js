@@ -1,5 +1,35 @@
 angular.module('starter.controllers', [])
 
+.controller('LoginCtrl', function($scope) {
+  
+  console.log("In login controller");
+
+})
+
+.controller('SignupCtrl', function($scope, $http) {
+  
+  console.log("In signup controller");
+
+  $scope.signupPostParams = {
+      name: "",
+      email: "",
+      username: "",
+      password: ""
+  }
+
+  $scope.signupUser = function() {
+    console.log("Signing up...");
+    $http.post("http://localhost:8888/users/", $scope.signupPostParams)
+      .success(function(data) {
+        console.log(data);
+      })
+      .error(function(data) {
+        alert("Could not create account");
+      })
+  };
+
+})
+
 .controller('HomeCtrl', function($scope, $ionicModal, $state, $http, Tabs) {
 
   console.log("In home controller");
@@ -75,34 +105,6 @@ angular.module('starter.controllers', [])
 
 })
 
-
-.controller('LoginCtrl', function($scope) {
-  
-  console.log("In login controller");
-
-})
-
-.controller('SignupCtrl', function($scope, $http) {
-  
-  console.log("In signup controller");
-
-  $scope.singupPostParams = {
-      username: "alan",
-      email: "test@email.com"
-  }
-
-  $scope.signupUser = function() {
-    $http.post("http://localhost:8888/users/", signupPostParams)
-      .success(function(data) {
-        console.log(data);
-      })
-      .error(function(data) {
-        alert("Could not create account");
-      })
-  };
-
-})
-
 .controller('TabDetailViewCtrl', function($scope, $stateParams, Tabs) {
   
   console.log("In tab detail view controller");
@@ -115,25 +117,16 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+.controller('AnalyticsCtrl', function($scope) {
+  
+  console.log("In analytics controller");
 
-  $scope.chats = Chats.all();
-
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    $scope.series = ['Series A', 'Series B'];
+    $scope.data = [
+        [65, 59, 80, 81, 56, 55, 40],
+        [28, 48, 40, 19, 86, 27, 90]
+    ];
 })
 
 .controller('AccountCtrl', function($scope, User) {
