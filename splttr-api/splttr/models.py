@@ -11,7 +11,7 @@ class Tab(models.Model):
             max_length=240
             )
     created = models.DateField(
-            auto_add_now=True
+            auto_now_add=True
             )
     members = models.ForeignKey(
             User,
@@ -29,7 +29,7 @@ class Event(models.Model):
             max_length=240
             )
     created = models.DateField(
-            auto_add_now=True
+            auto_now_add=True
             )
     tab = models.ForeignKey(
             Tab, 
@@ -40,10 +40,11 @@ class Bill(models.Model):
 
     creditor = models.ForeignKey(
             User,
-            on_delete=models.PROTECT
+            related_name='+',
+            on_delete=models.DO_NOTHING
             )
     debtor = models.ForeignKey(
             User,
-            on_delete=models.PROTECT
+            on_delete=models.DO_NOTHING
             )
     amount = models.DecimalField(max_digits=6, decimal_places=2)

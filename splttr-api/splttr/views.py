@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken import views as authview
 from django.contrib.auth.models import User, Group
 
-from splttr.serializers import UserSerializer, GroupSerializer
+from splttr.serializers import UserSerializer, GroupSerializer, TabSerializer, EventSerializer, BillSerializer
 
 
 
