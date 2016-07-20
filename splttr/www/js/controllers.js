@@ -81,6 +81,11 @@ angular.module('starter.controllers', [])
   $scope.tabs = Tabs.all();
   console.log($scope.tabs);
 
+  // calculate total balance for each tab based on expense balances
+  $scope.tabs.forEach(function(tab) {
+    Tabs.getTotalBalance(tab.id);
+  });
+
   $scope.getUsers = function() {
     $http.get("http://localhost:8888/users/", { params: {"key1" : "value1", "key2" : "value2"} })
       .success(function(data) {
@@ -142,7 +147,7 @@ angular.module('starter.controllers', [])
 
   $scope.saveNewTab = function(){
     console.log("Saving new tab");
-    Tabs.add($scope.newTab);
+    Tabs.addTab($scope.newTab);
     $scope.closeModal();
   }
 
@@ -201,9 +206,8 @@ angular.module('starter.controllers', [])
     $scope.expenseModal.show();
     console.log("Expense Modal opened");
     $scope.newExpense = {
-      member_ids: [],
-      expense_title: "",
-      expense_ammount: ""
+      title: "",
+      balance: ""
     }
   };
 
@@ -220,11 +224,18 @@ angular.module('starter.controllers', [])
   }
 
   $scope.addExpense = function() {
+    Tabs.addExpense($scope.tab.id, $scope.newExpense);
     console.log("New expense added");
-    console.log($scope.newExpense);
-    $scope.tab.balance = (parseFloat($scope.tab.balance) + parseFloat($scope.newExpense.expense_ammount)).toFixed(2);
+    Tabs.getTotalBalance($scope.tab.id);
+    // $scope.tab.balance = (parseFloat($scope.tab.balance) + parseFloat($scope.newExpense.expense_ammount)).toFixed(2);
     $scope.closeExpenseModal();
   }
+
+})
+
+.controller('ExpenseDetailCtrl', function($scope, $stateParams) {
+  
+  console.log("In expense controller", $stateParams);
 
 })
 
