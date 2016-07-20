@@ -38,6 +38,10 @@ textarea{
     min-height: 100px;
     padding: 5%;
 }
+.popup{
+    border-radius: 6px !important;
+    text-align: center;
+}
 .button.button-positive.active, .button.button-positive.activated{
     border-color: #0c60ee;
 }

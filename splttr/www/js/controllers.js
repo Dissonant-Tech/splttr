@@ -30,6 +30,12 @@ angular.module('starter.controllers', [])
 
 })
 
+.controller('ForgotPasswordCtrl', function($scope) {
+  
+  console.log("In forgot password controller");
+
+})
+
 .controller('HomeCtrl', function($scope, $ionicModal, $state, $http, Tabs) {
 
   console.log("In home controller");
@@ -114,7 +120,7 @@ angular.module('starter.controllers', [])
   $scope.showInvalidPaymentAlert = function() {
      var alertPopup = $ionicPopup.alert({
        title: 'Whoops!',
-       template: 'There is currently no balance due. Try adding an expense first!'
+       template: 'This tab currently has an empty balance. Try adding an expense first!'
      });
 
      alertPopup.then(function(res) {
