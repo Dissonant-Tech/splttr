@@ -14,6 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+    model = User
 
     @list_route(methods=['POST'])
     def login(self, request):
