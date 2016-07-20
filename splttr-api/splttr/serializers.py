@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User, Group
+from splttr.models import Tab, Event, Bill
 from rest_framework import serializers
 
 
@@ -23,6 +24,27 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = Group
         fields = ('url', 'name')
+
+
+class TabSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Tab
+        fields = ('name', 'description', 'created', 'members')
+
+
+class EventSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Event
+        fields = ('name', 'description', 'created', 'tab')
+
+class BillSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Bill
+        fields = ('creditor', 'debtor', 'amount')

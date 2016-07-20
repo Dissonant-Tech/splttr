@@ -20,7 +20,7 @@ class Tab(models.Model):
             )
 
 
-class Event(models.Model);
+class Event(models.Model):
 
     name = models.CharField(
             max_length=60
@@ -35,3 +35,15 @@ class Event(models.Model);
             Tab, 
             on_delete=models.CASCADE
             )
+
+class Bill(models.Model):
+
+    creditor = models.ForeignKey(
+            User,
+            on_delete=models.PROTECT
+            )
+    debtor = models.ForeignKey(
+            User,
+            on_delete=models.PROTECT
+            )
+    amount = models.DecimalField(max_digits=6, decimal_places=2)
