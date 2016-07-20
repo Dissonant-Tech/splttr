@@ -9,13 +9,13 @@
 		<form name="newTabForm" novalidate>
 			<div class="list">
 
-				<label class="item squad-modal">
+				<label class="modal-members-list item">
 					<span class="input-label">Invite to tab</span>
 					<label class="item item-input search">
 					  <i class="icon ion-search placeholder-icon"></i>
 					  <input type="search" placeholder="Search">
 					</label>
-					<ion-scroll zooming="false" direction="x" style="width: 2000px;">
+					<ion-scroll class="member-list-scroll" zooming="false" direction="x" style="width: 2000px;">
 					    <div class="tab-content-squad-wrapper">
 					                <ul class="squad-list">
 					                    <li style="background-image: url(./img/max.png);" on-tap="addMemberToTab()"></li>
@@ -47,7 +47,6 @@
 					<label class="item item-input textarea-wrapper">	
 					    <textarea placeholder="Road trip, gas money, lunch, etc..." ng-model="newTab.desc" required></textarea>
 				  	</label>
-
 			  	</div>
 
 				<div class="padding">
