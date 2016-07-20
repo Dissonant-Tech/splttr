@@ -37,3 +37,27 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+
+class TabViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows tabs to be viewed or edited
+    """
+    queryset = Group.objects.all()
+    serializer_class = TabSerializer
+
+
+class EventViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows events to be viewed or edited
+    """
+    queryset = Group.objects.all()
+    serializer_class = EventSerializer
+
+
+class BillViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows bills to be viewed or edited
+    """
+    queryset = Group.objects.all()
+    serializer_class = BillSerializer
