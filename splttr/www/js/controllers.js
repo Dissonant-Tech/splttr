@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $http) {
+.controller('LoginCtrl', function($scope, $state, $ionicPopup, $http) {
   
   console.log("In login controller");
   $scope.loginParams = {
@@ -8,9 +8,28 @@ angular.module('starter.controllers', [])
     password: ""
   }
 
+  $scope.showInvalidLoginAttemptAlert = function() {
+     var alertPopup = $ionicPopup.alert({
+       title: 'Invalid Login',
+       template: 'Sorry, an account with the provided username and password was not found'
+     });
+
+     alertPopup.then(function(res) {
+       console.log('User acknoloedged invalid login attempt popup');
+     });
+   };
+
   $scope.loginUser = function(){
     console.log("Loging in...", $scope.loginParams);
-  }
+    $http.post("http://localhost:8000/users/login/", $scope.loginParams)
+      .success(function(data) {
+        console.log("Successfully logged in");
+        $state.go("tab.home")
+      })
+      .error(function(data) {
+        $scope.showInvalidLoginAttemptAlert();
+      })
+  };
 
 })
 
@@ -27,7 +46,7 @@ angular.module('starter.controllers', [])
 
   $scope.signupUser = function() {
     console.log("Signing up...");
-    $http.post("http://localhost:8888/users/", $scope.signupPostParams)
+    $http.post("http://localhost:8000/users/", $scope.signupPostParams)
       .success(function(data) {
         console.log(data);
       })
