@@ -1,8 +1,16 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope) {
+.controller('LoginCtrl', function($scope, $http) {
   
   console.log("In login controller");
+  $scope.loginParams = {
+    username: "",
+    password: ""
+  }
+
+  $scope.loginUser = function(){
+    console.log("Loging in...", $scope.loginParams);
+  }
 
 })
 
@@ -27,6 +35,21 @@ angular.module('starter.controllers', [])
         alert("Could not create account");
       })
   };
+
+})
+
+.controller('ForgotPasswordCtrl', function($scope, $http) {
+  
+  console.log("In forgot password controller");
+
+  $scope.user = {
+    username: ""
+  }
+
+  $scope.forgotPassword = function() {
+    console.log("User forogt password", $scope.user.username);
+  }
+
 
 })
 
@@ -114,7 +137,7 @@ angular.module('starter.controllers', [])
   $scope.showInvalidPaymentAlert = function() {
      var alertPopup = $ionicPopup.alert({
        title: 'Whoops!',
-       template: 'There is currently no balance due. Try adding an expense first!'
+       template: 'This tab currently has an empty balance. Try adding an expense first!'
      });
 
      alertPopup.then(function(res) {
