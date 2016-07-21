@@ -9991,7 +9991,7 @@ ion-content {
   border-radius: 50%;
   max-width: 40%;
   border: 2px solid #c5c5c5;
-  margin: 0 auto 10px auto;
+  margin: 10px auto 10px auto;
   display: block; }
   .user-profile-image-wrapper {
     position: relative; }
@@ -10007,22 +10007,6 @@ ion-content {
   padding-top: 5px; }
   .user-name-wrapper h2 {
     margin: 0; }
-
-.user-setting-row-wrapper {
-  width: 100%; }
-
-.user-setting-title {
-  padding: 15% 0 3% 0; }
-
-.user-setting-wrapper {
-  width: 50%;
-  float: left;
-  background: white; }
-  .user-setting-wrapper .item-image {
-    padding: 5%; }
-  .user-setting-wrapper img {
-    max-width: 30%;
-    padding-top: 10%; }
 
 .tab-detail-header {
   height: 200px;

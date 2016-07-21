@@ -9,32 +9,30 @@
 		<form name="editProfileForm" novalidate>
 			<div class="list">
 
+				<!-- USER PROFILE PICTURE -->
+				<div class="user-profile-image-wrapper">
+					<img ng-src={{user.img}} alt="profile-picture" class="user-profile-image blur" id="user-profile-image">
+					<i class="ion-ios-cloud-upload-outline user-profile-image-edit-icon"></i>
+				</div>
+					
 				<!-- MODAL INPUT FIELDS -->
 				<div class="modal-input padding">
-
-					<label class="item item-input item-select modal-label">
-					    <div class="input-label">
-					      Expense
-					    </div>
-					    <select ng-model="newPayment.expense" required>
-					      <option ng-repeat="expense in tab.expenses">{{expense.title}}</option>
-					    </select>
-					  </label>
-
 					<label class="item item-input item-floating-label modal-label">
-						<span class="input-label">Amount</span>
-						<input type="number" placeholder="Amount" ng-model="newPayment.ammount_paid" required>
+						<span class="input-label">Name</span>
+						<input type="text" placeholder="Name" ng-model="user.name" required>
 					</label>
-
-					<div class="modal-tip-wrapper" ng-if="newPayment.expense">
-						<span class="modal-tip">Martin owes you <span class="balanced">$400</span> for <strong>Hotel</strong></span>
+					<label class="item item-input item-floating-label modal-label">
+						<span class="input-label">Username</span>
+						<input type="text" placeholder="Name" ng-model="user.username" required>
+					</label>
+					<div class="modal-tip-wrapper">
+						<span class="modal-tip">30 characters or fewer. Letters, digits and @/./+/-/_ only</span>
 					</div>
-
 			  	</div>
 
 			  	<!-- MODAL BUTTON -->
 				<div class="padding">
-					<button type="button" class="button button-block button-balanced" ng-disabled="editProfileForm.$invalid" ng-click="addPayment()">
+					<button type="button" class="button button-block button-balanced" ng-disabled="editProfileForm.$invalid" ng-click="saveProfileEdits()">
 					  	Save
 					</button>
 				</div>

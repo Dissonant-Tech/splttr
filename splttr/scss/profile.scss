@@ -12,7 +12,7 @@
 		border-radius: 50%;
 		max-width: 40%;
 		border: 2px solid #c5c5c5;
-		margin: 0 auto 10px auto;
+		margin: 10px auto 10px auto;
 		display: block;
 		&-wrapper{
 			position: relative;
@@ -30,31 +30,6 @@
 		padding-top: 5px;
 		h2{
 			margin: 0;
-		}
-	}
-
-
-
-
-
-
-	&-setting-row-wrapper{
-		width: 100%;
-	}
-	&-setting-title{
-		padding: 15% 0 3% 0;
-	}
-	&-setting-wrapper{
-		width: 50%;
-		float: left;
-		background: white;
-		.item-image{
-			padding: 5%;
-			// border: none;
-		}
-		img{
-			max-width: 30%;
-			padding-top: 10%;
 		}
 	}
 }

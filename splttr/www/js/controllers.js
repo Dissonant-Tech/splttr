@@ -288,6 +288,10 @@ angular.module('starter.controllers', [])
     $scope.openModal();
   }
 
+  $scope.saveProfileEdits = function() {
+    $scope.closeModal();
+  }
+
   $scope.closeModal = function() {
     $scope.modal.hide();
     console.log("Edit profile modal closed");
