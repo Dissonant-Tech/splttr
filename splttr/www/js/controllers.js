@@ -286,10 +286,20 @@ angular.module('starter.controllers', [])
 
   $scope.editProfile = function() {
     $scope.openModal();
+    $scope.newProfileDetails = {
+      username: $scope.user.username,
+      name: $scope.user.name
+    }
   }
 
   $scope.saveProfileEdits = function() {
-    $scope.closeModal();
+
+    var validProfileEdit = true;
+
+    console.log("saving edits", $scope.newProfileDetails)
+    if(validProfileEdit){
+      $scope.closeModal();
+    }
   }
 
   $scope.closeModal = function() {
