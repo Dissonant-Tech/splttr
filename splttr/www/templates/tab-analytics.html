@@ -1,13 +1,15 @@
 <ion-view view-title="Analytics">
     <ion-content class="padding">
         <div ng-repeat="tab in tabs">
-            <div class="card">
-            <div class="item item-divider">
-                {{tab.title}}
+            <div class="list">
+                <div class="card analytics-card">
+                    <div class="item item-divider analytics-header" style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url({{tab.bg_img}})">
+                        <span>{{tab.title}}</span>
+                    </div>
+                    <div class="item item-text-wrap">
+                        <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true" chart-series="series" chart-options="{showTooltips: false}"></canvas>
+                    </div>
+                </div>
             </div>
-            <div class="item item-text-wrap">
-                <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true" chart-series="series" chart-options="{showTooltips: false}"></canvas>
-            </div>
-        </div>
     </ion-content>       
 </ion-view>

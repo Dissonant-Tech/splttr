@@ -10153,3 +10153,17 @@ ion-content {
 
 .modal select {
   background: transparent; }
+
+.analytics-header {
+  background-position: center center;
+  background-size: cover;
+  height: 80px;
+  color: white; }
+  .analytics-header span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em; }
+
+.analytics-card {
+  border-radius: 6px; }
