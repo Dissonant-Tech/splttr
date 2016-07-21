@@ -1,0 +1,45 @@
+<ion-modal-view>
+	<ion-header-bar>
+		  <h1 class="title">Edit Account</h1>
+		  <div class="buttons">
+		    <button class="button button-clear button-positive" ng-click="closeModal()">Close</button>
+		  </div>
+	</ion-header-bar>
+	<ion-content>
+		<form name="editProfileForm" novalidate>
+			<div class="list">
+
+				<!-- MODAL INPUT FIELDS -->
+				<div class="modal-input padding">
+
+					<label class="item item-input item-select modal-label">
+					    <div class="input-label">
+					      Expense
+					    </div>
+					    <select ng-model="newPayment.expense" required>
+					      <option ng-repeat="expense in tab.expenses">{{expense.title}}</option>
+					    </select>
+					  </label>
+
+					<label class="item item-input item-floating-label modal-label">
+						<span class="input-label">Amount</span>
+						<input type="number" placeholder="Amount" ng-model="newPayment.ammount_paid" required>
+					</label>
+
+					<div class="modal-tip-wrapper" ng-if="newPayment.expense">
+						<span class="modal-tip">Martin owes you <span class="balanced">$400</span> for <strong>Hotel</strong></span>
+					</div>
+
+			  	</div>
+
+			  	<!-- MODAL BUTTON -->
+				<div class="padding">
+					<button type="button" class="button button-block button-balanced" ng-disabled="editProfileForm.$invalid" ng-click="addPayment()">
+					  	Save
+					</button>
+				</div>
+
+			</div>
+		</form>
+	</ion-content>
+</ion-modal-view>
