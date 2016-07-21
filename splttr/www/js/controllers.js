@@ -270,10 +270,46 @@ angular.module('starter.controllers', [])
 //     ];
 })
 
-.controller('AccountCtrl', function($scope, User) {
+.controller('AccountCtrl', function($scope, $ionicModal, User) {
 
   console.log("In account controller");
   $scope.user = User.get();
   console.log($scope.user);
+
+  $ionicModal.fromTemplateUrl('templates/edit-profile-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+    console.log("Edit profile modal loaded");
+  });
+
+  $scope.editProfile = function() {
+    $scope.openModal();
+    $scope.newProfileDetails = {
+      username: $scope.user.username,
+      name: $scope.user.name
+    }
+  }
+
+  $scope.saveProfileEdits = function() {
+
+    var validProfileEdit = true;
+
+    console.log("saving edits", $scope.newProfileDetails)
+    if(validProfileEdit){
+      $scope.closeModal();
+    }
+  }
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+    console.log("Edit profile modal closed");
+  };
+
+  $scope.openModal = function() {
+    $scope.modal.show();
+    console.log("Edit profile modal opened");
+  };
 
 });

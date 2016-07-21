@@ -9830,6 +9830,10 @@ textarea {
   min-height: 100px;
   padding: 5%; }
 
+.blur {
+  -webkit-filter: blur(4px);
+  filter: blur(4px); }
+
 .popup {
   border-radius: 6px !important;
   text-align: center; }
@@ -9975,41 +9979,37 @@ ion-content {
   background: #ddd;
   margin-bottom: 10px; }
 
-.user-name-wrapper {
-  text-align: center; }
-  .user-name-wrapper h1 {
-    font-size: 1.8em; }
-
-.user-profile-image {
-  border-radius: 50%;
-  max-width: 180px;
-  border: 4px solid #E6E5E5;
+.user-profile {
+  max-width: 600px;
   margin: 0 auto; }
 
 .user-profile-details {
-  background: linear-gradient(#0D47A1, black);
-  padding: 30px; }
-  .user-profile-details h1 {
-    color: white;
-    margin-bottom: 0px;
-    padding-top: 30px;
-    padding-botton: 30px; }
+  text-align: center;
+  padding: 10px 0; }
+  .user-profile-details-wrapper {
+    margin-top: 5px;
+    min-height: 250px; }
 
-.user-setting-row-wrapper {
-  width: 100%; }
+.user-profile-image {
+  border-radius: 50%;
+  max-width: 40%;
+  border: 2px solid #c5c5c5;
+  margin: 10px auto 10px auto;
+  display: block; }
+  .user-profile-image-wrapper {
+    position: relative; }
+  .user-profile-image-edit-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 7em;
+    color: white; }
 
-.user-setting-title {
-  padding: 15% 0 3% 0; }
-
-.user-setting-wrapper {
-  width: 50%;
-  float: left;
-  background: white; }
-  .user-setting-wrapper .item-image {
-    padding: 5%; }
-  .user-setting-wrapper img {
-    max-width: 30%;
-    padding-top: 10%; }
+.user-name-wrapper {
+  padding-top: 5px; }
+  .user-name-wrapper h2 {
+    margin: 0; }
 
 .tab-detail-header {
   height: 200px;

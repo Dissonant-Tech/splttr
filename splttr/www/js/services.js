@@ -206,7 +206,8 @@ angular.module('starter.services', [])
 	var user = {
 		id: "0",
 		img: "./img/alan.jpg",
-    name: "Alan Kopetman"
+    name: "Alan Kopetman",
+    username: "alankopetman"
 	};
 
 	return {
