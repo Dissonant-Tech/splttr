@@ -270,12 +270,21 @@ angular.module('starter.controllers', [])
 //     ];
 })
 
-.controller('AccountCtrl', function($scope, $ionicModal, User) {
+.controller('AccountCtrl', function($scope, $ionicModal, $rootScope, User) {
 
+  // $scope.$on("$ionicView.beforeEnter", function(event, data){
+  //   // get user data from API
+  //   $scope.user = User.get("12").then(function(user){
+  //     $scope.user = user.data;
+  //   }); 
+  // });
+
+  // get user from API
+  User.get("12");
   console.log("In account controller");
-  $scope.user = User.get();
-  console.log($scope.user);
+  console.log($rootScope.user);
 
+  // load modal
   $ionicModal.fromTemplateUrl('templates/edit-profile-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -284,6 +293,7 @@ angular.module('starter.controllers', [])
     console.log("Edit profile modal loaded");
   });
 
+  // profile edit button clicked
   $scope.editProfile = function() {
     $scope.openModal();
     $scope.newProfileDetails = {
@@ -293,9 +303,9 @@ angular.module('starter.controllers', [])
   }
 
   $scope.saveProfileEdits = function() {
-
     var validProfileEdit = true;
-
+    
+    // validation of new profile details
     console.log("saving edits", $scope.newProfileDetails)
     if(validProfileEdit){
       $scope.closeModal();

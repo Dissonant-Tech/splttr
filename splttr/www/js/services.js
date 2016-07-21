@@ -201,18 +201,19 @@ angular.module('starter.services', [])
 
 })
 
-.factory('User', function(){
-
-	var user = {
-		id: "0",
-		img: "./img/alan.jpg",
-    name: "Alan Kopetman",
-    username: "alankopetman"
-	};
+.factory('User', function($http, $rootScope){
 
 	return {
-		get: function() {
-			return user;
+		get: function(user_id) {
+			 $http.get('http://localhost:8000/users/'+user_id+'/', {})
+        .success(function(data) {
+          console.log("Got user from api", data);
+          $rootScope.user = data;
+        })
+        .error(function(data) {
+          console.log("Could not get user from api", data);
+        })
 		}
 	};
+
 });
