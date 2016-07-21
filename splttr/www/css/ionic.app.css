@@ -9979,12 +9979,15 @@ ion-content {
   background: #ddd;
   margin-bottom: 10px; }
 
+.user-profile {
+  max-width: 600px;
+  margin: 0 auto; }
+
 .user-profile-details {
   text-align: center;
   padding: 10px 0; }
   .user-profile-details-wrapper {
     margin-top: 5px;
-    text-align: center;
     min-height: 250px; }
 
 .user-profile-image {
