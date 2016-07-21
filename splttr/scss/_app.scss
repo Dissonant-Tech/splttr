@@ -38,6 +38,10 @@ textarea{
     min-height: 100px;
     padding: 5%;
 }
+.blur{
+    -webkit-filter: blur(4px);
+     filter: blur(4px);
+}
 .popup{
     border-radius: 6px !important;
     text-align: center;

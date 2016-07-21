@@ -1,17 +1,18 @@
-<ion-view view-title="Profile">
-	<ion-nav-buttons side="primary">
-	      <button class="button" side="right">
-	        edit
+<ion-view view-title="Account">
+	<ion-nav-buttons side="right">
+	      <button class="button button-clear button-positive" ng-clikc="editProfile()">
+	        Edit
 	      </button>
 	    </ion-nav-buttons>
 	<ion-content class="padding">
 
 	<!-- PROFILE DETAILS -->
-		<div class="user-profile-details-wrapper">
+		<div class="card user-profile-details-wrapper">
 			
 			<div class="user-profile-details">
-				<div class="item item-image user-profile-image">
-					<img ng-src={{user.img}} alt="profile-picture">
+				<div class="user-profile-image-wrapper">
+					<img ng-src={{user.img}} alt="profile-picture" class="user-profile-image" id="user-profile-image">
+					<!-- <i class="ion-ios-cloud-upload-outline user-profile-image-edit-icon"></i> -->
 				</div>
 				<div class="user-name-wrapper">
 					<h2>{{user.name}}</h2>
@@ -20,6 +21,8 @@
 			</div> 
 
 		</div>
+
+
 				<!-- SETTING TILES -->
 				<!-- <div class="user-setting-row-wrapper">
 					<div class="user-setting-wrapper">

@@ -9830,6 +9830,10 @@ textarea {
   min-height: 100px;
   padding: 5%; }
 
+.blur {
+  -webkit-filter: blur(4px);
+  filter: blur(4px); }
+
 .popup {
   border-radius: 6px !important;
   text-align: center; }
@@ -9979,18 +9983,30 @@ ion-content {
   text-align: center;
   padding: 10px 0; }
   .user-profile-details-wrapper {
+    margin-top: 5px;
     text-align: center;
-    min-height: 100px;
-    border-bottom: 1px solid #c5c5c5; }
+    min-height: 250px; }
 
 .user-profile-image {
   border-radius: 50%;
-  max-width: 50%;
+  max-width: 40%;
   border: 2px solid #c5c5c5;
-  margin: 0 auto 10px auto; }
+  margin: 0 auto 10px auto;
+  display: block; }
+  .user-profile-image-wrapper {
+    position: relative; }
+  .user-profile-image-edit-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 7em;
+    color: white; }
 
-.user-name-wrapper h2 {
-  margin: 0; }
+.user-name-wrapper {
+  padding-top: 5px; }
+  .user-name-wrapper h2 {
+    margin: 0; }
 
 .user-setting-row-wrapper {
   width: 100%; }
