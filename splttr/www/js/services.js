@@ -1,54 +1,5 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
-
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
-    }
-  };
-})
-
 .factory('Tabs', function(){
 
   // Collection of all tabs
@@ -57,10 +8,30 @@ angular.module('starter.services', [])
   {
       id: 1,
       title: "Apartment",
-      balance: "68.12",
+      balance: 0,
       debt: true,
       bg_img: "./img/tab2-background.jpg",
       desc: "This is tab1's description",
+      expenses: [
+        {
+          id: 0,
+          title: "Groceries",
+          balance: 68.98,
+          members: []
+        },
+        {
+          id: 1,
+          title: "Utilities",
+          balance: 90.12,
+          members: []
+        },
+        {
+          id: 2,
+          title: "New TV",
+          balance: 502.23,
+          members: []
+        }
+      ],
       squad: [
         {
           user_id: 0,
@@ -85,10 +56,30 @@ angular.module('starter.services', [])
     {
       id: 2,
       title: "New York Trip",
-      balance: "128.45",
+      balance: 0,
       debt: true,
       bg_img: "./img/tab1-background.jpg",
       desc: "This is tab2's description",
+      expenses: [
+        {
+          id: 0,
+          title: "Hotel",
+          balance: 145.23,
+          members: []
+        },
+        {
+          id: 1,
+          title: "Food",
+          balance: 83.12,
+          members: []
+        },
+        {
+          id: 2,
+          title: "Gas",
+          balance: 65.21,
+          members: []
+        }
+      ],
       squad: [
         {
           user_id: 0,
@@ -157,26 +148,72 @@ angular.module('starter.services', [])
       }
       return null;
     },
-    add: function(tab) {
+    addTab: function(tab) {
       tabs.push(tab);
       console.log(tabs);
+    },
+    addExpense: function(tabId, expense) {
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].id === parseInt(tabId)) {
+          var tab = tabs[i];
+        }
+      }
+
+      tab.expenses.push(expense);
+    },
+    getTotalBalance: function(tabId) {
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].id === parseInt(tabId)) {
+          var tab = tabs[i];
+          var totalBalance = 0;
+          tab.expenses.forEach(function(expense) {
+            totalBalance += expense.balance;
+          });
+          tab.balance = totalBalance;
+        }
+      }
+      // $scope.tabs.forEach(function(tab) {
+      //   var totalBalance = 0;
+      //   tab.expenses.forEach(function(expense) {
+      //     totalBalance += expense.balance;
+      //   });
+      //   tab.balance = totalBalance;
+      // });
     }
   };
 
 })
 
+.factory('Popups', function($ionicPopup){
 
-.factory('User', function(){
+  return {
+    showPopup: function(title, message) {
+      var alertPopup = $ionicPopup.alert({
+        title: title,
+        template: message
+      });
 
-	var user = {
-		id: "0",
-		img: "./img/alan.jpg",
-    name: "Alan Kopetman"
-	};
+      alertPopup.then(function(res) {
+        console.log('User acknoloedged popup');
+      });
+    }
+  };
+
+})
+
+.factory('User', function($http, $rootScope){
 
 	return {
-		get: function() {
-			return user;
+		get: function(user_id) {
+			 $http.get('http://localhost:8000/users/'+user_id+'/', {})
+        .success(function(data) {
+          console.log("Got user from api", data);
+          $rootScope.user = data;
+        })
+        .error(function(data) {
+          console.log("Could not get user from api", data);
+        })
 		}
 	};
+
 });
