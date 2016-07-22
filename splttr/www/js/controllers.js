@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ion-image-search'])
 
 .controller('LoginCtrl', function($scope, $state, $http, Popups) {
   
@@ -86,16 +86,6 @@ angular.module('starter.controllers', [])
     Tabs.getTotalBalance(tab.id);
   });
 
-  $scope.getUsers = function() {
-    $http.get("http://localhost:8888/users/", { params: {"key1" : "value1", "key2" : "value2"} })
-      .success(function(data) {
-        console.log(data);
-      })
-      .error(function(data) {
-        alert("Could not retrieve users");
-      })
-  };
-
   // =======  MODAL FUNCTIONS =======
 
   // load modal
@@ -153,16 +143,48 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, Popups, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs) {
   
   console.log("In tab detail view controller");
   $scope.tab = Tabs.get($stateParams.tabId);
   console.log($scope.tab);
 
+  // web image search modal
+  $scope.openImageChooserModal = function(){
+    $webImageSelector.show().then(function(image){
+      Tabs.edit($scope.tab.id, "bg_img", image.image.url);
+    });
+  }
+
   $scope.getImageUrl = function() {
     return "url(" + $scope.tab.bg_img + ")";
   }
 
+  // action sheet
+  $scope.openActionSheet = function() {
+    $ionicActionSheet.show({
+        titleText: $scope.tab.title,
+        buttons: [
+          { text: 'Add Cover Photo' }
+        ],
+        destructiveText: 'Delete',
+        cancelText: 'Cancel',
+        cancel: function() {
+          console.log('CANCELLED');
+        },
+        buttonClicked: function(index) {
+          console.log('BUTTON CLICKED', index);
+          if(index == 0){
+            $scope.openImageChooserModal();
+          }
+          return true;
+        },
+        destructiveButtonClicked: function() {
+          console.log('DESTRUCT');
+          return true;
+        }
+      });    
+  }
 
   // load expense modal
   $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {

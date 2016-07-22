@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ion-image-search'])
 
 .controller('LoginCtrl', function($scope, $state, $http, Popups) {
   
@@ -73,7 +73,9 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, Tabs) {
+.controller('HomeCtrl', function($scope, $webImageSelector, $ionicModal, $state, $http, Tabs) {
+
+  $webImageSelector.show();
 
   console.log("In home controller");
 
@@ -116,7 +118,7 @@ angular.module('starter.controllers', [])
         title: "",
         balance: 0,
         debt: true,
-        bg_img: "./img/tab3-background.jpg",
+        bg_img: "",
         desc: "",
         squad: [
           {
@@ -153,7 +155,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, Popups, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $ionicActionSheet, $stateParams, $ionicModal, Popups, Tabs) {
   
   console.log("In tab detail view controller");
   $scope.tab = Tabs.get($stateParams.tabId);
@@ -163,6 +165,28 @@ angular.module('starter.controllers', [])
     return "url(" + $scope.tab.bg_img + ")";
   }
 
+  // action sheet
+  $scope.openActionSheet = function() {
+    $ionicActionSheet.show({
+        titleText: $scope.tab.title,
+        buttons: [
+          { text: 'Add Cover Photo' }
+        ],
+        destructiveText: 'Delete',
+        cancelText: 'Cancel',
+        cancel: function() {
+          console.log('CANCELLED');
+        },
+        buttonClicked: function(index) {
+          console.log('BUTTON CLICKED', index);
+          return true;
+        },
+        destructiveButtonClicked: function() {
+          console.log('DESTRUCT');
+          return true;
+        }
+      });    
+  }
 
   // load expense modal
   $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
@@ -239,22 +263,87 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('AnalyticsCtrl', function($scope) {
+.controller('AnalyticsCtrl', function($scope, Tabs) {
+
   
   console.log("In analytics controller");
+  $scope.tabs = Tabs.all();
 
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    $scope.series = ['Series A', 'Series B'];
-    $scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-    ];
+  // for chart legends
+  $scope.labels = [];
+  $scope.data = [
+    []
+  ];
+  $scope.series = ['Expenses'];
+
+  $scope.tabs.forEach(function(tab) {
+    tab.expenses.forEach(function(expense) {
+      $scope.labels.push(expense.title);
+      $scope.data[0].push(expense.balance);
+    });
+  });
+
+
+
+  console.log($scope.labels, $scope.data);
+
+//   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    
+//     $scope.data = [
+//         [65, 59, 80, 81, 56, 55, 40]
+//     ];
 })
 
-.controller('AccountCtrl', function($scope, User) {
+.controller('AccountCtrl', function($scope, $ionicModal, $rootScope, User) {
 
+  // $scope.$on("$ionicView.beforeEnter", function(event, data){
+  //   // get user data from API
+  //   $scope.user = User.get("12").then(function(user){
+  //     $scope.user = user.data;
+  //   }); 
+  // });
+
+  // get user from API
+  User.get("12");
   console.log("In account controller");
-  $scope.user = User.get();
-  console.log($scope.user);
+  console.log($rootScope.user);
+
+  // load modal
+  $ionicModal.fromTemplateUrl('templates/edit-profile-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+    console.log("Edit profile modal loaded");
+  });
+
+  // profile edit button clicked
+  $scope.editProfile = function() {
+    $scope.openModal();
+    $scope.newProfileDetails = {
+      username: $scope.user.username,
+      name: $scope.user.name
+    }
+  }
+
+  $scope.saveProfileEdits = function() {
+    var validProfileEdit = true;
+    
+    // validation of new profile details
+    console.log("saving edits", $scope.newProfileDetails)
+    if(validProfileEdit){
+      $scope.closeModal();
+    }
+  }
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+    console.log("Edit profile modal closed");
+  };
+
+  $scope.openModal = function() {
+    $scope.modal.show();
+    console.log("Edit profile modal opened");
+  };
 
 });
