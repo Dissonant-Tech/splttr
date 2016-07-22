@@ -153,7 +153,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, Popups, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $ionicActionSheet, $stateParams, $ionicModal, Popups, Tabs) {
   
   console.log("In tab detail view controller");
   $scope.tab = Tabs.get($stateParams.tabId);
@@ -163,6 +163,28 @@ angular.module('starter.controllers', [])
     return "url(" + $scope.tab.bg_img + ")";
   }
 
+  // action sheet
+  $scope.openActionSheet = function() {
+    $ionicActionSheet.show({
+        titleText: $scope.tab.title,
+        buttons: [
+          { text: 'Add Cover Photo' }
+        ],
+        destructiveText: 'Delete',
+        cancelText: 'Cancel',
+        cancel: function() {
+          console.log('CANCELLED');
+        },
+        buttonClicked: function(index) {
+          console.log('BUTTON CLICKED', index);
+          return true;
+        },
+        destructiveButtonClicked: function() {
+          console.log('DESTRUCT');
+          return true;
+        }
+      });    
+  }
 
   // load expense modal
   $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
