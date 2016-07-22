@@ -5,7 +5,11 @@
         <div class="tab-wrapper" ng-repeat="tab in tabs | orderBy: 'id'">
 
             <!-- TAB CONTENT -->
-            <div class="tab-content-wrapper" style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url({{tab.bg_img}})">
+            <div class="tab-content-wrapper" ng-style="{ 
+
+                                            'background-image': tab.bg_img ? 'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url({{tab.bg_img}})' : '' 
+
+                                            }">
 
                 <!-- TITLE -->
                 <div class="tab-content-title">
@@ -18,8 +22,8 @@
                 </div>
 
                 <!-- MEMBERS LIST -->
-                <span class="tab-content-member-label">Members</span>
                 <div class="tab-content-member-wrapper">
+                    <span class="tab-content-member-label">Members</span>
                     <ul class="member-list">
                         <ion-scroll direction="x" style="white-space:nowrap;" has-bouncing="true">
                             <li
@@ -30,10 +34,11 @@
                         </ion-scroll>
                     </ul>
                 </div>
-
-                <div class="tab-arrow"></div>
+                
             </div>
+            <button type="button" class="button button-block button-positive tab-button"><a href="#/tab/home/{{tab.id}}">View Tab</a></button>
         </div>
+
     </ion-content>
     <!-- FAB -->
         <div class="FAB" ng-click="openModal()">
