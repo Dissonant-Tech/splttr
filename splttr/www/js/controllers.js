@@ -116,7 +116,7 @@ angular.module('starter.controllers', [])
         title: "",
         balance: 0,
         debt: true,
-        bg_img: "./img/tab3-background.jpg",
+        bg_img: "",
         desc: "",
         squad: [
           {

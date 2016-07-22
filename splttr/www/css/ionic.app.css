@@ -9906,9 +9906,13 @@ ion-content {
   .tab-home {
     text-align: center; } }
 
+.tab-button.button-block {
+  margin: 0;
+  border-radius: 0 0 6px 6px;
+  padding: 7px; }
+
 .tab-wrapper {
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.6);
-  position: relative;
+  box-shadow: 0 0px 4px rgba(0, 0, 0, 0.6);
   height: auto;
   background-color: gray;
   border-radius: 6px;
@@ -9922,11 +9926,12 @@ ion-content {
     max-width: 200px; } }
   @media (min-width: 640px) {
     .tab-wrapper {
-      max-width: 300px;
+      width: 300px;
       margin-right: 25px;
       display: inline-block; } }
 
 .tab-content-wrapper {
+  position: relative;
   height: 90%;
   padding: 10px;
   border-radius: 6px 6px 0 0;
@@ -9937,12 +9942,12 @@ ion-content {
   .tab-content-wrapper h2, .tab-content-wrapper h4 {
     color: white; }
 
-.tab-content-squad-label {
+.tab-content-member-label {
   color: white;
   padding-bottom: 5px;
   line-height: 2em; }
 
-.tab-content-squad-wrapper li {
+.tab-content-member-wrapper li {
   display: inline-block;
   border-radius: 50%;
   background-position: center center;
@@ -9953,24 +9958,7 @@ ion-content {
   border: 2px solid #c5c5c5;
   margin-right: 10px; }
 
-.tab-button-wrapper {
-  border-radius: 0 0 6px 6px;
-  margin: 0 !important;
-  height: 10%;
-  width: 100%;
-  background-color: #DED9D9;
-  padding: 3%;
-  -moz-border-radius: 0px 0px 6px 6px;
-  -webkit-border-radius: 0px 0px 6px 6px;
-  border-radius: 0px 0px 6px 6px;
-  text-align: center;
-  border: 1px solid #cac6c6;
-  border-top: none; }
-
-.tab-button-label {
-  color: #0e0e0e; }
-
-.squad-checked {
+.member-checked {
   opacity: 0.5;
   border: none !important; }
 
