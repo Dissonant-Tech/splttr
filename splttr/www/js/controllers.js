@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ion-image-search'])
 
 .controller('LoginCtrl', function($scope, $state, $http, Popups) {
   
@@ -73,7 +73,9 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, Tabs) {
+.controller('HomeCtrl', function($scope, $webImageSelector, $ionicModal, $state, $http, Tabs) {
+
+  $webImageSelector.show();
 
   console.log("In home controller");
 

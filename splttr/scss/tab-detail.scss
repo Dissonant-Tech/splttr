@@ -84,3 +84,13 @@
 		}	
 	}
 }
+.platform-android{
+	.action-sheet {
+		*{
+			text-align: center !important;
+		}
+		.button.destructive{
+			color: #ff3b30;
+		}
+	}
+}
