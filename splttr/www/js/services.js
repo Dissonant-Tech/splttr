@@ -32,7 +32,7 @@ angular.module('starter.services', [])
           members: []
         }
       ],
-      squad: [
+      members: [
         {
           user_id: 0,
           name: "Martin",
@@ -80,7 +80,7 @@ angular.module('starter.services', [])
           members: []
         }
       ],
-      squad: [
+      members: [
         {
           user_id: 0,
           name: "Martin",

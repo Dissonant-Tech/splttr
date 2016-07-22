@@ -9906,6 +9906,16 @@ ion-content {
   .tab-home {
     text-align: center; } }
 
+.tab-arrow {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  top: 50%;
+  right: 23px;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+  transform: translateY(-50%) rotate(315deg); }
+
 .tab-wrapper {
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.6);
   position: relative;
@@ -9927,6 +9937,7 @@ ion-content {
       display: inline-block; } }
 
 .tab-content-wrapper {
+  position: relative;
   height: 90%;
   padding: 10px;
   border-radius: 6px 6px 0 0;
@@ -9937,12 +9948,12 @@ ion-content {
   .tab-content-wrapper h2, .tab-content-wrapper h4 {
     color: white; }
 
-.tab-content-squad-label {
+.tab-content-member-label {
   color: white;
   padding-bottom: 5px;
   line-height: 2em; }
 
-.tab-content-squad-wrapper li {
+.tab-content-member-wrapper li {
   display: inline-block;
   border-radius: 50%;
   background-position: center center;
@@ -9970,7 +9981,7 @@ ion-content {
 .tab-button-label {
   color: #0e0e0e; }
 
-.squad-checked {
+.member-checked {
   opacity: 0.5;
   border: none !important; }
 
