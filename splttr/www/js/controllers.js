@@ -73,9 +73,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('HomeCtrl', function($scope, $webImageSelector, $ionicModal, $state, $http, Tabs) {
-
-  $webImageSelector.show();
+.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, Tabs) {
 
   console.log("In home controller");
 
@@ -87,16 +85,6 @@ angular.module('starter.controllers', ['ion-image-search'])
   $scope.tabs.forEach(function(tab) {
     Tabs.getTotalBalance(tab.id);
   });
-
-  $scope.getUsers = function() {
-    $http.get("http://localhost:8888/users/", { params: {"key1" : "value1", "key2" : "value2"} })
-      .success(function(data) {
-        console.log(data);
-      })
-      .error(function(data) {
-        alert("Could not retrieve users");
-      })
-  };
 
   // =======  MODAL FUNCTIONS =======
 
@@ -155,11 +143,18 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $ionicActionSheet, $stateParams, $ionicModal, Popups, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs) {
   
   console.log("In tab detail view controller");
   $scope.tab = Tabs.get($stateParams.tabId);
   console.log($scope.tab);
+
+  // web image search modal
+  $scope.openImageChooserModal = function(){
+    $webImageSelector.show().then(function(image){
+      Tabs.edit($scope.tab.id, "bg_img", image.image.url);
+    });
+  }
 
   $scope.getImageUrl = function() {
     return "url(" + $scope.tab.bg_img + ")";
@@ -179,6 +174,9 @@ angular.module('starter.controllers', ['ion-image-search'])
         },
         buttonClicked: function(index) {
           console.log('BUTTON CLICKED', index);
+          if(index == 0){
+            $scope.openImageChooserModal();
+          }
           return true;
         },
         destructiveButtonClicked: function() {
