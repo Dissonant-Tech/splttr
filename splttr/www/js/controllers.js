@@ -143,7 +143,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs) {
   
   console.log("In tab detail view controller");
   $scope.tab = Tabs.get($stateParams.tabId);
@@ -174,13 +174,19 @@ angular.module('starter.controllers', ['ion-image-search'])
         },
         buttonClicked: function(index) {
           console.log('BUTTON CLICKED', index);
+          switch(index){
+            case 0:
+              $scope.openImageChooserModal();
+          }
           if(index == 0){
-            $scope.openImageChooserModal();
+            
           }
           return true;
         },
         destructiveButtonClicked: function() {
-          console.log('DESTRUCT');
+          console.log("Removing tab..")
+          Tabs.remove($scope.tab);
+          $state.go('tab.home');
           return true;
         }
       });    
