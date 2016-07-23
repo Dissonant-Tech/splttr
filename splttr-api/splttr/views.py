@@ -1,11 +1,11 @@
 from rest_framework import status, viewsets
 from rest_framework.decorators import api_view, list_route
 from rest_framework.response import Response
-from rest_framework.authtoken import views as authview
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth.models import User, Group
 
 from splttr.serializers import UserSerializer, GroupSerializer, TabSerializer, EventSerializer, BillSerializer
-
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -28,7 +28,15 @@ class UserViewSet(viewsets.ModelViewSet):
             - name: password
               type: string
         """
-        return authview.obtain_auth_token(request)
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token':token.key,
+            'user_id': User.objects.get(username=str(user)).pk
+
+            })
 
 
 class GroupViewSet(viewsets.ModelViewSet):
