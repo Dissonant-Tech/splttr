@@ -1,5 +1,5 @@
 <ion-view view-title="Splttr">
-    <ion-content class="padding tab-home" has-bouncing="true">
+    <ion-content class="padding tab-home">
 
         <div class="tab-wrapper" ng-repeat="tab in tabs | orderBy: 'id'">
 
@@ -42,7 +42,13 @@
             </a>
         </div>
 
+      
+
     </ion-content>
+
+        <!-- NO TABS LABEL -->
+        <span ng-if="tabs.length == 0" class="tabs-message" >No tabs</span>            
+        
         <!-- FAB -->
         <div class="FAB" ng-click="openModal()">
             <i class="icon ion-plus-round"></i>
