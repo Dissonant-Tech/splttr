@@ -1,4 +1,4 @@
-from rest_framework import status, viewsets
+from rest_framework import status, viewsets, filters
 
 from rest_framework.decorators import api_view, list_route
 from rest_framework.response import Response
@@ -54,6 +54,8 @@ class TabViewSet(viewsets.ModelViewSet):
     """
     queryset = Tab.objects.all()
     serializer_class = TabSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('name', 'description', 'created', 'members')
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -62,6 +64,8 @@ class EventViewSet(viewsets.ModelViewSet):
     """
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('name', 'description', 'created', 'tab')
 
 
 class BillViewSet(viewsets.ModelViewSet):
@@ -70,3 +74,6 @@ class BillViewSet(viewsets.ModelViewSet):
     """
     queryset = Bill.objects.all()
     serializer_class = BillSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('creditor', 'debtor', 'a_debtor', 'event', 'amount')
+
