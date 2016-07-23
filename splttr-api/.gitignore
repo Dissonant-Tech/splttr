@@ -101,6 +101,7 @@ Session.vim
 tags
 
 static/
+.idea/
 
 *.log
 *.pid

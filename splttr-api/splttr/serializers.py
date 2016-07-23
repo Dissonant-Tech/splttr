@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User, Group
+from splttr.models import Tab, Event, Bill
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
@@ -11,7 +12,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         write_only_fields = ('password',)
 
     def create(self, validated_data):
-
         user = User.objects.create(
             username=validated_data['username'],
             email=validated_data['email']
@@ -22,7 +22,25 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         return user
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ('url', 'name')
+        fields = '__all__'
+
+
+class TabSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tab
+        fields = '__all__'
+
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = '__all__'
+
+
+class BillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bill
+        fields = '__all__'
