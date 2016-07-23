@@ -39,7 +39,12 @@ class Bill(models.Model):
     )
     debtor = models.ForeignKey(
         User,
-        on_delete=models.DO_NOTHING
+        on_delete=models.DO_NOTHING,
+        null=True
+    )
+    a_debtor = models.CharField(
+        max_length=60,
+        null=True
     )
     event = models.ForeignKey(
         Event,
