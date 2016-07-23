@@ -3,7 +3,7 @@ from splttr.models import Tab, Event, Bill
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
@@ -22,26 +22,25 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         return user
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ('url', 'name')
+        fields = '__all__'
 
 
-class TabSerializer(serializers.HyperlinkedModelSerializer):
+class TabSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tab
-        fields = ('name', 'description', 'created', 'members')
+        fields = '__all__'
 
 
-class EventSerializer(serializers.HyperlinkedModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ('name', 'description', 'created', 'tab')
+        fields = '__all__'
 
 
-class BillSerializer(serializers.HyperlinkedModelSerializer):
+class BillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bill
-        fields = ('creditor', 'debtor', 'a_debtor','amount', 'event')
-
+        fields = '__all__'
