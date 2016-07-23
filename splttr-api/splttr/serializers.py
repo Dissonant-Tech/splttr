@@ -12,7 +12,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         write_only_fields = ('password',)
 
     def create(self, validated_data):
-
         user = User.objects.create(
             username=validated_data['username'],
             email=validated_data['email']
@@ -24,27 +23,28 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = Group
         fields = ('url', 'name')
 
 
 class TabSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = Tab
         fields = ('name', 'description', 'created', 'members')
 
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = Event
         fields = ('name', 'description', 'created', 'tab')
 
-class BillSerializer(serializers.HyperlinkedModelSerializer):
 
+class BillSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Bill
         fields = ('creditor', 'debtor', 'amount')
+
+
+class PostSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True, many=True)
