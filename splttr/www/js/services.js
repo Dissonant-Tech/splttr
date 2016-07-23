@@ -32,7 +32,7 @@ angular.module('starter.services', [])
           members: []
         }
       ],
-      squad: [
+      members: [
         {
           user_id: 0,
           name: "Martin",
@@ -80,7 +80,7 @@ angular.module('starter.services', [])
           members: []
         }
       ],
-      squad: [
+      members: [
         {
           user_id: 0,
           name: "Martin",
@@ -139,6 +139,7 @@ angular.module('starter.services', [])
     },
     remove: function(tab) {
       tabs.splice(tabs.indexOf(tab), 1);
+      console.log(tabs);
     },
     get: function(tabId) {
       for (var i = 0; i < tabs.length; i++) {
@@ -172,13 +173,16 @@ angular.module('starter.services', [])
           tab.balance = totalBalance;
         }
       }
-      // $scope.tabs.forEach(function(tab) {
-      //   var totalBalance = 0;
-      //   tab.expenses.forEach(function(expense) {
-      //     totalBalance += expense.balance;
-      //   });
-      //   tab.balance = totalBalance;
-      // });
+    },
+    edit: function(tabId, attr, newValue) {
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].id === parseInt(tabId)) {
+          var tab = tabs[i];
+        }
+      }
+
+      tab[attr] = newValue;
+      console.log(tab);
     }
   };
 

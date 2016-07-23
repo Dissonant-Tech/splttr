@@ -1,40 +1,56 @@
 <ion-view view-title="Splttr">
-    <ion-content class="padding tab-home" has-bouncing="true">
+    <ion-content class="padding tab-home">
+
         <div class="tab-wrapper" ng-repeat="tab in tabs | orderBy: 'id'">
 
             <!-- TAB CONTENT -->
-            <div class="tab-content-wrapper" style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url({{tab.bg_img}})">
+            <div class="tab-content-wrapper" ng-style="{ 
+
+                                            'background-image': 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)), url({{tab.bg_img}})' 
+
+                                            }">
+
+                <!-- TITLE -->
                 <div class="tab-content-title">
                     <h2>{{tab.title}}</h2>
                 </div>
+
+                <!-- BALANCE -->
                 <div class="tab-content-balance">
                     <h4>Balance: ${{tab.balance}}</h4>
                 </div>
-                <span class="tab-content-squad-label">Members</span>
-                <ion-scroll zooming="false" direction="x" style="width: 1000px;">
-                    <div class="tab-content-squad-wrapper">
-                        <ul class="squad-list">
+
+                <!-- MEMBERS LIST -->
+                <div class="tab-content-member-wrapper">
+                    <span class="tab-content-member-label">Members</span>
+                    <ul class="member-list">
+                        <ion-scroll direction="x" style="white-space:nowrap;" has-bouncing="true">
                             <li
-                            ng-repeat="member in tab.squad | orderBy: 'debt'" 
+                            ng-repeat="member in tab.members | orderBy: 'debt'" 
                             style="background-image: url({{member.img}})" 
-                            ng-class="{'squad-checked': member.debt}">
+                            ng-class="{'member-checked': member.debt}">
                             </li>
-                        </ul>
-                    </div>
-                </ion-scroll>
+                        </ion-scroll>
+                    </ul>
+                </div>
+                
             </div>
 
-            <!-- TAB BUTTON -->
-            <a class="tab-button-wrapper button button-block button-positive" href="#/tab/home/{{tab.id}}">
-                    View Tab
+            <!-- VIEW TAB BUTTON -->
+            <a class="button button-block button-positive tab-button" href="#/tab/home/{{tab.id}}">
+                View Tab
             </a>
         </div>
 
-   <!--      <button class="button button-balanced" ng-click="getUsers()">
-            Get users
-        </button> -->
+      
+
     </ion-content>
 
-    <!-- FAB -->
-    <div class="FAB" ng-click="openModal()"><i class="icon ion-plus-round"></i></div>
+        <!-- NO TABS LABEL -->
+        <span ng-if="tabs.length == 0" class="tab-message" >No tabs</span>            
+        
+        <!-- FAB -->
+        <div class="FAB" ng-click="openModal()">
+            <i class="icon ion-plus-round"></i>
+        </div>
 </ion-view>
