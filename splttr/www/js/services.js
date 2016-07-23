@@ -139,6 +139,7 @@ angular.module('starter.services', [])
     },
     remove: function(tab) {
       tabs.splice(tabs.indexOf(tab), 1);
+      console.log(tabs);
     },
     get: function(tabId) {
       for (var i = 0; i < tabs.length; i++) {
