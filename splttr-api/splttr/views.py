@@ -6,6 +6,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth.models import User, Group
 
 from splttr.serializers import UserSerializer, GroupSerializer, TabSerializer, EventSerializer, BillSerializer
+from splttr.models import Tab, Event, Bill
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -35,7 +36,6 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response({
             'token':token.key,
             'user_id': User.objects.get(username=str(user)).pk
-
             })
 
 
@@ -51,7 +51,7 @@ class TabViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows tabs to be viewed or edited
     """
-    queryset = Group.objects.all()
+    queryset = Tab.objects.all()
     serializer_class = TabSerializer
 
 
@@ -59,7 +59,7 @@ class EventViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows events to be viewed or edited
     """
-    queryset = Group.objects.all()
+    queryset = Event.objects.all()
     serializer_class = EventSerializer
 
 
@@ -67,5 +67,5 @@ class BillViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows bills to be viewed or edited
     """
-    queryset = Group.objects.all()
+    queryset = Bill.objects.all()
     serializer_class = BillSerializer
