@@ -43,7 +43,7 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
 class BillSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Bill
-        fields = ('creditor', 'debtor', 'amount')
+        fields = ('creditor', 'debtor', 'amount', 'event')
 
 
 class PostSerializer(serializers.ModelSerializer):
