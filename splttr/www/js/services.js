@@ -137,11 +137,11 @@ angular.module('starter.services', [])
 
     // Remove Tab from DB
     remove: function(tab_id) {
-      $http.delete("http://localhost:8000/tabs"+JSON.stringify(tab_id))
+      return $http.delete("http://localhost:8000/tabs/"+tab_id+"/")
         .success(function(data){
           console.log("Deleted tab from DB. Response: ", data);
         })
-        error(function(data){
+        .error(function(data){
           Popups.showPopup("Error", "Sorry, we couldn't delete your Tab right now. Try again later!");
         })
     },

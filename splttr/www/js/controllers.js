@@ -124,54 +124,49 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 .controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs) {
   
-  console.log("In tab detail view controller");
-  console.log($stateParams.tabId);
+  // Load Tab detials from DB
   Tabs.getWithId($stateParams.tabId).then(function(res){
     $scope.tab = res.data;
+    console.log("In tab detail view controller");
   });
 
-  // web image search modal
-  // $scope.openImageChooserModal = function(){
-  //   $webImageSelector.show().then(function(image){
-  //     Tabs.edit($scope.tab.id, "bg_img", image.image.url);
-  //   });
-  // }
+  // Open web mage search modal
+  $scope.openImageChooserModal = function(){
+    $webImageSelector.show().then(function(image){
+      Tabs.edit($scope.tab.id, "bg_img", image.image.url);
+    });
+  }
 
-  // $scope.getImageUrl = function() {
-  //   return "url(" + $scope.tab.bg_img + ")";
-  // }
-
-  // // action sheet
-  // $scope.openActionSheet = function() {
-  //   $ionicActionSheet.show({
-  //       titleText: $scope.tab.title,
-  //       buttons: [
-  //         { text: 'Add Cover Photo' }
-  //       ],
-  //       destructiveText: 'Delete',
-  //       cancelText: 'Cancel',
-  //       cancel: function() {
-  //         console.log('CANCELLED');
-  //       },
-  //       buttonClicked: function(index) {
-  //         console.log('BUTTON CLICKED', index);
-  //         switch(index){
-  //           case 0:
-  //             $scope.openImageChooserModal();
-  //         }
-  //         if(index == 0){
-            
-  //         }
-  //         return true;
-  //       },
-  //       destructiveButtonClicked: function() {
-  //         console.log("Removing tab..")
-  //         Tabs.remove($scope.tab);
-  //         $state.go('tab.home');
-  //         return true;
-  //       }
-  //     });    
-  // }
+  // Open action sheet
+  $scope.openActionSheet = function() {
+    $ionicActionSheet.show({
+        titleText: $scope.tab.title,
+        buttons: [
+          { text: 'Add Cover Photo' }
+        ],
+        destructiveText: 'Delete',
+        cancelText: 'Cancel',
+        cancel: function() {
+          console.log('CANCELLED');
+        },
+        buttonClicked: function(index) {
+          console.log('BUTTON CLICKED', index);
+          switch(index){
+            case 0:
+              // Add Cover Photo Chosen
+              $scope.openImageChooserModal();
+          }
+          return true;
+        },
+        destructiveButtonClicked: function() {
+          console.log("Removing tab..")
+          Tabs.remove($scope.tab.id).then(function(){
+            $state.go("tab.home");
+          })
+          return true;
+        }
+      });    
+  }
 
   // // load expense modal
   // $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
