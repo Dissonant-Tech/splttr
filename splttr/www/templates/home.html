@@ -1,6 +1,6 @@
 <ion-view view-title="Splttr">
     <ion-content class="padding tab-home">
-        <div class="tab-wrapper" ng-repeat="tab in tabs | orderBy: 'created'">
+        <div class="tab-wrapper" ng-repeat="tab in tabs | orderBy: 'created':true">
 
             <!-- TAB CONTENT -->
             <div class="tab-content-wrapper" ng-style="{ 

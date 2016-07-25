@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.factory('Tabs', function($http, Popups){
+.factory('Tabs', function($http, Popups, $state){
 
   // Collection of all tabs
 
@@ -134,18 +134,24 @@ angular.module('starter.services', [])
   ];
 
   return {
-    all: function() {
-      return tabs;
+
+    // Remove Tab from DB
+    remove: function(tab_id) {
+      $http.delete("http://localhost:8000/tabs"+JSON.stringify(tab_id))
+        .success(function(data){
+          console.log("Deleted tab from DB. Response: ", data);
+        })
+        error(function(data){
+          Popups.showPopup("Error", "Sorry, we couldn't delete your Tab right now. Try again later!");
+        })
     },
-    remove: function(tab) {
-      tabs.splice(tabs.indexOf(tab), 1);
-      console.log(tabs);
-    },
+
+    // Get all Tabs that match User by its ID
     get: function(user_id) {
       return $http.get("http://localhost:8000/tabs/?members="+JSON.stringify(user_id))
         .success(function(data){
-          console.log("Getting all tabs for: " + user_id);
-          console.log("Tab retreived from DB. Response:", data);
+          console.log("Getting all tabs for user with ID: " + user_id);
+          console.log("Tabs retreived from DB. Response:", data);
           return data;
         })
         .error(function(data){
@@ -154,10 +160,28 @@ angular.module('starter.services', [])
         })
       
     },
+
+    // Get specific Tab by its ID
+    getWithId: function(tab_id) {
+      return $http.get("http://localhost:8000/tabs/"+tab_id)
+        .success(function(data){
+            console.log("Retreived tab detail from DB. Response:", data);
+            return data;
+        })
+        .error(function(data){
+            console.log("tried: " + tab_id);
+            console.log("Could not get tab from DB. Response: ", data);
+            $state.go("tab.home");
+        })
+
+    },
+
+    // Add new Tab to DB
     addTab: function(tab) {
       return $http.post("http://localhost:8000/tabs/", tab)
         .success(function(data) {
           console.log("Successfully added tab to DB", data);
+          return data;
         })
         .error(function(data) {
           console.log("sdlkjf", tab);

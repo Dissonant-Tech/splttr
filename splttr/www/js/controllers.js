@@ -70,7 +70,6 @@ angular.module('starter.controllers', ['ion-image-search'])
       User.get().then(function(user){
         $scope.user = user.data;
         Tabs.get($scope.user.id).then(function(res){
-          console.log(res);
           $scope.tabs = res.data;
         })
       }); 
@@ -115,7 +114,8 @@ angular.module('starter.controllers', ['ion-image-search'])
   // Add new Tab to DB
   $scope.saveNewTab = function(){
     console.log("Saving new tab", $scope.newTabParams);
-    Tabs.addTab($scope.newTabParams).then(function(){
+    Tabs.addTab($scope.newTabParams).then(function(res){
+      $scope.tabs.push(res.data);
       $scope.closeModal();
     })
   }
@@ -125,118 +125,120 @@ angular.module('starter.controllers', ['ion-image-search'])
 .controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs) {
   
   console.log("In tab detail view controller");
-  $scope.tab = Tabs.get($stateParams.tabId);
-  console.log($scope.tab);
+  console.log($stateParams.tabId);
+  Tabs.getWithId($stateParams.tabId).then(function(res){
+    $scope.tab = res.data;
+  });
 
   // web image search modal
-  $scope.openImageChooserModal = function(){
-    $webImageSelector.show().then(function(image){
-      Tabs.edit($scope.tab.id, "bg_img", image.image.url);
-    });
-  }
+  // $scope.openImageChooserModal = function(){
+  //   $webImageSelector.show().then(function(image){
+  //     Tabs.edit($scope.tab.id, "bg_img", image.image.url);
+  //   });
+  // }
 
-  $scope.getImageUrl = function() {
-    return "url(" + $scope.tab.bg_img + ")";
-  }
+  // $scope.getImageUrl = function() {
+  //   return "url(" + $scope.tab.bg_img + ")";
+  // }
 
-  // action sheet
-  $scope.openActionSheet = function() {
-    $ionicActionSheet.show({
-        titleText: $scope.tab.title,
-        buttons: [
-          { text: 'Add Cover Photo' }
-        ],
-        destructiveText: 'Delete',
-        cancelText: 'Cancel',
-        cancel: function() {
-          console.log('CANCELLED');
-        },
-        buttonClicked: function(index) {
-          console.log('BUTTON CLICKED', index);
-          switch(index){
-            case 0:
-              $scope.openImageChooserModal();
-          }
-          if(index == 0){
+  // // action sheet
+  // $scope.openActionSheet = function() {
+  //   $ionicActionSheet.show({
+  //       titleText: $scope.tab.title,
+  //       buttons: [
+  //         { text: 'Add Cover Photo' }
+  //       ],
+  //       destructiveText: 'Delete',
+  //       cancelText: 'Cancel',
+  //       cancel: function() {
+  //         console.log('CANCELLED');
+  //       },
+  //       buttonClicked: function(index) {
+  //         console.log('BUTTON CLICKED', index);
+  //         switch(index){
+  //           case 0:
+  //             $scope.openImageChooserModal();
+  //         }
+  //         if(index == 0){
             
-          }
-          return true;
-        },
-        destructiveButtonClicked: function() {
-          console.log("Removing tab..")
-          Tabs.remove($scope.tab);
-          $state.go('tab.home');
-          return true;
-        }
-      });    
-  }
+  //         }
+  //         return true;
+  //       },
+  //       destructiveButtonClicked: function() {
+  //         console.log("Removing tab..")
+  //         Tabs.remove($scope.tab);
+  //         $state.go('tab.home');
+  //         return true;
+  //       }
+  //     });    
+  // }
 
-  // load expense modal
-  $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(expenseModal) {
-    $scope.expenseModal = expenseModal;
-    console.log("Expense Modal loaded");
-  });
+  // // load expense modal
+  // $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
+  //   scope: $scope,
+  //   animation: 'slide-in-up'
+  // }).then(function(expenseModal) {
+  //   $scope.expenseModal = expenseModal;
+  //   console.log("Expense Modal loaded");
+  // });
 
-  // load Payment modal
-  $ionicModal.fromTemplateUrl('templates/add-payment-modal.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(PaymentModal) {
-    $scope.PaymentModal = PaymentModal;
-    console.log("Payment Modal loaded");
-  });
+  // // load Payment modal
+  // $ionicModal.fromTemplateUrl('templates/add-payment-modal.html', {
+  //   scope: $scope,
+  //   animation: 'slide-in-up'
+  // }).then(function(PaymentModal) {
+  //   $scope.PaymentModal = PaymentModal;
+  //   console.log("Payment Modal loaded");
+  // });
 
-  // modal functions
-  $scope.openPaymentModal = function() {
-    if($scope.tab.balance <= 0){
-      Popups.showPopup("Whoops!", "This tab currently has an empty balance. Try adding an expense first!");
-      return;
-    }
-    $scope.PaymentModal.show();
-    console.log("Payment Modal opened");
-    $scope.newPayment = {
-      member_id: 0,
-      expense: "",
-      ammount_paid: ""
-    }
-  };
+  // // modal functions
+  // $scope.openPaymentModal = function() {
+  //   if($scope.tab.balance <= 0){
+  //     Popups.showPopup("Whoops!", "This tab currently has an empty balance. Try adding an expense first!");
+  //     return;
+  //   }
+  //   $scope.PaymentModal.show();
+  //   console.log("Payment Modal opened");
+  //   $scope.newPayment = {
+  //     member_id: 0,
+  //     expense: "",
+  //     ammount_paid: ""
+  //   }
+  // };
 
-  $scope.closePaymentModal = function() {
-    $scope.PaymentModal.hide();
-    console.log("Payment Modal closed");
-  };
+  // $scope.closePaymentModal = function() {
+  //   $scope.PaymentModal.hide();
+  //   console.log("Payment Modal closed");
+  // };
 
-  $scope.openExpenseModal = function() {
-    $scope.expenseModal.show();
-    console.log("Expense Modal opened");
-    $scope.newExpense = {
-      title: "",
-      balance: ""
-    }
-  };
+  // $scope.openExpenseModal = function() {
+  //   $scope.expenseModal.show();
+  //   console.log("Expense Modal opened");
+  //   $scope.newExpense = {
+  //     title: "",
+  //     balance: ""
+  //   }
+  // };
 
-  $scope.closeExpenseModal = function() {
-    $scope.expenseModal.hide();
-    console.log("Expence Modal closed");
-  };
+  // $scope.closeExpenseModal = function() {
+  //   $scope.expenseModal.hide();
+  //   console.log("Expence Modal closed");
+  // };
 
-  $scope.addPayment = function() {
-    console.log("New payment added");
-    console.log($scope.newPayment);
-    $scope.tab.balance = ($scope.tab.balance - $scope.newPayment.ammount_paid).toFixed(2);
-    $scope.closePaymentModal();
-  }
+  // $scope.addPayment = function() {
+  //   console.log("New payment added");
+  //   console.log($scope.newPayment);
+  //   $scope.tab.balance = ($scope.tab.balance - $scope.newPayment.ammount_paid).toFixed(2);
+  //   $scope.closePaymentModal();
+  // }
 
-  $scope.addExpense = function() {
-    Tabs.addExpense($scope.tab.id, $scope.newExpense);
-    console.log("New expense added");
-    Tabs.getTotalBalance($scope.tab.id);
-    // $scope.tab.balance = (parseFloat($scope.tab.balance) + parseFloat($scope.newExpense.expense_ammount)).toFixed(2);
-    $scope.closeExpenseModal();
-  }
+  // $scope.addExpense = function() {
+  //   Tabs.addExpense($scope.tab.id, $scope.newExpense);
+  //   console.log("New expense added");
+  //   Tabs.getTotalBalance($scope.tab.id);
+  //   // $scope.tab.balance = (parseFloat($scope.tab.balance) + parseFloat($scope.newExpense.expense_ammount)).toFixed(2);
+  //   $scope.closeExpenseModal();
+  // }
 
 })
 

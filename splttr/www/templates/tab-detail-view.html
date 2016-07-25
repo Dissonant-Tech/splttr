@@ -1,4 +1,4 @@
-<ion-view view-title="{{tab.title}}">
+<ion-view view-title="{{tab.name}}">
 
 	<ion-nav-buttons side="right">
 		<button class="button button-icon ion-more" ng-click="openActionSheet()"></button>
@@ -34,7 +34,7 @@
 	<!-- TAB CONTENT -->
 	<div class="tab-detail-content padding">
 		<ion-label stacked class="tab-detail-label">Description</ion-label>
-		<pre>{{tab.desc}}</pre>
+		<pre>{{tab.description}}</pre>
 
 		<ion-label stacked class="tab-detail-label">Expenses</ion-label>
 		<div class="tab-detail-expense-wrapper">
@@ -44,7 +44,7 @@
 
 			<ion-list>
 			<ion-item class="item-remove-animate item-icon-right tab-detail-expense" ng-repeat="expense in tab.expenses|orderBy: 'balance':true" type="item-text-wrap" href="#/tab/home/{{tab.id}}/{{expense.id}}">
-			<h2>{{expense.title}}</h2>
+			<h2>{{expense.name}}</h2>
 			<p>${{expense.balance}}</p>
 			<i class="icon ion-chevron-right icon-accessory"></i>
 		</ion-item>
@@ -53,7 +53,7 @@
 
 	<ion-label stacked class="tab-detail-label">Members</ion-label>
 	<ul class="detail-squad-list">
-		<div class="detail-squad-member" ng-repeat="member in tab.squad | orderBy: '!debt'" ng-class="{'member-owes': !member.debt}">
+		<div class="detail-squad-member" ng-repeat="member in tab.members | orderBy: '!debt'" ng-class="{'member-owes': !member.debt}">
 			<img ng-src="{{member.img}}" alt="Member profile profile">
 			<div class="detail-squad-member-content">
 				<span>{{member.name}}</span>
