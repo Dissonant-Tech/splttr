@@ -9958,6 +9958,13 @@ ion-content {
   border: 2px solid #c5c5c5;
   margin-right: 10px; }
 
+.tab-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5em; }
+
 .member-checked {
   opacity: 0.5;
   border: none !important; }

@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ion-image-search'])
 
-.controller('LoginCtrl', function($scope, $state, $http, Popups) {
+.controller('LoginCtrl', function($scope, $state, $http, Popups, User) {
   
   console.log("In login controller");
   $scope.loginParams = {
@@ -10,15 +10,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
   $scope.loginUser = function(){
     console.log("Loging in...", $scope.loginParams);
-    $http.post("http://localhost:8000/users/login/", $scope.loginParams)
-      .success(function(data) {
-        console.log("Successfully logged in");
-        $state.go("tab.home")
-      })
-      .error(function(data) {
-        console.log("Invalid login");
-        Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
-      })
+    User.login($scope.loginParams);
   };
 
 })
@@ -73,8 +65,18 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, Tabs) {
+.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, User, Tabs) {
 
+  // load user data before entering home state
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+      
+      // get user data from API
+      User.get().then(function(user){
+        console.log("user loaded in controller");
+        $scope.user = user.data;
+      }); 
+
+  });
   console.log("In home controller");
 
   // get all tabs

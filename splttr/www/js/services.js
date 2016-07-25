@@ -205,19 +205,33 @@ angular.module('starter.services', [])
 
 })
 
-.factory('User', function($http, $rootScope){
+.factory('User', function($http, $rootScope, Popups, $state, $rootScope){
+
+  var currentUser = {};
 
 	return {
-		get: function(user_id) {
-			 $http.get('http://localhost:8000/users/'+user_id+'/', {})
+		get: function() {
+			 return $http.get('http://localhost:8000/users/'+currentUser.user_id+'/', {})
         .success(function(data) {
           console.log("Got user from api", data);
-          $rootScope.user = data;
         })
         .error(function(data) {
           console.log("Could not get user from api", data);
         })
-		}
+		},
+
+    login: function(params) {
+      $http.post("http://localhost:8000/users/login/", params)
+        .success(function(data) {
+          console.log("Successfully logged in", data);
+          currentUser = data;
+          $state.go("tab.home")
+        })
+        .error(function(data) {
+          console.log("Invalid login");
+          Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
+        })
+    }
 	};
 
 });
