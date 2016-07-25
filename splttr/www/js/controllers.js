@@ -2,11 +2,17 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 .controller('LoginCtrl', function($scope, $http, User) {
   
-  console.log("In login controller");
-  $scope.loginParams = {
-    username: "",
-    password: ""
-  }
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+      
+      // get user data from API
+      console.log("In login controller");
+      
+      $scope.loginParams = {
+        username: "",
+        password: ""
+      }   
+
+  });
 
   $scope.loginUser = function(){
     console.log("Loging in...", $scope.loginParams);
@@ -300,7 +306,7 @@ angular.module('starter.controllers', ['ion-image-search'])
     })
   }
 
-  // load modal
+  // Load modal
   $ionicModal.fromTemplateUrl('templates/edit-profile-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -309,7 +315,7 @@ angular.module('starter.controllers', ['ion-image-search'])
     console.log("Edit profile modal loaded");
   });
 
-  // profile edit button clicked
+  // Profile edit button clicked
   $scope.editProfile = function() {
     $scope.openModal();
     $scope.newProfileDetails = {
@@ -318,11 +324,16 @@ angular.module('starter.controllers', ['ion-image-search'])
     }
   }
 
-  // update User data in DB
+  // Edit User data in DB
   $scope.saveProfileEdits = function() {
     
     console.log("saving edits", $scope.newProfileDetails)
-    User.edit($scope.user.id, $scope.newProfileDetails);
+    User.edit($scope.user.id, $scope.newProfileDetails).then(function(){
+      User.get().then(function(user){
+        $scope.user = user.data;
+        $scope.closeModal();
+      })
+    });
   }
 
   $scope.closeModal = function() {
@@ -334,5 +345,9 @@ angular.module('starter.controllers', ['ion-image-search'])
     $scope.modal.show();
     console.log("Edit profile modal opened");
   };
+
+  $scope.signOut = function() {
+    User.signOut();
+  }
 
 });

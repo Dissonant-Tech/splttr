@@ -10006,6 +10006,10 @@ ion-content {
   .user-name-wrapper h2 {
     margin: 0; }
 
+.modal-profile {
+  padding-top: 20px;
+  margin-bottom: -25px; }
+
 .tab-detail-header {
   height: 200px;
   background-size: cover;

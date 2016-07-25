@@ -205,7 +205,7 @@ angular.module('starter.services', [])
       });
 
       alertPopup.then(function(res) {
-        console.log('User acknoloedged popup');
+        console.log('User acknowledged popup');
         if(alertCallback){
           alertCallback();
         }
@@ -293,6 +293,7 @@ angular.module('starter.services', [])
             console.log("Edited user in DB. Response:", data);
           })
           .error(function(data) {
+            Popups.showPopup("Error", "Please make sure your name and username are valid");
             console.log("Could not edit user in DB. Response:", data);
           })
     },
@@ -305,6 +306,12 @@ angular.module('starter.services', [])
           .error(function(data) {
             console.log("Could not delete user from DB. Response:", data);
           })
+    },
+
+    signOut: function() {
+      currentUser = null;
+      console.log("Successfully logged out", currentUser);
+      $state.go("login");
     }
 
 	};

@@ -13,7 +13,7 @@
 				</div>
 				<div class="user-profile-details">
 					<div class="user-profile-image-wrapper">
-						<img ng-src={{user.img}} alt="profile-picture" class="user-profile-image" id="user-profile-image">
+						<img ng-src="{{user.img? 'img/tab1-backgound.png' : 'img/blank-user.png'}}" alt="profile-picture" class="user-profile-image" id="user-profile-image">
 						<!-- <i class="ion-ios-cloud-upload-outline user-profile-image-edit-icon"></i> -->
 					</div>
 					<div class="user-name-wrapper">
@@ -34,7 +34,7 @@
 				<ion-toggle toggle-class="toggle-balanced">Setting 3</ion-toggle>
 			</div>
 		</div>
-		<button class="button button-block button-assertive">Sign Out</button>
+		<button class="button button-block button-assertive" ng-click="signOut()">Sign Out</button>
 	</div>
   </ion-content>
 </ion-view>
