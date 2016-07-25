@@ -141,13 +141,18 @@ angular.module('starter.services', [])
       tabs.splice(tabs.indexOf(tab), 1);
       console.log(tabs);
     },
-    get: function(tabId) {
-      for (var i = 0; i < tabs.length; i++) {
-        if (tabs[i].id === parseInt(tabId)) {
-          return tabs[i];
-        }
-      }
-      return null;
+    get: function(user_id) {
+      return $http.get("http://localhost:8000/tabs/?members="+JSON.stringify(user_id))
+        .success(function(data){
+          console.log("Getting all tabs for: " + user_id);
+          console.log("Tab retreived from DB. Response:", data);
+          return data;
+        })
+        .error(function(data){
+          console.log("No tabs returned from DB. Response:", data);
+          return null;
+        })
+      
     },
     addTab: function(tab) {
       return $http.post("http://localhost:8000/tabs/", tab)
@@ -155,7 +160,7 @@ angular.module('starter.services', [])
           console.log("Successfully added tab to DB", data);
         })
         .error(function(data) {
-          console.log("Invalid login");
+          console.log("sdlkjf", tab);
           Popups.showPopup("Could not add tab", "Sorry, you cannot currently add a tab.");
         })
       

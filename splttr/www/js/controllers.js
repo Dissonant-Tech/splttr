@@ -63,25 +63,21 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 .controller('HomeCtrl', function($scope, $ionicModal, $state, $http, User, Tabs) {
 
-  // load user data before entering home state
+  // Load home state from API
   $scope.$on("$ionicView.beforeEnter", function(event, data){
       
-      // get user data from API
+      // Get user data and Tabs from DB
       User.get().then(function(user){
         $scope.user = user.data;
+        Tabs.get($scope.user.id).then(function(res){
+          console.log(res);
+          $scope.tabs = res.data;
+        })
       }); 
 
   });
 
   console.log("In home controller");
-
-  // get all tabs
-  $scope.tabs = Tabs.all();
-
-  // calculate total balance for each tab based on expense balances
-  $scope.tabs.forEach(function(tab) {
-    Tabs.getTotalBalance(tab.id);
-  });
 
   // =======  MODAL FUNCTIONS =======
 
@@ -101,7 +97,7 @@ angular.module('starter.controllers', ['ion-image-search'])
     $scope.newTabParams = {
         name: "",
         description: "",
-        members: [13]
+        members: [JSON.stringify($scope.user.id)]
     }
   };
 
@@ -110,11 +106,13 @@ angular.module('starter.controllers', ['ion-image-search'])
     console.log("Modal closed");
   };
 
+  // Add members to new Tab
   $scope.addMemberToTab = function(member) {
     console.log("Member added");
 
   }
 
+  // Add new Tab to DB
   $scope.saveNewTab = function(){
     console.log("Saving new tab", $scope.newTabParams);
     Tabs.addTab($scope.newTabParams).then(function(){
