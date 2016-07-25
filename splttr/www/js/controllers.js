@@ -13,6 +13,7 @@ angular.module('starter.controllers', ['ion-image-search'])
     User.login($scope.loginParams);
   };
 
+
 })
 
 .controller('SignupCtrl', function($scope, User, $http) {
@@ -317,14 +318,11 @@ angular.module('starter.controllers', ['ion-image-search'])
     }
   }
 
+  // update User data in DB
   $scope.saveProfileEdits = function() {
-    var validProfileEdit = true;
     
-    // validation of new profile details
     console.log("saving edits", $scope.newProfileDetails)
-    if(validProfileEdit){
-      $scope.closeModal();
-    }
+    User.edit($scope.user.id, $scope.newProfileDetails);
   }
 
   $scope.closeModal = function() {

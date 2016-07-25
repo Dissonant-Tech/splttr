@@ -287,6 +287,16 @@ angular.module('starter.services', [])
          }) 
     },
 
+    edit: function(user_id, params) {
+        return $http.patch('http://localhost:8000/users/'+user_id+'/', params)
+          .success(function(data) {
+            console.log("Edited user in DB. Response:", data);
+          })
+          .error(function(data) {
+            console.log("Could not edit user in DB. Response:", data);
+          })
+    },
+
     delete: function(user_id) {
         return $http.delete('http://localhost:8000/users/'+user_id+'/', {})
           .success(function(data) {
