@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ion-image-search'])
 
-.controller('LoginCtrl', function($scope, $state, $http, Popups, User) {
+.controller('LoginCtrl', function($scope, $state, $http, User) {
   
   console.log("In login controller");
   $scope.loginParams = {
@@ -15,38 +15,27 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('SignupCtrl', function($scope, $state, Popups, $http) {
+.controller('SignupCtrl', function($scope, $state, Popups, User, $http) {
   
   console.log("In signup controller");
 
   $scope.signupPostParams = {
-      name: "",
-      email: "",
+      password: "",
       username: "",
-      password: ""
+      email: ""
   }
 
   $scope.signupUser = function() {
     console.log("Signing up...");
-    $http.post("http://localhost:8000/users/", $scope.signupPostParams)
-      .success(function(data) {
-        console.log("Successfully signed up user", data);
+    User.signup($scope.signupPostParams).then(function(){
 
-        // On successful signup, login user
-        $http.post("http://localhost:8000/users/login/", {username: $scope.signupPostParams.username, password: $scope.signupPostParams.password})
-          .success(function(data) {
-            console.log("Successfully logged in");
-            $state.go("tab.home")
-          })
-
-          .error(function(data) {
-            console.log("Invalid login");
-            Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
-          })
-      })
-      .error(function(data) {
-        Popups.showPopup("Error", "Could not create account. Try again later.")
-      })
+      // if signup was successful, log in user
+      var loginParams = {
+        username: $scope.signupPostParams.username,
+        password: $scope.signupPostParams.password
+      }
+      User.login(loginParams);
+    })
   };
 
 })

@@ -214,6 +214,7 @@ angular.module('starter.services', [])
 
 .factory('User', function($http, $rootScope, Popups, $state, $rootScope){
 
+  // to be populated at login
   var currentUser = {};
 
 	return {
@@ -238,6 +239,17 @@ angular.module('starter.services', [])
           console.log("Invalid login");
           Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
         })
+    },
+
+    signup: function(params) {
+       return $http.post("http://localhost:8000/users/", params)
+         .success(function(data) {
+           console.log("Successfully signed up", data);
+         })
+         .error(function(data) {
+           console.log("Invalid login");
+           Popups.showPopup("Error", "Could not create account. Try again later.")
+         }) 
     }
 	};
 
