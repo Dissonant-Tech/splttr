@@ -1,60 +1,48 @@
 angular.module('starter.controllers', ['ion-image-search'])
 
-.controller('LoginCtrl', function($scope, $state, $http, Popups) {
+.controller('LoginCtrl', function($scope, $http, User) {
   
-  console.log("In login controller");
-  $scope.loginParams = {
-    username: "",
-    password: ""
-  }
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+      
+      // get user data from API
+      console.log("In login controller");
+      
+      $scope.loginParams = {
+        username: "",
+        password: ""
+      }   
+
+  });
 
   $scope.loginUser = function(){
     console.log("Loging in...", $scope.loginParams);
-    $http.post("http://localhost:8000/users/login/", $scope.loginParams)
-      .success(function(data) {
-        console.log("Successfully logged in");
-        $state.go("tab.home")
-      })
-      .error(function(data) {
-        console.log("Invalid login");
-        Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
-      })
+    User.login($scope.loginParams);
   };
+
 
 })
 
-.controller('SignupCtrl', function($scope, $state, Popups, $http) {
+.controller('SignupCtrl', function($scope, User, $http) {
   
   console.log("In signup controller");
 
   $scope.signupPostParams = {
-      name: "",
-      email: "",
+      password: "",
       username: "",
-      password: ""
+      email: ""
   }
 
   $scope.signupUser = function() {
-    console.log("Signing up...");
-    $http.post("http://localhost:8000/users/", $scope.signupPostParams)
-      .success(function(data) {
-        console.log("Successfully signed up user", data);
+    User.signup($scope.signupPostParams).then(function(){
 
-        // On successful signup, login user
-        $http.post("http://localhost:8000/users/login/", {username: $scope.signupPostParams.username, password: $scope.signupPostParams.password})
-          .success(function(data) {
-            console.log("Successfully logged in");
-            $state.go("tab.home")
-          })
+      // if signup was successful, log in user
+      var loginParams = {
+        username: $scope.signupPostParams.username,
+        password: $scope.signupPostParams.password
+      }
 
-          .error(function(data) {
-            console.log("Invalid login");
-            Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
-          })
-      })
-      .error(function(data) {
-        Popups.showPopup("Error", "Could not create account. Try again later.")
-      })
+      User.login(loginParams);
+    })
   };
 
 })
@@ -73,13 +61,22 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, Tabs) {
+.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, User, Tabs) {
+
+  // load user data before entering home state
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+      
+      // get user data from API
+      User.get().then(function(user){
+        $scope.user = user.data;
+      }); 
+
+  });
 
   console.log("In home controller");
 
   // get all tabs
   $scope.tabs = Tabs.all();
-  console.log($scope.tabs);
 
   // calculate total balance for each tab based on expense balances
   $scope.tabs.forEach(function(tab) {
@@ -101,27 +98,10 @@ angular.module('starter.controllers', ['ion-image-search'])
     $scope.modal.show();
     console.log("Modal opened");
 
-    $scope.newTab = {
-        id: 0,
-        title: "",
-        balance: 0,
-        debt: true,
-        bg_img: "",
-        desc: "",
-        squad: [
-          {
-            user_id: 0,
-            name: "Martin",
-            img: "./img/ben.png",
-            debt: false,
-          },
-          {
-            user_id: 1,
-            name: "Martin",
-            img: "./img/adam.jpg",
-            debt: false,
-          }
-        ]
+    $scope.newTabParams = {
+        name: "",
+        description: "",
+        members: [13]
     }
   };
 
@@ -136,9 +116,10 @@ angular.module('starter.controllers', ['ion-image-search'])
   }
 
   $scope.saveNewTab = function(){
-    console.log("Saving new tab");
-    Tabs.addTab($scope.newTab);
-    $scope.closeModal();
+    console.log("Saving new tab", $scope.newTabParams);
+    Tabs.addTab($scope.newTabParams).then(function(){
+      $scope.closeModal();
+    })
   }
 
 })
@@ -291,28 +272,41 @@ angular.module('starter.controllers', ['ion-image-search'])
 
   console.log($scope.labels, $scope.data);
 
-//   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    
-//     $scope.data = [
-//         [65, 59, 80, 81, 56, 55, 40]
-//     ];
 })
 
-.controller('AccountCtrl', function($scope, $ionicModal, $rootScope, User) {
+.controller('AccountCtrl', function($scope, $ionicModal, $state, $rootScope, Popups, User) {
 
-  // $scope.$on("$ionicView.beforeEnter", function(event, data){
-  //   // get user data from API
-  //   $scope.user = User.get("12").then(function(user){
-  //     $scope.user = user.data;
-  //   }); 
-  // });
+  // load user data before entering home state
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+      
+      // get user data from API
+      User.get().then(function(user){
+        $scope.user = user.data;
+        console.log("In account controller")
+      }); 
 
-  // get user from API
-  User.get("12");
-  console.log("In account controller");
-  console.log($rootScope.user);
+  });
+  
 
-  // load modal
+  // Delete User from DB
+  $scope.deleteAccount = function(){
+    Popups.showConfirm("Delete Account", "Are you sure you want to delete your account?", function(){
+      
+      // user clicked "OK"
+      User.delete($scope.user.id);
+      $scope.closeModal();
+
+      // return to login state
+      $state.go("login");
+    }, function(){
+
+      // user clicked "Cancel"
+      $scope.closeModal();
+      console.log("Did not delete account");
+    })
+  }
+
+  // Load modal
   $ionicModal.fromTemplateUrl('templates/edit-profile-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -321,7 +315,7 @@ angular.module('starter.controllers', ['ion-image-search'])
     console.log("Edit profile modal loaded");
   });
 
-  // profile edit button clicked
+  // Profile edit button clicked
   $scope.editProfile = function() {
     $scope.openModal();
     $scope.newProfileDetails = {
@@ -330,14 +324,16 @@ angular.module('starter.controllers', ['ion-image-search'])
     }
   }
 
+  // Edit User data in DB
   $scope.saveProfileEdits = function() {
-    var validProfileEdit = true;
     
-    // validation of new profile details
     console.log("saving edits", $scope.newProfileDetails)
-    if(validProfileEdit){
-      $scope.closeModal();
-    }
+    User.edit($scope.user.id, $scope.newProfileDetails).then(function(){
+      User.get().then(function(user){
+        $scope.user = user.data;
+        $scope.closeModal();
+      })
+    });
   }
 
   $scope.closeModal = function() {
@@ -349,5 +345,9 @@ angular.module('starter.controllers', ['ion-image-search'])
     $scope.modal.show();
     console.log("Edit profile modal opened");
   };
+
+  $scope.signOut = function() {
+    User.signOut();
+  }
 
 });

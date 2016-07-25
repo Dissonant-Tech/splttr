@@ -19,7 +19,7 @@ angular.module('ion-image-search').
         };
 
         var defaultConfiguration = {
-            searchProviders: [searchProviders.Flickr],
+            searchProviders: [searchProviders.Bing],
             imgSize: imgSizes.small,
             fileType: fileTypes.jpg,
             maxSuccessiveFails: 5
