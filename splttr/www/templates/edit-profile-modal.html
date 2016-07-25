@@ -30,14 +30,18 @@
 					</div>
 			  	</div>
 
-			  	<!-- MODAL BUTTON -->
+			  	<!-- MODAL BUTTONS -->
 				<div class="padding">
 					<button type="button" class="button button-block button-balanced" ng-disabled="editProfileForm.$invalid" ng-click="saveProfileEdits()">
 					  	Save
 					</button>
-				</div>
-
+				</div>	
 			</div>
 		</form>
+		<div class="padding">
+			<button type="button" class="button button-block button-assertive" ng-click="deleteAccount()">
+			  	Delete Account
+			</button>
+		</div>
 	</ion-content>
 </ion-modal-view>

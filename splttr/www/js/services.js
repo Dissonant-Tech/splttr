@@ -198,7 +198,7 @@ angular.module('starter.services', [])
 .factory('Popups', function($ionicPopup){
 
   return {
-    showPopup: function(title, message) {
+    showPopup: function(title, message, alertCallback) {
       var alertPopup = $ionicPopup.alert({
         title: title,
         template: message
@@ -206,37 +206,72 @@ angular.module('starter.services', [])
 
       alertPopup.then(function(res) {
         console.log('User acknoloedged popup');
+        if(alertCallback){
+          alertCallback();
+        }
       });
-    }
+    },
+    
+    showConfirm: function(title, message, confirmCallback, cancellCallback) {
+       var confirmPopup = $ionicPopup.confirm({
+         title: title,
+         template: message
+       });
+
+       confirmPopup.then(function(res) {
+         if(res) {
+           confirmCallback();
+         } else {
+           cancellCallback();
+         }
+       });
+     }
   };
 
 })
 
 .factory('User', function($http, $rootScope, Popups, $state, $rootScope){
 
+  /*
+
+    Set of API functions specific to retreiving and manipulating User data
+
+  */
+
   // to be populated at login
   var currentUser = {};
 
 	return {
 		get: function() {
-			 return $http.get('http://localhost:8000/users/'+currentUser.user_id+'/', {})
-        .success(function(data) {
-          console.log("Got user from api", data);
-        })
-        .error(function(data) {
-          console.log("Could not get user from api", data);
-        })
+        return $http.get('http://localhost:8000/users/'+currentUser.user_id+'/', {})
+          .success(function(data) {
+            console.log("Got user from api. Response:", data);
+          })
+          .error(function(data) {
+            console.log("Could not get user from api. Response:", data);
+          })
 		},
+
+    getWithId: function(user_id) {
+        return $http.get('http://localhost:8000/users/'+user_id+'/', {})
+          .success(function(data) {
+            console.log("Got user from api. Response:", data);
+          })
+          .error(function(data) {
+            console.log("Could not get user from api. Response:", data);
+          })
+
+    },
 
     login: function(params) {
       $http.post("http://localhost:8000/users/login/", params)
         .success(function(data) {
-          console.log("Successfully logged in", data);
+          console.log("Successfully logged in. Response:", data);
           currentUser = data;
           $state.go("tab.home")
         })
         .error(function(data) {
-          console.log("Invalid login");
+          console.log("Could not login. Response: ", data);
           Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
         })
     },
@@ -244,13 +279,24 @@ angular.module('starter.services', [])
     signup: function(params) {
        return $http.post("http://localhost:8000/users/", params)
          .success(function(data) {
-           console.log("Successfully signed up", data);
+           console.log("Successfully signed up. Response:", data);
          })
          .error(function(data) {
-           console.log("Invalid login");
+           console.log("Could not sign up. Repsonse: ", data);
            Popups.showPopup("Error", "Could not create account. Try again later.")
          }) 
+    },
+
+    delete: function(user_id) {
+        return $http.delete('http://localhost:8000/users/'+user_id+'/', {})
+          .success(function(data) {
+            console.log("Deleted user from DB. Response:", data);
+          })
+          .error(function(data) {
+            console.log("Could not delete user from DB. Response:", data);
+          })
     }
+
 	};
 
 });

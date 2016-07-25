@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ion-image-search'])
 
-.controller('LoginCtrl', function($scope, $state, $http, User) {
+.controller('LoginCtrl', function($scope, $http, User) {
   
   console.log("In login controller");
   $scope.loginParams = {
@@ -15,7 +15,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('SignupCtrl', function($scope, $state, Popups, User, $http) {
+.controller('SignupCtrl', function($scope, User, $http) {
   
   console.log("In signup controller");
 
@@ -26,7 +26,6 @@ angular.module('starter.controllers', ['ion-image-search'])
   }
 
   $scope.signupUser = function() {
-    console.log("Signing up...");
     User.signup($scope.signupPostParams).then(function(){
 
       // if signup was successful, log in user
@@ -34,6 +33,7 @@ angular.module('starter.controllers', ['ion-image-search'])
         username: $scope.signupPostParams.username,
         password: $scope.signupPostParams.password
       }
+
       User.login(loginParams);
     })
   };
@@ -61,16 +61,15 @@ angular.module('starter.controllers', ['ion-image-search'])
       
       // get user data from API
       User.get().then(function(user){
-        console.log("user loaded in controller");
         $scope.user = user.data;
       }); 
 
   });
+
   console.log("In home controller");
 
   // get all tabs
   $scope.tabs = Tabs.all();
-  console.log($scope.tabs);
 
   // calculate total balance for each tab based on expense balances
   $scope.tabs.forEach(function(tab) {
@@ -266,26 +265,39 @@ angular.module('starter.controllers', ['ion-image-search'])
 
   console.log($scope.labels, $scope.data);
 
-//   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    
-//     $scope.data = [
-//         [65, 59, 80, 81, 56, 55, 40]
-//     ];
 })
 
-.controller('AccountCtrl', function($scope, $ionicModal, $rootScope, User) {
+.controller('AccountCtrl', function($scope, $ionicModal, $state, $rootScope, Popups, User) {
 
-  // $scope.$on("$ionicView.beforeEnter", function(event, data){
-  //   // get user data from API
-  //   $scope.user = User.get("12").then(function(user){
-  //     $scope.user = user.data;
-  //   }); 
-  // });
+  // load user data before entering home state
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+      
+      // get user data from API
+      User.get().then(function(user){
+        $scope.user = user.data;
+        console.log("In account controller")
+      }); 
 
-  // get user from API
-  User.get("12");
-  console.log("In account controller");
-  console.log($rootScope.user);
+  });
+  
+
+  // Delete User from DB
+  $scope.deleteAccount = function(){
+    Popups.showConfirm("Delete Account", "Are you sure you want to delete your account?", function(){
+      
+      // user clicked "OK"
+      User.delete($scope.user.id);
+      $scope.closeModal();
+
+      // return to login state
+      $state.go("login");
+    }, function(){
+
+      // user clicked "Cancel"
+      $scope.closeModal();
+      console.log("Did not delete account");
+    })
+  }
 
   // load modal
   $ionicModal.fromTemplateUrl('templates/edit-profile-modal.html', {
