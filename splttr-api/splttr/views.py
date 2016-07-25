@@ -7,7 +7,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth.models import User, Group
 
 from splttr.serializers import UserSerializer, GroupSerializer, TabSerializer, EventSerializer, BillSerializer
-from splttr.models import Tab, Event, Bill
+from splttr.models import Tab, Event, Bill, Profile
 
 
 class UserViewSet(viewsets.ModelViewSet):
