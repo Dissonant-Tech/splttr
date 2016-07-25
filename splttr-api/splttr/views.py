@@ -7,7 +7,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth.models import User, Group
 
 from splttr.serializers import UserSerializer, GroupSerializer, TabSerializer, EventSerializer, BillSerializer
-from splttr.models import Tab, Event, Bill
+from splttr.models import Tab, Event, Bill, Profile
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -16,6 +16,8 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
+    filter_fields = ('id', 'username', 'email')
     model = User
 
     @list_route(methods=['POST'])
@@ -54,7 +56,7 @@ class TabViewSet(viewsets.ModelViewSet):
     """
     queryset = Tab.objects.all()
     serializer_class = TabSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
+    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('name', 'description', 'created', 'members')
 
 
@@ -64,7 +66,7 @@ class EventViewSet(viewsets.ModelViewSet):
     """
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
+    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('name', 'description', 'created', 'tab')
 
 
@@ -74,6 +76,6 @@ class BillViewSet(viewsets.ModelViewSet):
     """
     queryset = Bill.objects.all()
     serializer_class = BillSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
+    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('creditor', 'debtor', 'a_debtor', 'event', 'amount')
 
