@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.factory('Tabs', function(){
+.factory('Tabs', function($http, Popups){
 
   // Collection of all tabs
 
@@ -150,8 +150,15 @@ angular.module('starter.services', [])
       return null;
     },
     addTab: function(tab) {
-      tabs.push(tab);
-      console.log(tabs);
+      return $http.post("http://localhost:8000/tabs/", tab)
+        .success(function(data) {
+          console.log("Successfully added tab to DB", data);
+        })
+        .error(function(data) {
+          console.log("Invalid login");
+          Popups.showPopup("Could not add tab", "Sorry, you cannot currently add a tab.");
+        })
+      
     },
     addExpense: function(tabId, expense) {
       for (var i = 0; i < tabs.length; i++) {

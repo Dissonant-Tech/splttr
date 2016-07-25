@@ -103,27 +103,10 @@ angular.module('starter.controllers', ['ion-image-search'])
     $scope.modal.show();
     console.log("Modal opened");
 
-    $scope.newTab = {
-        id: 0,
-        title: "",
-        balance: 0,
-        debt: true,
-        bg_img: "",
-        desc: "",
-        squad: [
-          {
-            user_id: 0,
-            name: "Martin",
-            img: "./img/ben.png",
-            debt: false,
-          },
-          {
-            user_id: 1,
-            name: "Martin",
-            img: "./img/adam.jpg",
-            debt: false,
-          }
-        ]
+    $scope.newTabParams = {
+        name: "",
+        description: "",
+        members: [13]
     }
   };
 
@@ -138,9 +121,10 @@ angular.module('starter.controllers', ['ion-image-search'])
   }
 
   $scope.saveNewTab = function(){
-    console.log("Saving new tab");
-    Tabs.addTab($scope.newTab);
-    $scope.closeModal();
+    console.log("Saving new tab", $scope.newTabParams);
+    Tabs.addTab($scope.newTabParams).then(function(){
+      $scope.closeModal();
+    })
   }
 
 })
