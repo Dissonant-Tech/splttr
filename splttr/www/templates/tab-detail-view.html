@@ -38,7 +38,7 @@
 
 		<ion-label stacked class="tab-detail-label">Expenses</ion-label>
 		<div class="tab-detail-expense-wrapper">
-			<div class="tab-detail-noexpense" ng-if="!tab.expenses">
+			<div class="tab-detail-noexpense" ng-if="!expenses">
 				<span class="modal-tip">No expenses</span>
 			</div>
 
@@ -51,10 +51,11 @@
 	</ion-list>
 	</div>
 
+	<!-- TAB MEMBERS -->
 	<ion-label stacked class="tab-detail-label">Members</ion-label>
 	<ul class="detail-squad-list">
 		<div class="detail-squad-member" ng-repeat="member in tab.members | orderBy: '!debt'" ng-class="{'member-owes': !member.debt}">
-			<img ng-src="{{member.img}}" alt="Member profile profile">
+			<img ng-src="{{member.img? 'member.img' : 'img/blank-user.png'}}"  alt="Member profile profile">
 			<div class="detail-squad-member-content">
 				<span>{{member.name}}</span>
 				<p ng-if="member.debt">Still owes: $45.34</p>

@@ -224,6 +224,38 @@ angular.module('starter.services', [])
 
 })
 
+.factory('Events', function($ionicPopup, $http){
+
+  return {
+
+    // Get all Expenses for a specific tab
+    getAll: function(tab_id) {
+      return $http.get("http://localhost:8000/events/?tab="+tab_id)
+        .success(function(data){
+            console.log("Retrieved all events. Response: ", data);
+            return data;
+        })
+        .error(function(data){
+          console.log("Could not get all events. Reponse: ", data);
+        })
+    },
+
+    // Add Expense to a Tab in the DB
+    addExpense: function(event){
+      return $http.post("http://localhost:8000/events/", event)
+        .success(function(data){
+          console.log("Added events to DB. Response: ", data);
+          return data;
+        })
+        .error(function(data){
+          console.log("Could not add events to DB. Response: ", data);
+        })
+    }
+
+  };
+
+})
+
 .factory('Popups', function($ionicPopup){
 
   return {

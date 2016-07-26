@@ -122,12 +122,15 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs, Events) {
   
   // Load Tab detials from DB
   Tabs.getWithId($stateParams.tabId).then(function(res){
     $scope.tab = res.data;
-    console.log("In tab detail view controller");
+    // Expenses.getAll($scope.tab.id).then(function(res){
+    //     $scope.expenses = res.data;
+    //     console.log("In tab detail view controller");
+    // })
   });
 
   // Open web mage search modal
@@ -168,72 +171,72 @@ angular.module('starter.controllers', ['ion-image-search'])
       });    
   }
 
-  // // load expense modal
-  // $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
-  //   scope: $scope,
-  //   animation: 'slide-in-up'
-  // }).then(function(expenseModal) {
-  //   $scope.expenseModal = expenseModal;
-  //   console.log("Expense Modal loaded");
-  // });
+  // Load expense modal
+  $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(expenseModal) {
+    $scope.expenseModal = expenseModal;
+  });
 
-  // // load Payment modal
-  // $ionicModal.fromTemplateUrl('templates/add-payment-modal.html', {
-  //   scope: $scope,
-  //   animation: 'slide-in-up'
-  // }).then(function(PaymentModal) {
-  //   $scope.PaymentModal = PaymentModal;
-  //   console.log("Payment Modal loaded");
-  // });
+  // Load Payment modal
+  $ionicModal.fromTemplateUrl('templates/add-payment-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(PaymentModal) {
+    $scope.PaymentModal = PaymentModal;
+  });
 
-  // // modal functions
-  // $scope.openPaymentModal = function() {
-  //   if($scope.tab.balance <= 0){
-  //     Popups.showPopup("Whoops!", "This tab currently has an empty balance. Try adding an expense first!");
-  //     return;
-  //   }
-  //   $scope.PaymentModal.show();
-  //   console.log("Payment Modal opened");
-  //   $scope.newPayment = {
-  //     member_id: 0,
-  //     expense: "",
-  //     ammount_paid: ""
-  //   }
-  // };
+  // Open Payment Modal
+  $scope.openPaymentModal = function() {
+    if($scope.tab.balance <= 0){
+      Popups.showPopup("Whoops!", "This tab currently has an empty balance. Try adding an expense first!");
+      return;
+    }
+    $scope.PaymentModal.show();
+    console.log("Payment Modal opened");
+    $scope.newPayment = {
+      member_id: 0,
+      expense: "",
+      ammount_paid: ""
+    }
+  };
 
-  // $scope.closePaymentModal = function() {
-  //   $scope.PaymentModal.hide();
-  //   console.log("Payment Modal closed");
-  // };
+  // Close Payment Modal
+  $scope.closePaymentModal = function() {
+    $scope.PaymentModal.hide();
+    console.log("Payment Modal closed");
+  };
 
-  // $scope.openExpenseModal = function() {
-  //   $scope.expenseModal.show();
-  //   console.log("Expense Modal opened");
-  //   $scope.newExpense = {
-  //     title: "",
-  //     balance: ""
-  //   }
-  // };
+  // Open Expense Modal
+  $scope.openExpenseModal = function() {
+    $scope.expenseModal.show();
+    console.log("Expense Modal opened");
+    $scope.newExpenseParams = {
+      title: "",
+      balance: ""
+    }
+  };
 
-  // $scope.closeExpenseModal = function() {
-  //   $scope.expenseModal.hide();
-  //   console.log("Expence Modal closed");
-  // };
+  // Close Expense Modal
+  $scope.closeExpenseModal = function() {
+    $scope.expenseModal.hide();
+    console.log("Expence Modal closed");
+  };
 
-  // $scope.addPayment = function() {
-  //   console.log("New payment added");
-  //   console.log($scope.newPayment);
-  //   $scope.tab.balance = ($scope.tab.balance - $scope.newPayment.ammount_paid).toFixed(2);
-  //   $scope.closePaymentModal();
-  // }
+  // Add Payment to Tab
+  $scope.addPayment = function() {
+    console.log("New payment added");
+    console.log($scope.newPayment);
+    $scope.tab.balance = ($scope.tab.balance - $scope.newPayment.ammount_paid).toFixed(2);
+    $scope.closePaymentModal();
+  }
 
-  // $scope.addExpense = function() {
-  //   Tabs.addExpense($scope.tab.id, $scope.newExpense);
-  //   console.log("New expense added");
-  //   Tabs.getTotalBalance($scope.tab.id);
-  //   // $scope.tab.balance = (parseFloat($scope.tab.balance) + parseFloat($scope.newExpense.expense_ammount)).toFixed(2);
-  //   $scope.closeExpenseModal();
-  // }
+  // Add Expense to Tab
+  $scope.addExpense = function() {
+    // Expenses.addExpense()
+    // $scope.closeExpenseModal();
+  }
 
 })
 
