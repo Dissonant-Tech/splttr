@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.factory('Tabs', function($http, Popups){
+.factory('Tabs', function($http, Popups, $state){
 
   // Collection of all tabs
 
@@ -134,28 +134,57 @@ angular.module('starter.services', [])
   ];
 
   return {
-    all: function() {
-      return tabs;
+
+    // Remove Tab from DB
+    remove: function(tab_id) {
+      return $http.delete("http://localhost:8000/tabs/"+tab_id+"/")
+        .success(function(data){
+          console.log("Deleted tab from DB. Response: ", data);
+        })
+        .error(function(data){
+          Popups.showPopup("Error", "Sorry, we couldn't delete your Tab right now. Try again later!");
+        })
     },
-    remove: function(tab) {
-      tabs.splice(tabs.indexOf(tab), 1);
-      console.log(tabs);
+
+    // Get all Tabs that match User by its ID
+    get: function(user_id) {
+      return $http.get("http://localhost:8000/tabs/?members="+JSON.stringify(user_id))
+        .success(function(data){
+          console.log("Getting all tabs for user with ID: " + user_id);
+          console.log("Tabs retreived from DB. Response:", data);
+          return data;
+        })
+        .error(function(data){
+          console.log("No tabs returned from DB. Response:", data);
+          return null;
+        })
+      
     },
-    get: function(tabId) {
-      for (var i = 0; i < tabs.length; i++) {
-        if (tabs[i].id === parseInt(tabId)) {
-          return tabs[i];
-        }
-      }
-      return null;
+
+    // Get specific Tab by its ID
+    getWithId: function(tab_id) {
+      return $http.get("http://localhost:8000/tabs/"+tab_id)
+        .success(function(data){
+            console.log("Retreived tab detail from DB. Response:", data);
+            return data;
+        })
+        .error(function(data){
+            console.log("tried: " + tab_id);
+            console.log("Could not get tab from DB. Response: ", data);
+            $state.go("tab.home");
+        })
+
     },
+
+    // Add new Tab to DB
     addTab: function(tab) {
       return $http.post("http://localhost:8000/tabs/", tab)
         .success(function(data) {
           console.log("Successfully added tab to DB", data);
+          return data;
         })
         .error(function(data) {
-          console.log("Invalid login");
+          console.log("sdlkjf", tab);
           Popups.showPopup("Could not add tab", "Sorry, you cannot currently add a tab.");
         })
       
@@ -191,6 +220,38 @@ angular.module('starter.services', [])
       tab[attr] = newValue;
       console.log(tab);
     }
+  };
+
+})
+
+.factory('Events', function($ionicPopup, $http){
+
+  return {
+
+    // Get all Expenses for a specific tab
+    getAll: function(tab_id) {
+      return $http.get("http://localhost:8000/events/?tab="+tab_id)
+        .success(function(data){
+            console.log("Retrieved all events. Response: ", data);
+            return data;
+        })
+        .error(function(data){
+          console.log("Could not get all events. Reponse: ", data);
+        })
+    },
+
+    // Add Expense to a Tab in the DB
+    addExpense: function(event){
+      return $http.post("http://localhost:8000/events/", event)
+        .success(function(data){
+          console.log("Added events to DB. Response: ", data);
+          return data;
+        })
+        .error(function(data){
+          console.log("Could not add events to DB. Response: ", data);
+        })
+    }
+
   };
 
 })

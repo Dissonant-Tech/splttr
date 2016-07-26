@@ -1,6 +1,6 @@
 <ion-view view-title="Splttr">
     <ion-content class="padding tab-home">
-        <div class="tab-wrapper" ng-repeat="tab in tabs | orderBy: 'id'">
+        <div class="tab-wrapper" ng-repeat="tab in tabs | orderBy: 'created':true">
 
             <!-- TAB CONTENT -->
             <div class="tab-content-wrapper" ng-style="{ 
@@ -11,12 +11,12 @@
 
                 <!-- TITLE -->
                 <div class="tab-content-title">
-                    <h2>{{tab.title}}</h2>
+                    <h2>{{tab.name}}</h2>
                 </div>
 
                 <!-- BALANCE -->
                 <div class="tab-content-balance">
-                    <h4>Balance: ${{tab.balance}}</h4>
+                    <h4>Balance: $0</h4>
                 </div>
 
                 <!-- MEMBERS LIST -->
@@ -26,7 +26,7 @@
                         <ion-scroll direction="x" style="white-space:nowrap;" has-bouncing="true">
                             <li
                             ng-repeat="member in tab.members | orderBy: 'debt'" 
-                            style="background-image: url({{member.img}})" 
+                            ng-style="{ 'background-image': member.img ? 'url({{member.img}})' : 'url(img/blank-user.png)' }" 
                             ng-class="{'member-checked': member.debt}">
                             </li>
                         </ion-scroll>
