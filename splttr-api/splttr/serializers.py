@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    bg_img = serializers.URLField(source='profile.bg_img', allow_blank=True)  # Telling Django to use profile instead
+    bg_img = serializers.URLField(source='profile.bg_img', allow_null=True,  allow_blank=True)  # Telling Django to use profile instead
     full_name = serializers.CharField(source='profile.full_name', allow_null=True, allow_blank=True)  # Same
 
     class Meta:

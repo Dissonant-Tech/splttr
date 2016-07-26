@@ -4,7 +4,7 @@ from django.db import models
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)  # extending the deault model
-    bg_img = models.URLField(default='', blank=True)  # Url Field for the bg image
+    bg_img = models.URLField(null=True, blank=True)  # Url Field for the bg image
     full_name = models.CharField(max_length=45, null=True, blank=True)
 
 
