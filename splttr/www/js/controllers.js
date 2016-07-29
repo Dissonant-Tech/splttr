@@ -15,10 +15,8 @@ angular.module('starter.controllers', ['ion-image-search'])
   });
 
   $scope.loginUser = function(){
-    console.log("Loging in...", $scope.loginParams);
     User.login($scope.loginParams);
   };
-
 
 })
 
@@ -86,7 +84,6 @@ angular.module('starter.controllers', ['ion-image-search'])
     animation: 'slide-in-up'
   }).then(function(modal) {
     $scope.modal = modal;
-    console.log("Modal loaded");
   });
 
   $scope.openModal = function() {
@@ -122,15 +119,23 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs, Events) {
+.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs, Events, Bills) {
   
-  // Load Tab detials from DB
+  // Get Tab details and events from DB
   Tabs.getWithId($stateParams.tabId).then(function(res){
     $scope.tab = res.data;
-    // Expenses.getAll($scope.tab.id).then(function(res){
-    //     $scope.expenses = res.data;
-    //     console.log("In tab detail view controller");
-    // })
+
+    // get all expenses
+    Events.getAll($scope.tab.id).then(function(events){
+      $scope.expenses = events.data;
+
+      // get bill per expense
+      $scope.expenses.forEach(function(expense){
+         Bills.getBill(expense.id).then(function(bill){
+            expense.amount = bill.amount;
+         });
+      })
+    })
   });
 
   // Open web mage search modal
@@ -213,8 +218,15 @@ angular.module('starter.controllers', ['ion-image-search'])
     $scope.expenseModal.show();
     console.log("Expense Modal opened");
     $scope.newExpenseParams = {
-      title: "",
-      balance: ""
+      name: "",
+      description: "Desc",
+      tab: $scope.tab.id
+    }
+
+    $scope.newBillParams = {
+      amount: 0,
+      creditor: 30,
+      event: ""
     }
   };
 
@@ -226,16 +238,21 @@ angular.module('starter.controllers', ['ion-image-search'])
 
   // Add Payment to Tab
   $scope.addPayment = function() {
-    console.log("New payment added");
-    console.log($scope.newPayment);
     $scope.tab.balance = ($scope.tab.balance - $scope.newPayment.ammount_paid).toFixed(2);
     $scope.closePaymentModal();
   }
 
   // Add Expense to Tab
   $scope.addExpense = function() {
-    // Expenses.addExpense()
-    // $scope.closeExpenseModal();
+    Events.addExpense($scope.newExpenseParams).then(function(res){
+        var newEventId = res.data.id;
+        $scope.newBillParams.event = newEventId;
+
+        // Add bill to event
+        Bills.addBill($scope.newBillParams).then(function(){
+            $scope.closeExpenseModal();
+        })
+    });
   }
 
 })

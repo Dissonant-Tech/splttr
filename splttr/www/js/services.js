@@ -228,10 +228,11 @@ angular.module('starter.services', [])
 
   return {
 
-    // Get all Expenses for a specific tab
+    // Get all events for a specific tab
     getAll: function(tab_id) {
       return $http.get("http://localhost:8000/events/?tab="+tab_id)
         .success(function(data){
+            console.log("Getting all events for Tab ID: " + tab_id);
             console.log("Retrieved all events. Response: ", data);
             return data;
         })
@@ -240,7 +241,7 @@ angular.module('starter.services', [])
         })
     },
 
-    // Add Expense to a Tab in the DB
+    // Add event to a Tab in the DB
     addExpense: function(event){
       return $http.post("http://localhost:8000/events/", event)
         .success(function(data){
@@ -251,6 +252,38 @@ angular.module('starter.services', [])
           console.log("Could not add events to DB. Response: ", data);
         })
     }
+
+  };
+
+})
+
+.factory('Bills', function($ionicPopup, $http){
+  return {
+
+      // Get bill for a specific event
+      getBill: function(event_id) {
+        return $http.get("http://localhost:8000/bills/?event="+event_id)
+          .success(function(data){
+              console.log("Getting bill for event: " + event_id);
+              console.log("Retrieved bill. Response: ", data);
+              return data;
+          })
+          .error(function(data){
+            console.log("Could not get bill. Reponse: ", data);
+          })
+      },
+
+      // Add bill to event
+      addBill: function(bill){
+        return $http.post("http://localhost:8000/bills/", bill)
+          .success(function(data){
+            console.log("Added bill to event in DB. Response: ", data);
+            return data;
+          })
+          .error(function(data){
+            console.log("Could not add bill to DB. Response: ", data);
+          })
+      }
 
   };
 
