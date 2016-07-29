@@ -15,10 +15,8 @@ angular.module('starter.controllers', ['ion-image-search'])
   });
 
   $scope.loginUser = function(){
-    console.log("Loging in...", $scope.loginParams);
     User.login($scope.loginParams);
   };
-
 
 })
 
@@ -86,7 +84,6 @@ angular.module('starter.controllers', ['ion-image-search'])
     animation: 'slide-in-up'
   }).then(function(modal) {
     $scope.modal = modal;
-    console.log("Modal loaded");
   });
 
   $scope.openModal = function() {
@@ -124,14 +121,15 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 .controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs, Events) {
   
-  // Load Tab detials from DB
+  // Get Tab details and events from DB
   Tabs.getWithId($stateParams.tabId).then(function(res){
     $scope.tab = res.data;
-    // Expenses.getAll($scope.tab.id).then(function(res){
-    //     $scope.expenses = res.data;
-    //     console.log("In tab detail view controller");
-    // })
+    Events.getAll($scope.tab.id).then(function(events){
+      $scope.expenses = events.data;
+
+    })
   });
+
 
   // Open web mage search modal
   $scope.openImageChooserModal = function(){

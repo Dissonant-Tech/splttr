@@ -228,10 +228,11 @@ angular.module('starter.services', [])
 
   return {
 
-    // Get all Expenses for a specific tab
+    // Get all events for a specific tab
     getAll: function(tab_id) {
       return $http.get("http://localhost:8000/events/?tab="+tab_id)
         .success(function(data){
+            console.log("Getting all events for Tab ID: " + tab_id);
             console.log("Retrieved all events. Response: ", data);
             return data;
         })
@@ -240,7 +241,7 @@ angular.module('starter.services', [])
         })
     },
 
-    // Add Expense to a Tab in the DB
+    // Add event to a Tab in the DB
     addExpense: function(event){
       return $http.post("http://localhost:8000/events/", event)
         .success(function(data){
