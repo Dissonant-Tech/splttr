@@ -1,49 +1,42 @@
-.user{
-	&-wrapper{
+.user{	
+	&-profile{
+		max-width: 600px;
+		margin: 0 auto;
 	}
-	&-profile-wrapper{
-	}
-	&-item-image{
-	}
-	&-name-wrapper{
+	&-profile-details{
 		text-align: center;
-		h1{
-			font-size: 1.8em;
+		padding: 10px 0;
+		&-wrapper{
+			margin-top: 5px;
+			min-height: 250px;
 		}
 	}
 	&-profile-image{
 		border-radius: 50%;
-		max-width: 180px;
-		border: 4px solid #E6E5E5;
-		margin: 0 auto;
-	}
-	&-profile-details{
-		background: linear-gradient($splttr-blue, black);
-		padding: 30px;
-		h1{
-			color: white;
-			margin-bottom: 0px;
-			padding-top: 30px;
-			padding-botton: 30px;
+		max-width: 40%;
+		border: 2px solid #c5c5c5;
+		margin: 10px auto 10px auto;
+		display: block;
+		&-wrapper{
+			position: relative;
+		}
+		&-edit-icon{
+			position: absolute;
+		    top: 50%;
+		    left: 50%;
+		    transform: translate(-50%,-50%);
+		    font-size: 7em;
+		    color: white;
 		}
 	}
-	&-setting-row-wrapper{
-		width: 100%;
-	}
-	&-setting-title{
-		padding: 15% 0 3% 0;
-	}
-	&-setting-wrapper{
-		width: 50%;
-		float: left;
-		background: white;
-		.item-image{
-			padding: 5%;
-			// border: none;
-		}
-		img{
-			max-width: 30%;
-			padding-top: 10%;
+	&-name-wrapper{
+		padding-top: 5px;
+		h2{
+			margin: 0;
 		}
 	}
+}
+.modal-profile{
+	padding-top: 20px;
+	margin-bottom: -25px;
 }

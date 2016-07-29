@@ -1,54 +1,68 @@
-<ion-view view-title="{{tab.title}}">
+<ion-view view-title="{{tab.name}}">
+
+	<ion-nav-buttons side="right">
+		<button class="button button-icon ion-more" ng-click="openActionSheet()"></button>
+	</ion-nav-buttons>
+
+
+	<div class="bar bar-header">
+		<h1 class="title">Popover</h1>
+		<div class="buttons">
+			<button class="button button-icon ion-more" ng-click="popover.show($event)">
+			</button>
+		</div>
+	</div>
 	<ion-content class="tab-detail">
 
-	 	<!-- TAB HEADER -->
-		<div class="tab-detail-header" ng-style="{ 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)),' + getImageUrl() }">
-			<div class="tab-detail-title">
-				<h1>${{tab.balance}}</h1>
-			</div>
+	<!-- TAB HEADER -->
+	<div class="tab-detail-header" ng-style="{ 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),' + getImageUrl() }">
+		<div class="tab-detail-title">
+			<h1>${{tab.balance}}</h1>
 		</div>
+	</div>
 
-		<!-- TAB BUTTONS -->
-		<div class="tab-detail-button-wrapper">
-			<button class="button button-positive tab-detail-button" ng-click="openExpenseModal()">
-			  Add Expense
-			</button>
-			<button class="button button-balanced tab-detail-button" ng-click="openPaymentModal()">
-			  Add Payment
-			</button>
-		</div>
+	<!-- TAB BUTTONS -->
+	<div class="tab-detail-button-wrapper">
+		<button class="button button-positive tab-detail-button" ng-click="openExpenseModal()">
+			Add Expense
+		</button>
+		<button class="button button-balanced tab-detail-button" ng-click="openPaymentModal()">
+			Add Payment
+		</button>
+	</div>
 
-		<!-- TAB CONTENT -->
-		<div class="tab-detail-content padding">
-			<ion-label stacked class="tab-detail-label">Description</ion-label>
-			<pre>{{tab.desc}}</pre>
+	<!-- TAB CONTENT -->
+	<div class="tab-detail-content padding">
+		<ion-label stacked class="tab-detail-label">Description</ion-label>
+		<pre>{{tab.description}}</pre>
 
-			<ion-label stacked class="tab-detail-label">Expenses</ion-label>
-			<div class="tab-detail-expense-wrapper">
-				<div class="tab-detail-noexpense" ng-if="!tab.expenses">
-					<span class="modal-tip">No expenses</span>
-				</div>
-
-				<ion-list>
-				      <ion-item class="item-remove-animate item-icon-right tab-detail-expense" ng-repeat="expense in tab.expenses|orderBy: 'balance':true" type="item-text-wrap" href="#/tab/home/{{tab.id}}/{{expense.id}}">
-				        <h2>{{expense.title}}</h2>
-				        <p>${{expense.balance}}</p>
-				        <i class="icon ion-chevron-right icon-accessory"></i>
-				      </ion-item>
-			    </ion-list>
+		<ion-label stacked class="tab-detail-label">Expenses</ion-label>
+		<div class="tab-detail-expense-wrapper">
+			<div class="tab-detail-noexpense" ng-if="!expenses">
+				<span class="modal-tip">No expenses</span>
 			</div>
 
-			<ion-label stacked class="tab-detail-label">Members</ion-label>
-            <ul class="detail-squad-list">
-            	<div class="detail-squad-member" ng-repeat="member in tab.squad | orderBy: '!debt'" ng-class="{'member-owes': !member.debt}">
-            		<img ng-src="{{member.img}}" alt="Member profile profile">
-            		<div class="detail-squad-member-content">
-            			<span>{{member.name}}</span>
-            			<p ng-if="member.debt">Still owes: $45.34</p>
-            			<p ng-if="!member.debt">Does not owe</p>
-        			</div>
-            	</div>
-            </ul>
+			<ion-list>
+			<ion-item class="item-remove-animate item-icon-right tab-detail-expense" ng-repeat="expense in tab.expenses|orderBy: 'balance':true" type="item-text-wrap" href="#/tab/home/{{tab.id}}/{{expense.id}}">
+			<h2>{{expense.name}}</h2>
+			<p>${{expense.balance}}</p>
+			<i class="icon ion-chevron-right icon-accessory"></i>
+		</ion-item>
+	</ion-list>
+	</div>
+
+	<!-- TAB MEMBERS -->
+	<ion-label stacked class="tab-detail-label">Members</ion-label>
+	<ul class="detail-squad-list">
+		<div class="detail-squad-member" ng-repeat="member in tab.members | orderBy: '!debt'" ng-class="{'member-owes': !member.debt}">
+			<img ng-src="{{member.img? 'member.img' : 'img/blank-user.png'}}"  alt="Member profile profile">
+			<div class="detail-squad-member-content">
+				<span>{{member.name}}</span>
+				<p ng-if="member.debt">Still owes: $45.34</p>
+				<p ng-if="!member.debt">Does not owe</p>
+			</div>
 		</div>
+	</ul>
+	</div>
 	</ion-content>
 </ion-view>

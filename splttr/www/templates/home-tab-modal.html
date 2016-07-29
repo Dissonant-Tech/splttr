@@ -16,8 +16,8 @@
 					  <input type="search" placeholder="Search">
 					</label>
 					<ion-scroll class="member-list-scroll" zooming="false" direction="x" style="width: 2000px;">
-					    <div class="tab-content-squad-wrapper">
-					                <ul class="squad-list">
+					    <div class="tab-content-member-wrapper">
+					                <ul class="member-list">
 					                    <li style="background-image: url(./img/max.png);" on-tap="addMemberToTab()"></li>
 					                    <li style="background-image: url(./img/adam.jpg);" on-tap="addMemberToTab()"></li>
 					                    <li style="background-image: url(./img/ben.png);" on-tap="addMemberToTab()"></li>
@@ -35,12 +35,12 @@
 
 					<label class="item item-input item-floating-label modal-label">
 						<span class="input-label">Title</span>
-						<input type="text" placeholder="Title" ng-model="newTab.title" required>
+						<input type="text" placeholder="Title" ng-model="newTabParams.name" required>
 					</label>
 
 					<span class="input-label padding modal-label textarea-label">Description</span>
 					<label class="item item-input textarea-wrapper">	
-					    <textarea placeholder="Road trip, music festival, lunch, etc..." ng-model="newTab.desc" required></textarea>
+					    <textarea placeholder="Road trip, music festival, lunch, etc..." ng-model="newTabParams.description" required></textarea>
 				  	</label>
 			  	</div>
 

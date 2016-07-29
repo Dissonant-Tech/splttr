@@ -1,0 +1,43 @@
+<ion-modal-view>
+	<ion-header-bar>
+		  <h1 class="title">Edit Account</h1>
+		  <div class="buttons">
+		    <button class="button button-clear button-positive" ng-click="closeModal()">Close</button>
+		  </div>
+	</ion-header-bar>
+	<ion-content class="padding">
+		<form name="editProfileForm" novalidate>
+			<div class="list">
+
+				<!-- USER PROFILE PICTURE -->
+				<div class="user-profile-image-wrapper modal-profile">
+					<img ng-src="{{user.img? 'img/tab1-backgound.png' : 'img/blank-user.png'}}" alt="profile-picture" class="user-profile-image blur" id="user-profile-image">
+					<i class="ion-ios-cloud-upload-outline user-profile-image-edit-icon"></i>
+				</div>
+					
+				<!-- MODAL INPUT FIELDS -->
+				<div class="modal-input padding">
+					<label class="item item-input item-floating-label modal-label">
+						<span class="input-label">Name</span>
+						<input type="text" placeholder="Name" ng-model="newProfileDetails.name" required>
+					</label>
+					<label class="item item-input item-floating-label modal-label">
+						<span class="input-label">Username</span>
+						<input type="text" placeholder="Name" ng-model="newProfileDetails.username" required>
+					</label>
+					<div class="modal-tip-wrapper">
+						<span class="modal-tip">30 characters or fewer. Letters, digits and @/./+/-/_ only</span>
+					</div>
+			  	</div>
+
+			  	<!-- MODAL BUTTONS -->
+				<button type="button" class="button button-block button-balanced" ng-disabled="editProfileForm.$invalid" ng-click="saveProfileEdits()">
+				  	Save
+				</button>
+			</div>
+		</form>
+		<button type="button" class="button button-block button-assertive" ng-click="deleteAccount()">
+		  	Delete Account
+		</button>
+	</ion-content>
+</ion-modal-view>

@@ -1,60 +1,48 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ion-image-search'])
 
-.controller('LoginCtrl', function($scope, $state, $http, Popups) {
+.controller('LoginCtrl', function($scope, $http, User) {
   
-  console.log("In login controller");
-  $scope.loginParams = {
-    username: "",
-    password: ""
-  }
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+      
+      // get user data from API
+      console.log("In login controller");
+      
+      $scope.loginParams = {
+        username: "",
+        password: ""
+      }   
+
+  });
 
   $scope.loginUser = function(){
     console.log("Loging in...", $scope.loginParams);
-    $http.post("http://localhost:8000/users/login/", $scope.loginParams)
-      .success(function(data) {
-        console.log("Successfully logged in");
-        $state.go("tab.home")
-      })
-      .error(function(data) {
-        console.log("Invalid login");
-        Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
-      })
+    User.login($scope.loginParams);
   };
+
 
 })
 
-.controller('SignupCtrl', function($scope, $state, Popups, $http) {
+.controller('SignupCtrl', function($scope, User, $http) {
   
   console.log("In signup controller");
 
   $scope.signupPostParams = {
-      name: "",
-      email: "",
+      password: "",
       username: "",
-      password: ""
+      email: ""
   }
 
   $scope.signupUser = function() {
-    console.log("Signing up...");
-    $http.post("http://localhost:8000/users/", $scope.signupPostParams)
-      .success(function(data) {
-        console.log("Successfully signed up user", data);
+    User.signup($scope.signupPostParams).then(function(){
 
-        // On successful signup, login user
-        $http.post("http://localhost:8000/users/login/", {username: $scope.signupPostParams.username, password: $scope.signupPostParams.password})
-          .success(function(data) {
-            console.log("Successfully logged in");
-            $state.go("tab.home")
-          })
+      // if signup was successful, log in user
+      var loginParams = {
+        username: $scope.signupPostParams.username,
+        password: $scope.signupPostParams.password
+      }
 
-          .error(function(data) {
-            console.log("Invalid login");
-            Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
-          })
-      })
-      .error(function(data) {
-        Popups.showPopup("Error", "Could not create account. Try again later.")
-      })
+      User.login(loginParams);
+    })
   };
 
 })
@@ -73,28 +61,22 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, Tabs) {
+.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, User, Tabs) {
 
-  console.log("In home controller");
+  // Load home state from API
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+      
+      // Get user data and Tabs from DB
+      User.get().then(function(user){
+        $scope.user = user.data;
+        Tabs.get($scope.user.id).then(function(res){
+          $scope.tabs = res.data;
+        })
+      }); 
 
-  // get all tabs
-  $scope.tabs = Tabs.all();
-  console.log($scope.tabs);
-
-  // calculate total balance for each tab based on expense balances
-  $scope.tabs.forEach(function(tab) {
-    Tabs.getTotalBalance(tab.id);
   });
 
-  $scope.getUsers = function() {
-    $http.get("http://localhost:8888/users/", { params: {"key1" : "value1", "key2" : "value2"} })
-      .success(function(data) {
-        console.log(data);
-      })
-      .error(function(data) {
-        alert("Could not retrieve users");
-      })
-  };
+  console.log("In home controller");
 
   // =======  MODAL FUNCTIONS =======
 
@@ -111,27 +93,10 @@ angular.module('starter.controllers', [])
     $scope.modal.show();
     console.log("Modal opened");
 
-    $scope.newTab = {
-        id: 0,
-        title: "",
-        balance: 0,
-        debt: true,
-        bg_img: "./img/tab3-background.jpg",
-        desc: "",
-        squad: [
-          {
-            user_id: 0,
-            name: "Martin",
-            img: "./img/ben.png",
-            debt: false,
-          },
-          {
-            user_id: 1,
-            name: "Martin",
-            img: "./img/adam.jpg",
-            debt: false,
-          }
-        ]
+    $scope.newTabParams = {
+        name: "",
+        description: "",
+        members: [JSON.stringify($scope.user.id)]
     }
   };
 
@@ -140,49 +105,89 @@ angular.module('starter.controllers', [])
     console.log("Modal closed");
   };
 
+  // Add members to new Tab
   $scope.addMemberToTab = function(member) {
     console.log("Member added");
 
   }
 
+  // Add new Tab to DB
   $scope.saveNewTab = function(){
-    console.log("Saving new tab");
-    Tabs.addTab($scope.newTab);
-    $scope.closeModal();
+    console.log("Saving new tab", $scope.newTabParams);
+    Tabs.addTab($scope.newTabParams).then(function(res){
+      $scope.tabs.push(res.data);
+      $scope.closeModal();
+    })
   }
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $stateParams, $ionicModal, Popups, Tabs) {
+.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs, Events) {
   
-  console.log("In tab detail view controller");
-  $scope.tab = Tabs.get($stateParams.tabId);
-  console.log($scope.tab);
+  // Load Tab detials from DB
+  Tabs.getWithId($stateParams.tabId).then(function(res){
+    $scope.tab = res.data;
+    // Expenses.getAll($scope.tab.id).then(function(res){
+    //     $scope.expenses = res.data;
+    //     console.log("In tab detail view controller");
+    // })
+  });
 
-  $scope.getImageUrl = function() {
-    return "url(" + $scope.tab.bg_img + ")";
+  // Open web mage search modal
+  $scope.openImageChooserModal = function(){
+    $webImageSelector.show().then(function(image){
+      Tabs.edit($scope.tab.id, "bg_img", image.image.url);
+    });
   }
 
+  // Open action sheet
+  $scope.openActionSheet = function() {
+    $ionicActionSheet.show({
+        titleText: $scope.tab.title,
+        buttons: [
+          { text: 'Add Cover Photo' }
+        ],
+        destructiveText: 'Delete',
+        cancelText: 'Cancel',
+        cancel: function() {
+          console.log('CANCELLED');
+        },
+        buttonClicked: function(index) {
+          console.log('BUTTON CLICKED', index);
+          switch(index){
+            case 0:
+              // Add Cover Photo Chosen
+              $scope.openImageChooserModal();
+          }
+          return true;
+        },
+        destructiveButtonClicked: function() {
+          console.log("Removing tab..")
+          Tabs.remove($scope.tab.id).then(function(){
+            $state.go("tab.home");
+          })
+          return true;
+        }
+      });    
+  }
 
-  // load expense modal
+  // Load expense modal
   $ionicModal.fromTemplateUrl('templates/add-expense-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(expenseModal) {
     $scope.expenseModal = expenseModal;
-    console.log("Expense Modal loaded");
   });
 
-  // load Payment modal
+  // Load Payment modal
   $ionicModal.fromTemplateUrl('templates/add-payment-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(PaymentModal) {
     $scope.PaymentModal = PaymentModal;
-    console.log("Payment Modal loaded");
   });
 
-  // modal functions
+  // Open Payment Modal
   $scope.openPaymentModal = function() {
     if($scope.tab.balance <= 0){
       Popups.showPopup("Whoops!", "This tab currently has an empty balance. Try adding an expense first!");
@@ -197,25 +202,29 @@ angular.module('starter.controllers', [])
     }
   };
 
+  // Close Payment Modal
   $scope.closePaymentModal = function() {
     $scope.PaymentModal.hide();
     console.log("Payment Modal closed");
   };
 
+  // Open Expense Modal
   $scope.openExpenseModal = function() {
     $scope.expenseModal.show();
     console.log("Expense Modal opened");
-    $scope.newExpense = {
+    $scope.newExpenseParams = {
       title: "",
       balance: ""
     }
   };
 
+  // Close Expense Modal
   $scope.closeExpenseModal = function() {
     $scope.expenseModal.hide();
     console.log("Expence Modal closed");
   };
 
+  // Add Payment to Tab
   $scope.addPayment = function() {
     console.log("New payment added");
     console.log($scope.newPayment);
@@ -223,12 +232,10 @@ angular.module('starter.controllers', [])
     $scope.closePaymentModal();
   }
 
+  // Add Expense to Tab
   $scope.addExpense = function() {
-    Tabs.addExpense($scope.tab.id, $scope.newExpense);
-    console.log("New expense added");
-    Tabs.getTotalBalance($scope.tab.id);
-    // $scope.tab.balance = (parseFloat($scope.tab.balance) + parseFloat($scope.newExpense.expense_ammount)).toFixed(2);
-    $scope.closeExpenseModal();
+    // Expenses.addExpense()
+    // $scope.closeExpenseModal();
   }
 
 })
@@ -263,17 +270,82 @@ angular.module('starter.controllers', [])
 
   console.log($scope.labels, $scope.data);
 
-//   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    
-//     $scope.data = [
-//         [65, 59, 80, 81, 56, 55, 40]
-//     ];
 })
 
-.controller('AccountCtrl', function($scope, User) {
+.controller('AccountCtrl', function($scope, $ionicModal, $state, $rootScope, Popups, User) {
 
-  console.log("In account controller");
-  $scope.user = User.get();
-  console.log($scope.user);
+  // load user data before entering home state
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+      
+      // get user data from API
+      User.get().then(function(user){
+        $scope.user = user.data;
+        console.log("In account controller")
+      }); 
+
+  });
+  
+
+  // Delete User from DB
+  $scope.deleteAccount = function(){
+    Popups.showConfirm("Delete Account", "Are you sure you want to delete your account?", function(){
+      
+      // user clicked "OK"
+      User.delete($scope.user.id);
+      $scope.closeModal();
+
+      // return to login state
+      $state.go("login");
+    }, function(){
+
+      // user clicked "Cancel"
+      $scope.closeModal();
+      console.log("Did not delete account");
+    })
+  }
+
+  // Load modal
+  $ionicModal.fromTemplateUrl('templates/edit-profile-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+    console.log("Edit profile modal loaded");
+  });
+
+  // Profile edit button clicked
+  $scope.editProfile = function() {
+    $scope.openModal();
+    $scope.newProfileDetails = {
+      username: $scope.user.username,
+      name: $scope.user.name
+    }
+  }
+
+  // Edit User data in DB
+  $scope.saveProfileEdits = function() {
+    
+    console.log("saving edits", $scope.newProfileDetails)
+    User.edit($scope.user.id, $scope.newProfileDetails).then(function(){
+      User.get().then(function(user){
+        $scope.user = user.data;
+        $scope.closeModal();
+      })
+    });
+  }
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+    console.log("Edit profile modal closed");
+  };
+
+  $scope.openModal = function() {
+    $scope.modal.show();
+    console.log("Edit profile modal opened");
+  };
+
+  $scope.signOut = function() {
+    User.signOut();
+  }
 
 });

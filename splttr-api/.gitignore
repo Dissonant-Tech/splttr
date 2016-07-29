@@ -25,6 +25,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+.idea/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -100,6 +101,7 @@ Session.vim
 tags
 
 static/
+.idea/
 
 *.log
 *.pid
