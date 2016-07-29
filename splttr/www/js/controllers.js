@@ -119,17 +119,24 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs, Events) {
+.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs, Events, Bills) {
   
   // Get Tab details and events from DB
   Tabs.getWithId($stateParams.tabId).then(function(res){
     $scope.tab = res.data;
+
+    // get all expenses
     Events.getAll($scope.tab.id).then(function(events){
       $scope.expenses = events.data;
 
+      // get bill per expense
+      $scope.expenses.forEach(function(expense){
+         Bills.getBill(expense.id).then(function(bill){
+            expense.amount = bill.amount;
+         });
+      })
     })
   });
-
 
   // Open web mage search modal
   $scope.openImageChooserModal = function(){
@@ -211,8 +218,15 @@ angular.module('starter.controllers', ['ion-image-search'])
     $scope.expenseModal.show();
     console.log("Expense Modal opened");
     $scope.newExpenseParams = {
-      title: "",
-      balance: ""
+      name: "",
+      description: "Desc",
+      tab: $scope.tab.id
+    }
+
+    $scope.newBillParams = {
+      amount: 0,
+      creditor: 30,
+      event: ""
     }
   };
 
@@ -224,16 +238,21 @@ angular.module('starter.controllers', ['ion-image-search'])
 
   // Add Payment to Tab
   $scope.addPayment = function() {
-    console.log("New payment added");
-    console.log($scope.newPayment);
     $scope.tab.balance = ($scope.tab.balance - $scope.newPayment.ammount_paid).toFixed(2);
     $scope.closePaymentModal();
   }
 
   // Add Expense to Tab
   $scope.addExpense = function() {
-    // Expenses.addExpense()
-    // $scope.closeExpenseModal();
+    Events.addExpense($scope.newExpenseParams).then(function(res){
+        var newEventId = res.data.id;
+        $scope.newBillParams.event = newEventId;
+
+        // Add bill to event
+        Bills.addBill($scope.newBillParams).then(function(){
+            $scope.closeExpenseModal();
+        })
+    });
   }
 
 })

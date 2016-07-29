@@ -257,6 +257,38 @@ angular.module('starter.services', [])
 
 })
 
+.factory('Bills', function($ionicPopup, $http){
+  return {
+
+      // Get bill for a specific event
+      getBill: function(event_id) {
+        return $http.get("http://localhost:8000/bills/?event="+event_id)
+          .success(function(data){
+              console.log("Getting bill for event: " + event_id);
+              console.log("Retrieved bill. Response: ", data);
+              return data;
+          })
+          .error(function(data){
+            console.log("Could not get bill. Reponse: ", data);
+          })
+      },
+
+      // Add bill to event
+      addBill: function(bill){
+        return $http.post("http://localhost:8000/bills/", bill)
+          .success(function(data){
+            console.log("Added bill to event in DB. Response: ", data);
+            return data;
+          })
+          .error(function(data){
+            console.log("Could not add bill to DB. Response: ", data);
+          })
+      }
+
+  };
+
+})
+
 .factory('Popups', function($ionicPopup){
 
   return {
