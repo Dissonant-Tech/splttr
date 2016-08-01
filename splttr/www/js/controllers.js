@@ -138,6 +138,16 @@ angular.module('starter.controllers', ['ion-image-search'])
     })
   });
 
+
+  // Analytics chart legends
+  $scope.labels = ['M','T','W','T','F','S'];
+  $scope.data = [
+    [45,12,65,12,76,16]
+  ];
+  $scope.series = ['Expenses'];
+
+  
+
   // Open web mage search modal
   $scope.openImageChooserModal = function(){
     $webImageSelector.show().then(function(image){
@@ -263,29 +273,10 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('AnalyticsCtrl', function($scope, Tabs) {
+.controller('ActivityCtrl', function($scope, Tabs) {
 
   
-  console.log("In analytics controller");
-  $scope.tabs = Tabs.all();
-
-  // for chart legends
-  $scope.labels = [];
-  $scope.data = [
-    []
-  ];
-  $scope.series = ['Expenses'];
-
-  $scope.tabs.forEach(function(tab) {
-    tab.expenses.forEach(function(expense) {
-      $scope.labels.push(expense.title);
-      $scope.data[0].push(expense.balance);
-    });
-  });
-
-
-
-  console.log($scope.labels, $scope.data);
+  console.log("In activity controller");
 
 })
 
