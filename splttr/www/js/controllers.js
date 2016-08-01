@@ -263,25 +263,24 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('AnalyticsCtrl', function($scope, Tabs) {
+.controller('ActivityCtrl', function($scope, Tabs) {
 
   
-  console.log("In analytics controller");
-  $scope.tabs = Tabs.all();
+  console.log("In activity controller");
 
-  // for chart legends
-  $scope.labels = [];
-  $scope.data = [
-    []
-  ];
-  $scope.series = ['Expenses'];
+  // // for chart legends
+  // $scope.labels = [];
+  // $scope.data = [
+  //   []
+  // ];
+  // $scope.series = ['Expenses'];
 
-  $scope.tabs.forEach(function(tab) {
-    tab.expenses.forEach(function(expense) {
-      $scope.labels.push(expense.title);
-      $scope.data[0].push(expense.balance);
-    });
-  });
+  // $scope.tabs.forEach(function(tab) {
+  //   tab.expenses.forEach(function(expense) {
+  //     $scope.labels.push(expense.title);
+  //     $scope.data[0].push(expense.balance);
+  //   });
+  // });
 
 
 
