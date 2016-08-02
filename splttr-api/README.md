@@ -41,6 +41,16 @@ $(docker-machine env default)` to configure your shell. Lastly, run the command
 
 Splttr-api stores and manages the backend components to the [Splltr app][4]
 
+## Authentication
+
+Our API uses [token authentication][5].
+
+For clients to authenticate, the token key should be included in the
+Authorization HTTP header. The key should be prefixed by the string literal
+"Token", with whitespace separating the two strings. For example:
+
+    Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+
 ### Dependencies
 
 * Django
@@ -55,3 +65,4 @@ These are installed when the `pip install` command is ran.
 [2]: https://docs.python.org/3/using/scripts.html
 [3]: https://docs.docker.com/engine/installation/
 [4]: http://www.splttr.com
+[5]: http://www.django-rest-framework.org/api-guide/authentication/
