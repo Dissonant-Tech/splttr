@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ion-image-search'])
+angular.module('starter.controllers', ['ion-image-search', 'chart.js'])
 
 .controller('LoginCtrl', function($scope, $http, User) {
   
@@ -140,13 +140,32 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 
   // Analytics chart legends
-  $scope.labels = ['M','T','W','T','F','S'];
+  $scope.labels = ['M','T','W','T','F','S','S'];
   $scope.data = [
     [45,12,65,12,76,16]
   ];
   $scope.series = ['Expenses'];
 
-  
+	$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+		$scope.options = {
+			scales: {
+				yAxes: [
+					{
+						id: 'y-axis-1',
+						type: 'linear',
+						display: true,
+						position: 'left'
+					},
+					{
+						id: 'y-axis-2',
+						type: 'linear',
+						display: true,
+						position: 'right'
+					}
+				]
+			}
+		};
+	  
 
   // Open web mage search modal
   $scope.openImageChooserModal = function(){
@@ -264,6 +283,20 @@ angular.module('starter.controllers', ['ion-image-search'])
         })
     });
   }
+
+  	$scope.chart = "chart";
+
+	$scope.toggleAnalytics = function(chart) {
+      if ($scope.isAnalyticsShown(chart)) {
+	        $scope.shownAnalytics = null;
+
+	      } else {
+		        $scope.shownAnalytics = chart;
+		      }
+    };
+	$scope.isAnalyticsShown = function(chart) {
+	    return $scope.shownAnalytics === chart;
+	  };
 
 })
 
