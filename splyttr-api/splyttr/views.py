@@ -64,7 +64,12 @@ class TabViewSet(viewsets.ModelViewSet):
 
 class EventViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows events to be viewed or edited
+    Events are the middle of the Splyttr hierarchy. They represent an event or
+    occurrance where bills were generated.
+
+    For example, a trip to a local restaurant could be classified as an event.
+
+    Events are grouped by which tab they belong to.
     """
     queryset = Event.objects.all()
     serializer_class = EventSerializer
@@ -74,7 +79,11 @@ class EventViewSet(viewsets.ModelViewSet):
 
 class BillViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows bills to be viewed or edited
+    Bills are the lowest level of the Splyttr hierarchy. They represent a debt 
+    or credit between two people.
+
+    Bills are organized by events. Each bill belongs to a specific event, many 
+    bills can belong to the same event. 
     """
     queryset = Bill.objects.all()
     serializer_class = BillSerializer
