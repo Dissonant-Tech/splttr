@@ -1,12 +1,15 @@
 version: '2'
+
 services:
-  splttr-api:
+
+  api:
     env_file:
       - ./ENV
     restart: always
     build: .
-    depends_on:
+    links:
       - postgres
+
   postgres:
     env_file:
       - ./ENV

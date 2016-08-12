@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+
+  loadbalancer:
+    restart: always
+    build: ./nginx
+    external_links:
+      - api
+      - openocr
+    ports:
+      - "80:80"
+      - "443:443"
