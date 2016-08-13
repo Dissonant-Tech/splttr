@@ -2,7 +2,6 @@
 
 Django REST Framework For Splyttr API
 
-
 ## Installing
 
 This project is best ran in a virtual environment. You can use [pyvenv][2],
@@ -20,22 +19,33 @@ To run the the server use the following commands:
 1. `python manage.py migrate`
 2. `python manage.py runserver`
 
-You can provide a port after the `runserver`. However, the default is 8000. 
+You can provide a port after the `runserver`. However, the default is 8000.
+
+__Using Docker__
 
 This project can also be ran using docker. Docker is a container system meant
 to run an application with the same environment it was built in. This ensures
 dependencies remain the same on every system. To get started, install the
 docker toolbox with your favorite package manager. On mac, run  `brew cask
-install dockertoolbox` to get the tools that you'll need. 
+install dockertoolbox` to get the tools that you'll need.
 
 For every other system, vist [docker's website][3] for installation
-istructions. 
+istructions.
 
 To run this using docker, make sure that your docker machine is running if you
-are on Mac/Windows. The command is `docker-machine start default` and `eval
-$(docker-machine env default)` to configure your shell. Lastly, run the command
-`docker compose up`. 
+are on Mac/Windows. To create a virtualbox using `docker-machine` and then load
+it use the following commands:
 
+1. `docker-machine create --driver virtualbox default`
+2. `docker-machine start default`
+3. `eval $(docker-machine env default)`
+
+Once the previous commands are done you should have a working VM running and
+loaded. Use `docker ps` to get a list of docker containers (should be empty at
+this time).
+
+Finally, to start the app:
+`cd $SPLYTTR_DIR && docker-compose up -d --build`
 
 ## Introduction
 
@@ -58,6 +68,7 @@ Authorization HTTP header. The key should be prefixed by the string literal
 * djangorestframework
 * Markdown
 * PyYAML
+* ... see more in requirements.txt
 
 These are installed when the `pip install` command is ran.
 
