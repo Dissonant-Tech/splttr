@@ -7,15 +7,22 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 from django.contrib.auth.models import User, Group
+from django.views.generic import RedirectView
 
 from splyttr.serializers import UserSerializer, GroupSerializer, TabSerializer, EventSerializer, BillSerializer
 from splyttr.models import Tab, Event, Bill, Profile
+
+
+@api_view(['GET'])
+def get_ocr_view(request):
+    return Response({})
 
 
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
+    permission_classes = (IsAuthenticated,)
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
@@ -48,6 +55,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
+    permission_classes = (IsAuthenticated,)
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
@@ -56,6 +64,7 @@ class TabViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows tabs to be viewed or edited
     """
+    permission_classes = (IsAuthenticated,)
     queryset = Tab.objects.all()
     serializer_class = TabSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
@@ -71,6 +80,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
     Events are grouped by which tab they belong to.
     """
+    permission_classes = (IsAuthenticated,)
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
@@ -79,12 +89,13 @@ class EventViewSet(viewsets.ModelViewSet):
 
 class BillViewSet(viewsets.ModelViewSet):
     """
-    Bills are the lowest level of the Splyttr hierarchy. They represent a debt 
+    Bills are the lowest level of the Splyttr hierarchy. They represent a debt
     or credit between two people.
 
-    Bills are organized by events. Each bill belongs to a specific event, many 
-    bills can belong to the same event. 
+    Bills are organized by events. Each bill belongs to a specific event, many
+    bills can belong to the same event.
     """
+    permission_classes = (IsAuthenticated,)
     queryset = Bill.objects.all()
     serializer_class = BillSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)

@@ -1,7 +1,8 @@
 
 DEBUG=False
+SECRET_KEY=qr)emen@1waau2ali2134t=35*b0h2qr!b@6vvlc-182j+#k+x
 
 POSTGRES_USER=splyttrsql
 POSTGRES_PASSWORD=6?F#9EoK$Hkc[]my")i7QKtC
 POSTGRES_DB=splyttr
-POSTGRES_HOST=postgres
+POSTGRES_HOST=db

@@ -8,6 +8,38 @@ services:
     external_links:
       - api
       - openocr
+    volumes_from:
+      - api
     ports:
       - "80:80"
       - "443:443"
+
+  api:
+    restart: always
+    build: ./splyttr-api
+    environment:
+      - DEBUG=False
+    env_file:
+      - ./splyttr-api/ENV
+    links:
+      - db
+    ports:
+      - "8050:8050"
+    volumes:
+      - staticfiles:/static
+
+  db:
+    restart: always
+    image: postgres:9.6
+    env_file:
+      - ./splyttr-api/ENV
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+
+  postgres:
+    driver: local
+
+  staticfiles:
+    driver: local

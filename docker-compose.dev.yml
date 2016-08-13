@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+
+  loadbalancer:
+    restart: always
+    build: ./nginx
+    volumes:
+      - ./nginx/nginx.debug.conf:/etc/nginx/nginx.conf

@@ -14,12 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 
 from rest_framework import routers, serializers, viewsets
 from rest_auth.views import LoginView, LogoutView, UserDetailsView, PasswordResetView
 
-from splyttr import views
+from splyttr import views, settings
 from splyttr.router import HybridRouter
 
 
@@ -32,8 +33,8 @@ router.register_include(url(r'^auth/', include('rest_auth.urls', namespace='auth
 router.register_include(url(r'^auth/registration/', include('rest_auth.registration.urls')))
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
+    url(r'^api/', include(router.urls)),
     url(r'^admin', admin.site.urls),
-    url(r'^auth/', include('rest_auth.urls')),
-    url(r'^auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^api/auth/', include('rest_auth.urls')),
+    url(r'^api/auth/registration/', include('rest_auth.registration.urls')),
 ]
