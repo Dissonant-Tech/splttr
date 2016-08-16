@@ -8,10 +8,6 @@
             </div>
             <form name="signupForm" novalidate>
             <div class="list list-inset padding login-options-wrapper">
-              <label class="item item-input item-floating-label">
-                <span class="input-label">Name</span>
-                <input type="text" placeholder="Name" ng-model="signupPostParams.name" required>
-              </label>
                 <label class="item item-input item-floating-label">
                   <span class="input-label">Email</span>
                   <input type="text" placeholder="Email" ng-model="signupPostParams.email" required>
@@ -22,7 +18,11 @@
                 </label>
                 <label class="item item-input item-floating-label">
                   <span class="input-label">Password</span>
-                  <input type="password" placeholder="Password" ng-model="signupPostParams.password" required>
+                  <input type="password" placeholder="Password" ng-model="signupPostParams.password1" required>
+                </label>
+                <label class="item item-input item-floating-label">
+                  <span class="input-label">Comfirm Password</span>
+                  <input type="password" placeholder="Confirm Password" ng-model="signupPostParams.password2" required>
                 </label>
             </div>
             <div class="login-button-wrapper">
