@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ion-image-search'])
 
-.controller('LoginCtrl', function($scope, $http, User) {
+.controller('LoginCtrl', function($scope, $http, User, $rootScope) {
   
   $scope.$on("$ionicView.beforeEnter", function(event, data){
       
@@ -10,7 +10,7 @@ angular.module('starter.controllers', ['ion-image-search'])
       $scope.loginParams = {
         username: "",
         password: "",
-        Authorization: "Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
+        Authorization: $rootScope.token
       }   
 
   });
@@ -21,7 +21,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('SignupCtrl', function($scope, User, $http) {
+.controller('SignupCtrl', function($scope, $rootScope, User, $http) {
   
   console.log("In signup controller");
 
@@ -30,7 +30,7 @@ angular.module('starter.controllers', ['ion-image-search'])
       password2: "",
       username: "",
       email: "",
-      Authorization: "Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
+      Authorization: $rootScope.token
   }
 
   $scope.signupUser = function() {
@@ -40,7 +40,7 @@ angular.module('starter.controllers', ['ion-image-search'])
       var loginParams = {
         username: $scope.signupPostParams.username,
         password: $scope.signupPostParams.password1,
-        Authorization: "Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
+        Authorization: $rootScope.token
       }
 
       User.login(loginParams);
@@ -63,7 +63,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, User, Tabs) {
+.controller('HomeCtrl', function($scope, $rootScope, $ionicModal, $state, $http, User, Tabs) {
 
   // Load home state from API
   $scope.$on("$ionicView.beforeEnter", function(event, data){
@@ -97,7 +97,9 @@ angular.module('starter.controllers', ['ion-image-search'])
     $scope.newTabParams = {
         name: "",
         description: "",
-        members: [JSON.stringify($scope.user.id)]
+        members: [],
+        Authorization: $rootScope.token
+        // members: [JSON.stringify($scope.user.id)]
     }
   };
 
