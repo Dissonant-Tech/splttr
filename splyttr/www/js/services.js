@@ -6,7 +6,7 @@ angular.module('starter.services', [])
 
     // Remove Tab from DB
     remove: function(tab_id) {
-      return $http.delete("http://localhost:8000/tabs/"+tab_id+"/")
+      return $http.delete("http://localhost:8000/api/tabs/"+tab_id+"/")
         .success(function(data){
           console.log("Deleted tab from DB. Response: ", data);
         })
@@ -17,7 +17,7 @@ angular.module('starter.services', [])
 
     // Get all Tabs that match User by its ID
     get: function(user_id) {
-      return $http.get("http://localhost:8000/tabs/?members="+JSON.stringify(user_id))
+      return $http.get("http://localhost:8000/api/tabs/?members="+JSON.stringify(user_id))
         .success(function(data){
           console.log("Getting all tabs for user with ID: " + user_id);
           console.log("Tabs retreived from DB. Response:", data);
@@ -32,7 +32,7 @@ angular.module('starter.services', [])
 
     // Get specific Tab by its ID
     getWithId: function(tab_id) {
-      return $http.get("http://localhost:8000/tabs/"+tab_id)
+      return $http.get("http://localhost:8000/api/tabs/"+tab_id)
         .success(function(data){
             console.log("Retreived tab detail from DB. Response:", data);
             return data;
@@ -47,7 +47,7 @@ angular.module('starter.services', [])
 
     // Add new Tab to DB
     addTab: function(tab) {
-      return $http.post("http://localhost:8000/tabs/", tab)
+      return $http.post("http://localhost:8000/api/tabs/", tab)
         .success(function(data) {
           console.log("Successfully added tab to DB", data);
           return data;
@@ -99,7 +99,7 @@ angular.module('starter.services', [])
 
     // Get all events for a specific tab
     getAll: function(tab_id) {
-      return $http.get("http://localhost:8000/events/?tab="+tab_id)
+      return $http.get("http://localhost:8000/api/events/?tab="+tab_id)
         .success(function(data){
             console.log("Getting all events for Tab ID: " + tab_id);
             console.log("Retrieved all events. Response: ", data);
@@ -112,7 +112,7 @@ angular.module('starter.services', [])
 
     // Add event to a Tab in the DB
     addExpense: function(event){
-      return $http.post("http://localhost:8000/events/", event)
+      return $http.post("http://localhost:8000/api/events/", event)
         .success(function(data){
           console.log("Added events to DB. Response: ", data);
           return data;
@@ -131,7 +131,7 @@ angular.module('starter.services', [])
 
       // Get bill for a specific event
       getBill: function(event_id) {
-        return $http.get("http://localhost:8000/bills/?event="+event_id)
+        return $http.get("http://localhost:8000/api/bills/?event="+event_id)
           .success(function(data){
               console.log("Getting bill for event: " + event_id);
               console.log("Retrieved bill. Response: ", data);
@@ -144,7 +144,7 @@ angular.module('starter.services', [])
 
       // Add bill to event
       addBill: function(bill){
-        return $http.post("http://localhost:8000/bills/", bill)
+        return $http.post("http://localhost:8000/api/bills/", bill)
           .success(function(data){
             console.log("Added bill to event in DB. Response: ", data);
             return data;
@@ -202,11 +202,18 @@ angular.module('starter.services', [])
   */
 
   // to be populated at login
-  var currentUser = {};
+  var loginToken = '';
 
 	return {
-		get: function() {
-        return $http.get('http://localhost:8000/users/'+currentUser.user_id+'/', {})
+		get: function() {  
+        
+        var params = {
+          Authorization: loginToken
+        }
+
+        console.log(params);
+        
+        return $http.get('http://localhost:8000/api/auth/user/', params)
           .success(function(data) {
             console.log("Got user from api. Response:", data);
           })
@@ -216,7 +223,7 @@ angular.module('starter.services', [])
 		},
 
     getWithId: function(user_id) {
-        return $http.get('http://localhost:8000/users/'+user_id+'/', {})
+        return $http.get('http://localhost:8000/api/users/'+user_id+'/', {})
           .success(function(data) {
             console.log("Got user from api. Response:", data);
           })
@@ -227,10 +234,11 @@ angular.module('starter.services', [])
     },
 
     login: function(params) {
-      $http.post("http://localhost:8000/users/login/", params)
-        .success(function(data) {
-          console.log("Successfully logged in. Response:", data);
-          currentUser = data;
+      console.log(params);
+      $http.post("http://localhost:8000/api/auth/login/", params)
+        .success(function(token) {
+          console.log("Successfully logged in. Response:", token);
+          loginToken = 'Token ' + token.key;
           $state.go("tab.home")
         })
         .error(function(data) {
@@ -240,7 +248,7 @@ angular.module('starter.services', [])
     },
 
     signup: function(params) {
-       return $http.post("http://localhost:8000/users/", params)
+       return $http.post("http://localhost:8000/api/auth/registration/", params)
          .success(function(data) {
            console.log("Successfully signed up. Response:", data);
          })
@@ -251,7 +259,7 @@ angular.module('starter.services', [])
     },
 
     edit: function(user_id, params) {
-        return $http.patch('http://localhost:8000/users/'+user_id+'/', params)
+        return $http.patch('http://localhost:8000/api/users/'+user_id+'/', params)
           .success(function(data) {
             console.log("Edited user in DB. Response:", data);
           })
@@ -262,7 +270,7 @@ angular.module('starter.services', [])
     },
 
     delete: function(user_id) {
-        return $http.delete('http://localhost:8000/users/'+user_id+'/', {})
+        return $http.delete('http://localhost:8000/api/users/'+user_id+'/', {})
           .success(function(data) {
             console.log("Deleted user from DB. Response:", data);
           })

@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ion-image-search', 'chart.js'])
+angular.module('starter.controllers', ['ion-image-search'])
 
 .controller('LoginCtrl', function($scope, $http, User) {
   
@@ -9,7 +9,8 @@ angular.module('starter.controllers', ['ion-image-search', 'chart.js'])
       
       $scope.loginParams = {
         username: "",
-        password: ""
+        password: "",
+        Authorization: "Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
       }   
 
   });
@@ -25,9 +26,11 @@ angular.module('starter.controllers', ['ion-image-search', 'chart.js'])
   console.log("In signup controller");
 
   $scope.signupPostParams = {
-      password: "",
+      password1: "",
+      password2: "",
       username: "",
-      email: ""
+      email: "",
+      Authorization: "Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
   }
 
   $scope.signupUser = function() {
@@ -36,7 +39,8 @@ angular.module('starter.controllers', ['ion-image-search', 'chart.js'])
       // if signup was successful, log in user
       var loginParams = {
         username: $scope.signupPostParams.username,
-        password: $scope.signupPostParams.password
+        password: $scope.signupPostParams.password1,
+        Authorization: "Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
       }
 
       User.login(loginParams);
