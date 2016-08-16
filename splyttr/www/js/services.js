@@ -234,6 +234,7 @@ angular.module('starter.services', [])
     },
 
     login: function(params) {
+      console.log(params);
       $http.post("http://localhost:8000/api/auth/login/", params)
         .success(function(token) {
           console.log("Successfully logged in. Response:", token);
