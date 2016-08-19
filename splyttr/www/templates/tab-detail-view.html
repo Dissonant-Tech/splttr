@@ -22,6 +22,7 @@
                                             }">
 		<div class="tab-detail-title">
 			<h1>${{tab.balance}}</h1>
+			<h2>{{tab.name}}</h2>
 		</div>
 	</div>
 
@@ -37,6 +38,7 @@
 
 
 	<!-- TAB ANALYTICS -->
+	<!-- 
 	<div class="tab-analytics">
 		<div class="tab-analytics-dropdown">
 			<button class="button button-block button-positive tab-analytics-dropdown-button" 
@@ -50,6 +52,7 @@
 				<canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true" chart-series="series" chart-options="{showTooltips: false}"></canvas>
 			</div>
 		</div>
+	-->
 
 	<!-- TAB CONTENT -->
 	<div class="tab-detail-content padding">
@@ -77,7 +80,7 @@
 		<div class="detail-squad-member" ng-repeat="member in tab.members | orderBy: '!debt'" ng-class="{'member-owes': !member.debt}">
 			<img ng-src="{{member.img? 'member.img' : 'img/blank-user.png'}}"  alt="Member profile profile">
 			<div class="detail-squad-member-content">
-				<span>{{member.name}}</span>
+				<span>@{{member.username}}</span>
 				<p ng-if="member.debt">Still owes: $45.34</p>
 				<p ng-if="!member.debt">Does not owe</p>
 			</div>
