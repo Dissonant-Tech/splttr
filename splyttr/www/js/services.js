@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.factory('Tabs', function($http, Popups, $state){
+.factory('Tabs', function($http, Popups, $state, $rootScope){
 
   return {
 
@@ -32,13 +32,12 @@ angular.module('starter.services', [])
 
     // Get specific Tab by its ID
     getWithId: function(tab_id) {
-      return $http.get("http://localhost:8000/api/tabs/"+tab_id)
+      return $http.get("http://localhost:8000/api/tabs/"+tab_id+'/')
         .success(function(data){
             console.log("Retreived tab detail from DB. Response:", data);
             return data;
         })
         .error(function(data){
-            console.log("tried: " + tab_id);
             console.log("Could not get tab from DB. Response: ", data);
             $state.go("tab.home");
         })
@@ -160,7 +159,16 @@ angular.module('starter.services', [])
 
 .factory('Popups', function($ionicPopup){
 
+  /*
+
+      Set of functions designed to display Ionic Popup modals
+
+  */
+
+
   return {
+
+    // Display alert Popup modal
     showPopup: function(title, message, alertCallback) {
       var alertPopup = $ionicPopup.alert({
         title: title,
@@ -175,6 +183,7 @@ angular.module('starter.services', [])
       });
     },
     
+    // Display OK/Cancel Popup modal
     showConfirm: function(title, message, confirmCallback, cancellCallback) {
        var confirmPopup = $ionicPopup.confirm({
          title: title,
@@ -201,19 +210,11 @@ angular.module('starter.services', [])
 
   */
 
-  // to be populated at login
-  var loginToken = '';
-
 	return {
-		get: function() {  
-        
-        var params = {
-          Authorization: loginToken
-        }
 
-        console.log(params);
-        
-        return $http.get('http://localhost:8000/api/auth/user/', params)
+    // Returns current User
+		get: function() {  
+        return $http.get('http://localhost:8000/api/auth/user/')
           .success(function(data) {
             console.log("Got user from api. Response:", data);
           })
@@ -222,6 +223,18 @@ angular.module('starter.services', [])
           })
 		},
 
+    // Returns list of all Users
+    getAll: function() {
+      return $http.get('http://localhost:8000/api/users/')
+        .success(function(data) {
+            console.log("Successfully retreived response from server");
+        })
+        .error(function(err){
+            console.log("Error: ", err);
+        })
+    },
+
+    // Returns User by its ID
     getWithId: function(user_id) {
         return $http.get('http://localhost:8000/api/users/'+user_id+'/', {})
           .success(function(data) {
@@ -233,20 +246,24 @@ angular.module('starter.services', [])
 
     },
 
+    // Logs in User. Sets common Authentication header
     login: function(params) {
-      console.log(params);
       $http.post("http://localhost:8000/api/auth/login/", params)
-        .success(function(token) {
+        .success(function(token, status, some, config) {
           console.log("Successfully logged in. Response:", token);
-          loginToken = 'Token ' + token.key;
+
+          // Set global header auth token for each subsequent request
+          $http.defaults.headers.common.Authorization = 'Token ' + token.key;
           $state.go("tab.home")
         })
         .error(function(data) {
           console.log("Could not login. Response: ", data);
-          Popups.showPopup("Invalid Login", "Sorry, an account with the provided username and password was not found");
+          Popups.showPopup("Invalid Login", data.non_field_errors[0]);
         })
     },
 
+
+    // Registers new User
     signup: function(params) {
        return $http.post("http://localhost:8000/api/auth/registration/", params)
          .success(function(data) {
@@ -254,21 +271,39 @@ angular.module('starter.services', [])
          })
          .error(function(data) {
            console.log("Could not sign up. Repsonse: ", data);
-           Popups.showPopup("Error", "Could not create account. Try again later.")
+           var err = Object.keys(data)[0];
+           Popups.showPopup("Error", data[err]);
          }) 
     },
 
+    // Creates anonymous User
+    createAnonymousUser: function(user) {
+
+        user.is_anonymous = true;
+
+        return $http.post("http://localhost:8000/api/auth/registration/", user)
+          .success(function(data) {
+            console.log("Successfully created anonymous user. Response:", data);
+          })
+          .error(function(data) {
+            console.log("Could not create anonymous user. Repsonse: ", data);
+          }) 
+    },
+
+    // Edits User properties
     edit: function(user_id, params) {
         return $http.patch('http://localhost:8000/api/users/'+user_id+'/', params)
           .success(function(data) {
-            console.log("Edited user in DB. Response:", data);
+            console.log("Successfully edited user. Response:", data);
           })
           .error(function(data) {
-            Popups.showPopup("Error", "Please make sure your name and username are valid");
-            console.log("Could not edit user in DB. Response:", data);
+            var err = Object.keys(data)[0]
+            Popups.showPopup("Error", data[err]);
+            console.log("Could not edit user. Response:", data);
           })
     },
 
+    // Deletes user
     delete: function(user_id) {
         return $http.delete('http://localhost:8000/api/users/'+user_id+'/', {})
           .success(function(data) {
@@ -279,10 +314,20 @@ angular.module('starter.services', [])
           })
     },
 
+    // Signs out User and deletes Auth token
     signOut: function() {
-      currentUser = null;
-      console.log("Successfully logged out", currentUser);
-      $state.go("login");
+      $http.post('http://localhost:8000/api/auth/logout/')
+        .success(function(data){
+
+          // Remove previous Auth token
+          $http.defaults.headers.common.Authorization = undefined;
+          console.log("Successfully logged out. Response: ", data);
+          $state.go("login");
+        })
+        .error(function(data){
+          console.log("Could not logout", data);
+          Popups.showPopup("Error", "Sorry, there seems to be a problem. Try again later")
+        })      
     }
 
 	};

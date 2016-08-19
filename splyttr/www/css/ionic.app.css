@@ -9947,16 +9947,18 @@ ion-content {
   padding-bottom: 5px;
   line-height: 2em; }
 
-.tab-content-member-wrapper li {
-  display: inline-block;
-  border-radius: 50%;
-  background-position: center center;
-  background-size: cover;
-  height: 42px;
-  width: 42px;
-  background-color: white;
-  border: 2px solid #c5c5c5;
-  margin-right: 10px; }
+.tab-content-member-wrapper {
+  height: 90px; }
+  .tab-content-member-wrapper li {
+    display: inline-block;
+    border-radius: 50%;
+    background-position: center center;
+    background-size: cover;
+    height: 42px;
+    width: 42px;
+    background-color: white;
+    border: 2px solid #c5c5c5;
+    margin-right: 10px; }
 
 .tab-message {
   position: absolute;
@@ -10136,10 +10138,23 @@ ion-content {
 
 .modal-members-list {
   background-color: #efefef; }
+  .modal-members-list span.modal-tip {
+    position: absolute;
+    top: 72%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
   .modal-members-list li {
     height: 60px;
     width: 60px;
-    border: 2px solid #ddd; }
+    border: 2px solid #ddd;
+    position: relative; }
+    .modal-members-list li span {
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%); }
+  .modal-members-list li.added {
+    border: 4px solid #33CD60; }
 
 .modal ion-scroll {
   padding-bottom: 10px; }

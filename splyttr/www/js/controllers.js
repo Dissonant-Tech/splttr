@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ion-image-search'])
 
-.controller('LoginCtrl', function($scope, $http, User, $rootScope) {
+.controller('LoginCtrl', function($scope, $http, User) {
   
   $scope.$on("$ionicView.beforeEnter", function(event, data){
       
@@ -9,8 +9,7 @@ angular.module('starter.controllers', ['ion-image-search'])
       
       $scope.loginParams = {
         username: "",
-        password: "",
-        Authorization: $rootScope.token
+        password: ""
       }   
 
   });
@@ -21,7 +20,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('SignupCtrl', function($scope, $rootScope, User, $http) {
+.controller('SignupCtrl', function($scope, User, $http) {
   
   console.log("In signup controller");
 
@@ -29,8 +28,7 @@ angular.module('starter.controllers', ['ion-image-search'])
       password1: "",
       password2: "",
       username: "",
-      email: "",
-      Authorization: $rootScope.token
+      email: ""
   }
 
   $scope.signupUser = function() {
@@ -39,8 +37,7 @@ angular.module('starter.controllers', ['ion-image-search'])
       // if signup was successful, log in user
       var loginParams = {
         username: $scope.signupPostParams.username,
-        password: $scope.signupPostParams.password1,
-        Authorization: $rootScope.token
+        password: $scope.signupPostParams.password1
       }
 
       User.login(loginParams);
@@ -63,7 +60,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('HomeCtrl', function($scope, $rootScope, $ionicModal, $state, $http, User, Tabs) {
+.controller('HomeCtrl', function($scope, $ionicModal, $state, $http, User, Tabs) {
 
   // Load home state from API
   $scope.$on("$ionicView.beforeEnter", function(event, data){
@@ -92,26 +89,32 @@ angular.module('starter.controllers', ['ion-image-search'])
 
   $scope.openModal = function() {
     $scope.modal.show();
-    console.log("Modal opened");
 
     $scope.newTabParams = {
         name: "",
         description: "",
-        members: [],
-        Authorization: $rootScope.token
-        // members: [JSON.stringify($scope.user.id)]
+        members: [JSON.stringify($scope.user.id)]
     }
   };
 
   $scope.closeModal = function() {
     $scope.modal.hide();
-    console.log("Modal closed");
   };
 
-  // Add members to new Tab
-  $scope.addMemberToTab = function(member) {
-    console.log("Member added");
+  // Add members to new Tab. If they have already been added, they will be removed
+  $scope.addMemberToTab = function($event) {
 
+    if($event.target.classList.contains('added')){
+      $event.target.classList.remove('added');
+      var members = $scope.newTabParams.members;
+      members.splice(members.indexOf(this.result.id), 1);
+      console.log(this.result.username + ' removed from tab');
+      return;
+    }
+
+    $event.target.classList.add('added');
+    $scope.newTabParams.members.push(this.result.id);
+    console.log(this.result.username + ' added to tab');
   }
 
   // Add new Tab to DB
@@ -123,55 +126,92 @@ angular.module('starter.controllers', ['ion-image-search'])
     })
   }
 
+
+  // ====== Search user functions =====
+
+  $scope.search = {
+    text: ''
+  };
+
+  $scope.searchUser = function(query) {
+    
+    // If user has erased search, remove search results from view
+    if(query === ''){
+      $scope.searchResults = [];
+      return
+    }
+
+    var usersList = [];
+
+    $scope.searchResults = [
+      {
+        username: query,
+        bg_img: 'img/black-user.png',
+        anonymous: true
+      }
+    ];
+
+    // Search users on each keypress of the search bar
+    User.getAll().then(function(res){
+      usersList = res.data;
+
+      // Fuzzy search users list with given query
+      for(i in usersList){
+        if (usersList[i].username.indexOf(query) !== -1) {
+          $scope.searchResults.push(usersList[i]);
+        }
+      }
+
+    })
+
+  }
+
 })
 
-.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, Popups, Tabs, Events, Bills) {
+.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, User, Popups, Tabs, Events, Bills) {
   
-  // Get Tab details and events from DB
-  Tabs.getWithId($stateParams.tabId).then(function(res){
-    $scope.tab = res.data;
+  $scope.$on("$ionicView.beforeEnter", function(){
 
-    // get all expenses
-    Events.getAll($scope.tab.id).then(function(events){
-      $scope.expenses = events.data;
+      var tabData = {};
+      $scope.tab = {
+        name: 'asdfa',
+        description: '',
+        members: []
+      };    
+      // Get Tab details
+      Tabs.getWithId($stateParams.tabId).then(function(res){
+        var tabData = res.data;
+        
+        
+        
+        $scope.tab.name = tabData.name;
+        $scope.tab.description = tabData.description;
 
-      // get bill per expense
-      $scope.expenses.forEach(function(expense){
-         Bills.getBill(expense.id).then(function(bill){
-            expense.amount = bill.amount;
-         });
-      })
-    })
+        // Get User info for each member
+        tabData.members.forEach(function(userID){
+          User.getWithId(userID).then(function(res){
+            var user = res.data;
+            $scope.tab.members.push(user);
+          })
+        });
+
   });
 
+  
 
-  // Analytics chart legends
-  $scope.labels = ['M','T','W','T','F','S','S'];
-  $scope.data = [
-    [45,12,65,12,76,16]
-  ];
-  $scope.series = ['Expenses'];
 
-	$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-		$scope.options = {
-			scales: {
-				yAxes: [
-					{
-						id: 'y-axis-1',
-						type: 'linear',
-						display: true,
-						position: 'left'
-					},
-					{
-						id: 'y-axis-2',
-						type: 'linear',
-						display: true,
-						position: 'right'
-					}
-				]
-			}
-		};
-	  
+    // get all expenses
+    // Events.getAll($scope.tab.id).then(function(events){
+    //   $scope.expenses = events.data;
+
+    //   // get bill per expense
+    //   $scope.expenses.forEach(function(expense){
+    //      Bills.getBill(expense.id).then(function(bill){
+    //         expense.amount = bill.amount;
+    //      });
+    //   })
+    // })
+  });
 
   // Open web mage search modal
   $scope.openImageChooserModal = function(){
@@ -319,7 +359,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('AccountCtrl', function($scope, $ionicModal, $state, $rootScope, Popups, User) {
+.controller('AccountCtrl', function($scope, $ionicModal, $state, Popups, User) {
 
   // load user data before entering home state
   $scope.$on("$ionicView.beforeEnter", function(event, data){
