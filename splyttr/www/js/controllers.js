@@ -331,6 +331,8 @@ angular.module('starter.controllers', ['ion-image-search'])
 
     // Add Event to Tab via api, then add each Bill to that exent
     Events.addExpense($scope.newExpenseParams).then(function(res){
+      
+      $scope.expenses.push(res.data)
 
       $scope.newBillParams.event = res.data.id;
 

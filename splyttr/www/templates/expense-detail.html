@@ -1,7 +1,26 @@
 <ion-view view-title="Expense">
-  <ion-content class="padding">
-    <p>
-      {{expense.title}}
-    </p>
-  </ion-content>
+	<ion-content class="padding">
+
+		<div class="card">
+			<div class="item item-divider">
+			Expense details
+			</div>
+			<div class="item item-text-wrap">
+				{{expense.description}}
+			</div>
+			<div class="item item-divider">
+				Members
+			</div>
+			<div class="item item-text-wrap">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.</p>
+			</div>
+		</div>
+
+
+
+		<button class="button button-block button-assertive">
+			Delete Expense
+		</button>		
+	</ion-content>
 </ion-view>
