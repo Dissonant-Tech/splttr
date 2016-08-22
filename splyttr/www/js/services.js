@@ -109,11 +109,11 @@ angular.module('starter.services', [])
         })
     },
 
-    // Add event to a Tab in the DB
+    // Add event to a Tab
     addExpense: function(event){
       return $http.post("http://localhost:8000/api/events/", event)
         .success(function(data){
-          console.log("Added events to DB. Response: ", data);
+          console.log("Added events to tab. Response: ", data);
           return data;
         })
         .error(function(data){

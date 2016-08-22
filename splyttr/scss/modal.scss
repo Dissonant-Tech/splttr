@@ -8,6 +8,9 @@
 	}
 	&-members-list{
 		background-color: #efefef;
+		&.expense{
+			border: none;
+		}
 		span.modal-tip{
 			position: absolute;
 			top: 72%;
@@ -47,6 +50,30 @@
 	}
 	select{
 		background: transparent;
+	}
+	&-expense{
+		background-color: #efefef;
+		border: none;
+		padding-top: 0;
+		.member-image{
+			border-radius: 50%;
+			max-width: 60px;
+			display: block;
+			padding-bottom: 5%;
+			&-wrapper{
+				float: left;
+				text-align: center;
+			}
+		}
+		.member-info{
+			padding-left: 100px;
+		}
+		.members-list{
+			padding-top: 15px;
+			li{
+				margin-bottom: 40px;
+			}
+		}
 	}
 
 }
