@@ -10226,3 +10226,6 @@ ion-content {
 .tab-analytics .btoggle {
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px; }
+
+.expense-title {
+  padding-bottom: 10px; }

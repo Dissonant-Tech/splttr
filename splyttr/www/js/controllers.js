@@ -352,17 +352,22 @@ angular.module('starter.controllers', ['ion-image-search'])
   
 })
 
-.controller('ExpenseDetailCtrl', function($scope, $ionicHistory, $stateParams, Events) {
-  
-  console.log("In expense controller", $stateParams);
+.controller('ExpenseDetailCtrl', function($scope, $ionicHistory, $stateParams, Tabs, Events, User) {
 
+  // Get expense details
+  Events.get($stateParams.expenseId).then(function(res){
+    $scope.expense = res.data;
+  })
+  
+  // Get expense members
+
+  // Remove Expense 
   $scope.deleteExpense = function(){
     Events.remove($stateParams.expenseId).then(function(){
       $ionicHistory.goBack();
     });
 
   }
-
 
 
 })
