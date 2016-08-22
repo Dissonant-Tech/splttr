@@ -92,7 +92,7 @@ angular.module('starter.services', [])
 
 })
 
-.factory('Events', function($ionicPopup, $http){
+.factory('Events', function($ionicPopup, $http, Popups){
 
   return {
 
@@ -118,6 +118,17 @@ angular.module('starter.services', [])
         })
         .error(function(data){
           console.log("Could not add events to DB. Response: ", data);
+        })
+    },
+
+    // Remove Event
+    remove: function(event_id) {
+      return $http.delete("http://localhost:8000/api/events/"+event_id+"/")
+        .success(function(data){
+          console.log("Deleted event from DB. Response: ", data);
+        })
+        .error(function(data){
+          Popups.showPopup("Error", "Sorry, we couldn't delete your Expense right now. Try again later!");
         })
     }
 

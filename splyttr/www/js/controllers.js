@@ -331,7 +331,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
     // Add Event to Tab via api, then add each Bill to that exent
     Events.addExpense($scope.newExpenseParams).then(function(res){
-      
+
       $scope.expenses.push(res.data)
 
       $scope.newBillParams.event = res.data.id;
@@ -341,7 +341,7 @@ angular.module('starter.controllers', ['ion-image-search'])
         // Set new bill paramaters for API
         $scope.newBillParams.amount = bill.amount;
         $scope.newBillParams.debtor = bill.id;
-        console.log("SENDING THIS", $scope.newBillParams);
+        
         Bills.addBill($scope.newBillParams);
       });
 
@@ -352,9 +352,18 @@ angular.module('starter.controllers', ['ion-image-search'])
   
 })
 
-.controller('ExpenseDetailCtrl', function($scope, $stateParams) {
+.controller('ExpenseDetailCtrl', function($scope, $ionicHistory, $stateParams, Events) {
   
   console.log("In expense controller", $stateParams);
+
+  $scope.deleteExpense = function(){
+    Events.remove($stateParams.expenseId).then(function(){
+      $ionicHistory.goBack();
+    });
+
+  }
+
+
 
 })
 
