@@ -60,6 +60,13 @@
 				border: 2px solid rgb(197, 197, 197);
 				margin-right: 10px;
 			}
+			&.expense{
+				height: auto;
+				li{
+					display: block;
+					margin-bottom: 40px;
+				}
+			}
 		}
 	}
 	&-message{

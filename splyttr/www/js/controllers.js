@@ -8,8 +8,8 @@ angular.module('starter.controllers', ['ion-image-search'])
       console.log("In login controller");
       
       $scope.loginParams = {
-        username: "",
-        password: ""
+        username: "user",
+        password: "rojomartin95"
       }   
 
   });
@@ -174,18 +174,19 @@ angular.module('starter.controllers', ['ion-image-search'])
 
       var tabData = {};
       $scope.tab = {
-        name: 'asdfa',
+        name: '',
         description: '',
-        members: []
-      };    
+        members: [],
+        id: 0
+      };
+
       // Get Tab details
       Tabs.getWithId($stateParams.tabId).then(function(res){
         var tabData = res.data;
         
-        
-        
         $scope.tab.name = tabData.name;
         $scope.tab.description = tabData.description;
+        $scope.tab.id = tabData.id;
 
         // Get User info for each member
         tabData.members.forEach(function(userID){
@@ -195,22 +196,18 @@ angular.module('starter.controllers', ['ion-image-search'])
           })
         });
 
-  });
+        // Get Tab events
+        Events.getAll($scope.tab.id).then(function(events){
+          $scope.expenses = events.data;
 
-  
-
-
-    // get all expenses
-    // Events.getAll($scope.tab.id).then(function(events){
-    //   $scope.expenses = events.data;
-
-    //   // get bill per expense
-    //   $scope.expenses.forEach(function(expense){
-    //      Bills.getBill(expense.id).then(function(bill){
-    //         expense.amount = bill.amount;
-    //      });
-    //   })
-    // })
+          // Get bill per expense
+          $scope.expenses.forEach(function(expense){
+             Bills.getBill(expense.id).then(function(bill){
+                expense.amount = bill.amount;
+             });
+          })
+        })
+      });    
   });
 
   // Open web mage search modal
@@ -285,70 +282,88 @@ angular.module('starter.controllers', ['ion-image-search'])
   // Close Payment Modal
   $scope.closePaymentModal = function() {
     $scope.PaymentModal.hide();
-    console.log("Payment Modal closed");
   };
 
   // Open Expense Modal
   $scope.openExpenseModal = function() {
     $scope.expenseModal.show();
-    console.log("Expense Modal opened");
+
     $scope.newExpenseParams = {
       name: "",
-      description: "Desc",
+      description: "",
       tab: $scope.tab.id
     }
 
-    $scope.newBillParams = {
-      amount: 0,
-      creditor: 30,
-      event: ""
-    }
+    User.get().then(function(res){
+      $scope.newBillParams = {
+        a_debtor: false,
+        amount: 0,
+        creditor: res.data.id,
+        debtor: 0,
+        event: 0
+      }
+    });
+
   };
 
   // Close Expense Modal
   $scope.closeExpenseModal = function() {
     $scope.expenseModal.hide();
-    console.log("Expence Modal closed");
   };
 
-  // Add Payment to Tab
-  $scope.addPayment = function() {
-    $scope.tab.balance = ($scope.tab.balance - $scope.newPayment.ammount_paid).toFixed(2);
-    $scope.closePaymentModal();
+  /* =========================
+
+    ADD EXPENSE
+
+    ==========================
+  */
+
+  $scope.search = '';
+  $scope.newBillAmounts = [];
+
+  $scope.addUserBill = function(index, userID) {
+      $scope.newBillAmounts[index].id = userID;
   }
 
-  // Add Expense to Tab
-  $scope.addExpense = function() {
+  $scope.addNewExpense = function() {
+    
+    $scope.newExpenseParams.tab = $scope.tab.id;
+
+    // Add Event to Tab via api, then add each Bill to that exent
     Events.addExpense($scope.newExpenseParams).then(function(res){
-        var newEventId = res.data.id;
-        $scope.newBillParams.event = newEventId;
 
-        // Add bill to event
-        Bills.addBill($scope.newBillParams).then(function(){
-            $scope.closeExpenseModal();
-        })
-    });
+      $scope.expenses.push(res.data)
+
+      $scope.newBillParams.event = res.data.id;
+
+      $scope.newBillAmounts.forEach(function(bill){
+
+        // Set new bill paramaters for API
+        $scope.newBillParams.amount = bill.amount;
+        $scope.newBillParams.debtor = bill.id;
+        
+        Bills.addBill($scope.newBillParams);
+      });
+
+      $scope.closeExpenseModal();
+    })
   }
-
-  	$scope.chart = "chart";
-
-	$scope.toggleAnalytics = function(chart) {
-      if ($scope.isAnalyticsShown(chart)) {
-	        $scope.shownAnalytics = null;
-
-	      } else {
-		        $scope.shownAnalytics = chart;
-		      }
-    };
-	$scope.isAnalyticsShown = function(chart) {
-	    return $scope.shownAnalytics === chart;
-	  };
-
+ 
+  
 })
 
-.controller('ExpenseDetailCtrl', function($scope, $stateParams) {
+.controller('ExpenseDetailCtrl', function($scope, $ionicHistory, $stateParams, Events) {
   
   console.log("In expense controller", $stateParams);
+
+  $scope.deleteExpense = function(){
+    Events.remove($stateParams.expenseId).then(function(){
+      $ionicHistory.goBack();
+    });
+
+  }
+
+
 
 })
 

@@ -9959,6 +9959,11 @@ ion-content {
     background-color: white;
     border: 2px solid #c5c5c5;
     margin-right: 10px; }
+  .tab-content-member-wrapper.expense {
+    height: auto; }
+    .tab-content-member-wrapper.expense li {
+      display: block;
+      margin-bottom: 40px; }
 
 .tab-message {
   position: absolute;
@@ -10138,6 +10143,8 @@ ion-content {
 
 .modal-members-list {
   background-color: #efefef; }
+  .modal-members-list.expense {
+    border: none; }
   .modal-members-list span.modal-tip {
     position: absolute;
     top: 72%;
@@ -10173,6 +10180,25 @@ ion-content {
 
 .modal select {
   background: transparent; }
+
+.modal-expense {
+  background-color: #efefef;
+  border: none;
+  padding-top: 0; }
+  .modal-expense .member-image {
+    border-radius: 50%;
+    max-width: 60px;
+    display: block;
+    padding-bottom: 5%; }
+    .modal-expense .member-image-wrapper {
+      float: left;
+      text-align: center; }
+  .modal-expense .member-info {
+    padding-left: 100px; }
+  .modal-expense .members-list {
+    padding-top: 15px; }
+    .modal-expense .members-list li {
+      margin-bottom: 40px; }
 
 .tab-analytics-dropdown {
   position: relative;
