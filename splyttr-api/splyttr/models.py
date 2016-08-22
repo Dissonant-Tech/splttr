@@ -16,7 +16,7 @@ class Tab(models.Model):
     description = models.CharField(
         max_length=240
     )
-    created = models.DateField(
+    created = models.DateTimeField(
         auto_now_add=True
     )
     members = models.ManyToManyField(User)
@@ -29,7 +29,7 @@ class Event(models.Model):
     description = models.CharField(
         max_length=240
     )
-    created = models.DateField(
+    created = models.DateTimeField(
         auto_now_add=True
     )
     tab = models.ForeignKey(
@@ -56,5 +56,8 @@ class Bill(models.Model):
     event = models.ForeignKey(
         Event,
         on_delete=models.CASCADE
+    )
+    created = models.DateTimeField(
+            auto_now_add=True
     )
     amount = models.DecimalField(max_digits=6, decimal_places=2)
