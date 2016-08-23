@@ -76,7 +76,7 @@ class TabViewSet(viewsets.ModelViewSet):
     def total(self, request, pk=None):
 
         total = 0 
-        bills = Bill.objects.filter(event__pk=pk) # querying for all events with the same tab
+        bills = Bill.objects.filter(event__tab__pk=pk) # querying for all events with the same tab
 
         for bill in bills:
             total += bill.amount 
@@ -111,11 +111,23 @@ class EventViewSet(viewsets.ModelViewSet):
         for bill in bills:
             if bill.a_debtor is not None:
                 members.append(bill.a_debtor)
-
             members.append(bill.creditor)
             members.append(bill.debtor)
             [member_list.append(member.pk) for member in members if member.pk  not in member_list]
+
         return Response(member_list)
+
+    @detail_route(methods=['GET'])
+    def total(self, request, pk=None):
+        total = 0
+
+        bills = Bill.objects.filter(event__pk = pk) # Separate all bill of this event
+        for bill in bills:
+            total += bill.amount
+
+        return Response({
+            'total': total
+        })
 
 
 class BillViewSet(viewsets.ModelViewSet):
