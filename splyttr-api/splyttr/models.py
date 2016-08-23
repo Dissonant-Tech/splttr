@@ -26,7 +26,7 @@ class QuickEvent(Tab):
     pass
 
 
-class Event(QuickEvent):
+class Event(models.Model):
     name = models.CharField(
         max_length=60
     )
@@ -40,10 +40,7 @@ class Event(QuickEvent):
         Tab,
         on_delete=models.CASCADE
     )
-    sub_members = models.ForeignKey(
-                User,
-                related_name="sub_members",
-    )
+    sub_members = models.ManyToManyField(User)
 
 
 class QuickBill(models.Model):
