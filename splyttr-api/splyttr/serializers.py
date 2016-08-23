@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from splyttr.models import Tab, Event, Bill, Profile
+from splyttr.models import Tab, Event, Bill, Profile, QuickBill, QuickEvent
 from rest_framework import serializers
 
 
@@ -53,4 +53,16 @@ class EventSerializer(serializers.ModelSerializer):
 class BillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bill
+        fields = '__all__'
+
+
+class QuickBillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuickBill
+        fields = '__all__'
+
+
+class QuickEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuickEvent
         fields = '__all__'
