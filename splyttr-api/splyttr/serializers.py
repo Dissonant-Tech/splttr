@@ -3,6 +3,12 @@ from splyttr.models import Tab, Event, Bill, Profile
 from rest_framework import serializers
 
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
+
+
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     bg_img = serializers.URLField(source='profile.bg_img', allow_null=True,  allow_blank=True)  # Telling Django to use profile instead

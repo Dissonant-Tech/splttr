@@ -4,9 +4,21 @@ from django.db import models
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)  # extending the deault model
-    bg_img = models.URLField(null=True, blank=True)  # Url Field for the bg image
-    full_name = models.CharField(max_length=45, null=True, blank=True)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        null = True,
+        blank = True
+    )
+    bg_img = models.URLField(
+        null=True,
+        blank=True
+    )
+    full_name = models.CharField(
+        max_length=45,
+        null=True,
+        blank=True
+    )
 
 
 class Tab(models.Model):
@@ -16,10 +28,16 @@ class Tab(models.Model):
     description = models.CharField(
         max_length=240
     )
-    created = models.DateField(
+    created = models.DateTimeField(
         auto_now_add=True
     )
-    members = models.ManyToManyField(User)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
+    members = models.ManyToManyField(
+        Profile
+    )
 
 
 class Event(models.Model):
@@ -40,21 +58,20 @@ class Event(models.Model):
 
 class Bill(models.Model):
     creditor = models.ForeignKey(
-        User,
+        Profile,
         related_name='+',
         on_delete=models.DO_NOTHING
     )
     debtor = models.ForeignKey(
-        User,
+        Profile,
         on_delete=models.DO_NOTHING,
-        null=True
-    )
-    a_debtor = models.CharField(
-        max_length=60,
         null=True
     )
     event = models.ForeignKey(
         Event,
         on_delete=models.CASCADE
     )
-    amount = models.DecimalField(max_digits=6, decimal_places=2)
+    amount = models.DecimalField(
+        max_digits=6,
+        decimal_places=2
+    )

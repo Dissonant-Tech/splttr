@@ -9,13 +9,19 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth.models import User, Group
 from django.views.generic import RedirectView
 
-from splyttr.serializers import UserSerializer, GroupSerializer, TabSerializer, EventSerializer, BillSerializer
+from splyttr.serializers import UserSerializer, GroupSerializer, TabSerializer, EventSerializer, BillSerializer, ProfileSerializer
 from splyttr.models import Tab, Event, Bill, Profile
 
 
 @api_view(['GET'])
 def get_ocr_view(request):
     return Response({})
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
