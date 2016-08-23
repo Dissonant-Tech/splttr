@@ -9,6 +9,7 @@ from rest_framework.decorators import detail_route
 
 from django.contrib.auth.models import User, Group
 from django.views.generic import RedirectView
+from django.core import serializers
 
 from splyttr.serializers import UserSerializer, GroupSerializer, TabSerializer, EventSerializer, BillSerializer
 from splyttr.models import Tab, Event, Bill, Profile
@@ -75,11 +76,10 @@ class TabViewSet(viewsets.ModelViewSet):
     def total(self, request, pk=None):
 
         total = 0 
-        events = Event.objects.filter(tab=pk) # querying for all events with the same tab
-        for item in events:
-            bills = Bill.objects.filter(event=item.pk) # for every bill use these events 
-            for bill in bills:
-                total += bill.amount # Running total( N^2) TODO: Optimize
+        bills = Bill.objects.filter(event__pk=pk) # querying for all events with the same tab
+
+        for bill in bills:
+            total += bill.amount 
 
         return Response({
             'total': total
@@ -100,6 +100,21 @@ class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('name', 'description', 'created', 'tab')
+
+    @detail_route(methods=['GET'])
+    def members(self, request, pk=None):
+
+        members = []
+
+        bills = Bill.objects.filter(event__pk) # Separate all bill of this event
+        for bill in bills:
+            if bill.a_debtor is not None:
+                members.append(bill.a_debtor)
+
+            members.append(bill.creditor)
+            members.append(bill.debtor)
+
+        return Response([[member.pk, member.username] for member in members])
 
 
 class BillViewSet(viewsets.ModelViewSet):
