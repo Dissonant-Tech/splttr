@@ -22,7 +22,11 @@ class Tab(models.Model):
     members = models.ManyToManyField(User)
 
 
-class Event(models.Model):
+class QuickEvent(Tab):
+    pass
+
+
+class Event(QuickEvent):
     name = models.CharField(
         max_length=60
     )
@@ -36,6 +40,32 @@ class Event(models.Model):
         Tab,
         on_delete=models.CASCADE
     )
+    sub_members = models.ForeignKey(
+                User,
+                related_name="sub_members",
+    )
+
+
+class QuickBill(models.Model):
+    creditor = models.ForeignKey(
+        User,
+        related_name='+',
+        on_delete=models.DO_NOTHING
+    )
+    debtor = models.ForeignKey(
+        User,
+        on_delete=models.DO_NOTHING,
+        null=True
+    )
+    a_debtor = models.CharField(
+        max_length=60,
+        null=True
+    )
+    qevent = models.ForeignKey(
+        QuickEvent,
+        on_delete=models.CASCADE
+    )
+    amount = models.DecimalField(max_digits=6, decimal_places=2)
 
 
 class Bill(models.Model):
