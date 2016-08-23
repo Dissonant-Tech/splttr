@@ -8,7 +8,7 @@ angular.module('starter.services', [])
     remove: function(tab_id) {
       return $http.delete("http://localhost:8000/api/tabs/"+tab_id+"/")
         .success(function(data){
-          console.log("Deleted tab from DB. Response: ", data);
+          // console.log("Deleted tab from DB. Response: ", data);
         })
         .error(function(data){
           Popups.showPopup("Error", "Sorry, we couldn't delete your Tab right now. Try again later!");
@@ -19,12 +19,12 @@ angular.module('starter.services', [])
     get: function(user_id) {
       return $http.get("http://localhost:8000/api/tabs/?members="+JSON.stringify(user_id))
         .success(function(data){
-          console.log("Getting all tabs for user with ID: " + user_id);
-          console.log("Tabs retreived from DB. Response:", data);
+          // console.log("Getting all tabs for user with ID: " + user_id);
+          // console.log("Tabs retreived from DB. Response:", data);
           return data;
         })
         .error(function(data){
-          console.log("No tabs returned from DB. Response:", data);
+          // console.log("No tabs returned from DB. Response:", data);
           return null;
         })
       
@@ -34,11 +34,11 @@ angular.module('starter.services', [])
     getWithId: function(tab_id) {
       return $http.get("http://localhost:8000/api/tabs/"+tab_id+'/')
         .success(function(data){
-            console.log("Retreived tab detail from DB. Response:", data);
+            // console.log("Retreived tab detail from DB. Response:", data);
             return data;
         })
         .error(function(data){
-            console.log("Could not get tab from DB. Response: ", data);
+            // console.log("Could not get tab from DB. Response: ", data);
             $state.go("tab.home");
         })
 
@@ -48,11 +48,11 @@ angular.module('starter.services', [])
     addTab: function(tab) {
       return $http.post("http://localhost:8000/api/tabs/", tab)
         .success(function(data) {
-          console.log("Successfully added tab to DB", data);
+          // console.log("Successfully added tab to DB", data);
           return data;
         })
         .error(function(data) {
-          console.log("sdlkjf", tab);
+          // console.log("sdlkjf", tab);
           Popups.showPopup("Could not add tab", "Sorry, you cannot currently add a tab.");
         })
       
@@ -86,7 +86,7 @@ angular.module('starter.services', [])
       }
 
       tab[attr] = newValue;
-      console.log(tab);
+      // console.log(tab);
     }
   };
 
@@ -100,12 +100,25 @@ angular.module('starter.services', [])
     getAll: function(tab_id) {
       return $http.get("http://localhost:8000/api/events/?tab="+tab_id)
         .success(function(data){
-            console.log("Getting all events for Tab ID: " + tab_id);
-            console.log("Retrieved all events. Response: ", data);
+            // console.log("Getting all events for Tab ID: " + tab_id);
+            // console.log("Retrieved all events. Response: ", data);
             return data;
         })
         .error(function(data){
-          console.log("Could not get all events. Reponse: ", data);
+          // console.log("Could not get all events. Reponse: ", data);
+        })
+    },
+
+    // Get specific event
+    get: function(event_id) {
+      return $http.get("http://localhost:8000/api/events/"+event_id+"/")
+        .success(function(data){
+            // console.log("Getting all events for Tab ID: " + tab_id);
+            // console.log("Retrieved all events. Response: ", data);
+            return data;
+        })
+        .error(function(data){
+          // console.log("Could not get all events. Reponse: ", data);
         })
     },
 
@@ -113,11 +126,11 @@ angular.module('starter.services', [])
     addExpense: function(event){
       return $http.post("http://localhost:8000/api/events/", event)
         .success(function(data){
-          console.log("Added events to tab. Response: ", data);
+          // console.log("Added events to tab. Response: ", data);
           return data;
         })
         .error(function(data){
-          console.log("Could not add events to DB. Response: ", data);
+          // console.log("Could not add events to DB. Response: ", data);
         })
     },
 
@@ -125,7 +138,7 @@ angular.module('starter.services', [])
     remove: function(event_id) {
       return $http.delete("http://localhost:8000/api/events/"+event_id+"/")
         .success(function(data){
-          console.log("Deleted event from DB. Response: ", data);
+          // console.log("Deleted event from DB. Response: ", data);
         })
         .error(function(data){
           Popups.showPopup("Error", "Sorry, we couldn't delete your Expense right now. Try again later!");
@@ -143,24 +156,24 @@ angular.module('starter.services', [])
       getBill: function(event_id) {
         return $http.get("http://localhost:8000/api/bills/?event="+event_id)
           .success(function(data){
-              console.log("Getting bill for event: " + event_id);
-              console.log("Retrieved bill. Response: ", data);
+              // console.log("Getting bill for event: " + event_id);
+              // console.log("Retrieved bill. Response: ", data);
               return data;
           })
           .error(function(data){
-            console.log("Could not get bill. Reponse: ", data);
+            // console.log("Could not get bill. Reponse: ", data);
           })
-      },
+      }, 
 
       // Add bill to event
       addBill: function(bill){
         return $http.post("http://localhost:8000/api/bills/", bill)
           .success(function(data){
-            console.log("Added bill to event in DB. Response: ", data);
+            // console.log("Added bill to event in DB. Response: ", data);
             return data;
           })
           .error(function(data){
-            console.log("Could not add bill to DB. Response: ", data);
+            // console.log("Could not add bill to DB. Response: ", data);
           })
       }
 
@@ -187,7 +200,7 @@ angular.module('starter.services', [])
       });
 
       alertPopup.then(function(res) {
-        console.log('User acknowledged popup');
+        // console.log('User acknowledged popup');
         if(alertCallback){
           alertCallback();
         }
@@ -227,10 +240,10 @@ angular.module('starter.services', [])
 		get: function() {  
         return $http.get('http://localhost:8000/api/auth/user/')
           .success(function(data) {
-            console.log("Got user from api. Response:", data);
+            // console.log("Got user from api. Response:", data);
           })
           .error(function(data) {
-            console.log("Could not get user from api. Response:", data);
+            // console.log("Could not get user from api. Response:", data);
           })
 		},
 
@@ -238,10 +251,10 @@ angular.module('starter.services', [])
     getAll: function() {
       return $http.get('http://localhost:8000/api/users/')
         .success(function(data) {
-            console.log("Successfully retreived response from server");
+            // console.log("Successfully retreived response from server");
         })
         .error(function(err){
-            console.log("Error: ", err);
+            // console.log("Error: ", err);
         })
     },
 
@@ -249,10 +262,10 @@ angular.module('starter.services', [])
     getWithId: function(user_id) {
         return $http.get('http://localhost:8000/api/users/'+user_id+'/', {})
           .success(function(data) {
-            console.log("Got user from api. Response:", data);
+            // console.log("Got user from api. Response:", data);
           })
           .error(function(data) {
-            console.log("Could not get user from api. Response:", data);
+            // console.log("Could not get user from api. Response:", data);
           })
 
     },
@@ -261,14 +274,14 @@ angular.module('starter.services', [])
     login: function(params) {
       $http.post("http://localhost:8000/api/auth/login/", params)
         .success(function(token, status, some, config) {
-          console.log("Successfully logged in. Response:", token);
+          // console.log("Successfully logged in. Response:", token);
 
           // Set global header auth token for each subsequent request
           $http.defaults.headers.common.Authorization = 'Token ' + token.key;
           $state.go("tab.home")
         })
         .error(function(data) {
-          console.log("Could not login. Response: ", data);
+          // console.log("Could not login. Response: ", data);
           Popups.showPopup("Invalid Login", data.non_field_errors[0]);
         })
     },
@@ -278,10 +291,10 @@ angular.module('starter.services', [])
     signup: function(params) {
        return $http.post("http://localhost:8000/api/auth/registration/", params)
          .success(function(data) {
-           console.log("Successfully signed up. Response:", data);
+           // console.log("Successfully signed up. Response:", data);
          })
          .error(function(data) {
-           console.log("Could not sign up. Repsonse: ", data);
+           // console.log("Could not sign up. Repsonse: ", data);
            var err = Object.keys(data)[0];
            Popups.showPopup("Error", data[err]);
          }) 
@@ -294,10 +307,10 @@ angular.module('starter.services', [])
 
         return $http.post("http://localhost:8000/api/auth/registration/", user)
           .success(function(data) {
-            console.log("Successfully created anonymous user. Response:", data);
+            // console.log("Successfully created anonymous user. Response:", data);
           })
           .error(function(data) {
-            console.log("Could not create anonymous user. Repsonse: ", data);
+            // console.log("Could not create anonymous user. Repsonse: ", data);
           }) 
     },
 
@@ -305,12 +318,12 @@ angular.module('starter.services', [])
     edit: function(user_id, params) {
         return $http.patch('http://localhost:8000/api/users/'+user_id+'/', params)
           .success(function(data) {
-            console.log("Successfully edited user. Response:", data);
+            // console.log("Successfully edited user. Response:", data);
           })
           .error(function(data) {
             var err = Object.keys(data)[0]
             Popups.showPopup("Error", data[err]);
-            console.log("Could not edit user. Response:", data);
+            // console.log("Could not edit user. Response:", data);
           })
     },
 
@@ -318,10 +331,10 @@ angular.module('starter.services', [])
     delete: function(user_id) {
         return $http.delete('http://localhost:8000/api/users/'+user_id+'/', {})
           .success(function(data) {
-            console.log("Deleted user from DB. Response:", data);
+            // console.log("Deleted user from DB. Response:", data);
           })
           .error(function(data) {
-            console.log("Could not delete user from DB. Response:", data);
+            // console.log("Could not delete user from DB. Response:", data);
           })
     },
 
@@ -332,11 +345,11 @@ angular.module('starter.services', [])
 
           // Remove previous Auth token
           $http.defaults.headers.common.Authorization = undefined;
-          console.log("Successfully logged out. Response: ", data);
+          // console.log("Successfully logged out. Response: ", data);
           $state.go("login");
         })
         .error(function(data){
-          console.log("Could not logout", data);
+          // console.log("Could not logout", data);
           Popups.showPopup("Error", "Sorry, there seems to be a problem. Try again later")
         })      
     }
