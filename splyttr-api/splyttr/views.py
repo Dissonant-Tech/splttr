@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.decorators import detail_route
 
 from django.contrib.auth.models import User, Group
 from django.views.generic import RedirectView
@@ -69,6 +70,20 @@ class TabViewSet(viewsets.ModelViewSet):
     serializer_class = TabSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('name', 'description', 'created', 'members')
+
+    @detail_route(methods=['GET'])
+    def total(self, request, pk=None):
+
+        total = 0 
+        events = Event.objects.filter(tab=pk) # querying for all events with the same tab
+        for item in events:
+            bills = Bill.objects.filter(event=item.pk) # for every bill use these events 
+            for bill in bills:
+                total += bill.amount # Running total( N^2) TODO: Optimize
+
+        return Response({
+            'total': total
+        })
 
 
 class EventViewSet(viewsets.ModelViewSet):
