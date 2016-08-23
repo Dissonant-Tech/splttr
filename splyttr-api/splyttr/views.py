@@ -105,16 +105,17 @@ class EventViewSet(viewsets.ModelViewSet):
     def members(self, request, pk=None):
 
         members = []
+        member_list = []
 
-        bills = Bill.objects.filter(event__pk) # Separate all bill of this event
+        bills = Bill.objects.filter(event__pk = pk) # Separate all bill of this event
         for bill in bills:
             if bill.a_debtor is not None:
                 members.append(bill.a_debtor)
 
             members.append(bill.creditor)
             members.append(bill.debtor)
-
-        return Response([[member.pk, member.username] for member in members])
+            [member_list.append(member.pk) for member in members if member.pk  not in member_list]
+        return Response(member_list)
 
 
 class BillViewSet(viewsets.ModelViewSet):
