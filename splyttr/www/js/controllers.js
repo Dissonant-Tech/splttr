@@ -75,7 +75,6 @@ angular.module('starter.controllers', ['ion-image-search'])
           $scope.tabs.forEach(function(tab, index, tabs){
             Tabs.getRemainingBalance(tab.id).then(function(res){
               tabs[index].total = res.data.total;
-              console.log($scope.tabs);
             })       
           })
         })
@@ -194,7 +193,12 @@ angular.module('starter.controllers', ['ion-image-search'])
         
         $scope.tab.name = tabData.name;
         $scope.tab.description = tabData.description;
-        $scope.tab.id = tabData.id;
+        $scope.tab.id = tabData.id; 
+
+        // Get Tab remaining balance
+        Tabs.getRemainingBalance($scope.tab.id).then(function(res){
+          $scope.tab.total = res.data.total;
+        })
 
         // Get User info for each member
         tabData.members.forEach(function(userID){
@@ -207,13 +211,6 @@ angular.module('starter.controllers', ['ion-image-search'])
         // Get Tab events
         Events.getAll($scope.tab.id).then(function(events){
           $scope.expenses = events.data;
-
-          // Get bill per expense
-          $scope.expenses.forEach(function(expense){
-             Bills.getBill(expense.id).then(function(bill){
-                expense.amount = bill.amount;
-             });
-          })
         })
       });    
   });
@@ -364,6 +361,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
   // Get expense details
   Events.get($stateParams.expenseId).then(function(res){
+    console.log(res.data);
     $scope.expense = res.data;
   })
   
