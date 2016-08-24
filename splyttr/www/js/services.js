@@ -44,6 +44,19 @@ angular.module('starter.services', [])
 
     },
 
+    // Get a Tab's remaining balance
+    getRemainingBalance: function(tab_id) {
+      return $http.get("http://localhost:8000/api/tabs/"+tab_id+'/total/')
+        .success(function(data){
+            // console.log("Retreived tab detail from DB. Response:", data);
+            return data;
+        })
+        .error(function(data){
+            // console.log("Could not get tab from DB. Response: ", data);
+        })
+
+    },
+
     // Add new Tab to DB
     addTab: function(tab) {
       return $http.post("http://localhost:8000/api/tabs/", tab)

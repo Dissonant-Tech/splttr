@@ -70,6 +70,14 @@ angular.module('starter.controllers', ['ion-image-search'])
         $scope.user = user.data;
         Tabs.get($scope.user.id).then(function(res){
           $scope.tabs = res.data;
+
+          // Get balance for each tab
+          $scope.tabs.forEach(function(tab, index, tabs){
+            Tabs.getRemainingBalance(tab.id).then(function(res){
+              tabs[index].total = res.data.total;
+              console.log($scope.tabs);
+            })       
+          })
         })
       }); 
 
