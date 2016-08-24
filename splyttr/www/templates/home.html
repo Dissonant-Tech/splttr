@@ -1,45 +1,35 @@
 <ion-view view-title="Splyttr">
     <ion-content class="padding tab-home">
-        <div class="tab-wrapper" ng-repeat="tab in tabs | orderBy: 'created':true">
 
-            <!-- TAB CONTENT -->
-            <div class="tab-content-wrapper" ng-style="{ 
+        <div class="tab-list">
+            <div class="list card tab" ng-repeat="tab in tabs | orderBy: 'created':true">
 
-                                            'background-image': 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)), url({{tab.bg_img}})' 
+                <div class="item">
+                  <span class="tab-total">${{tab.total}}</span>  
+                  <h2>{{tab.name}}</h2>
+                  <p class="tab-description">{{tab.description}}</p>
 
-                                            }">
-
-                <!-- TITLE -->
-                <div class="tab-content-title">
-                    <h2>{{tab.name}}</h2>
+                    <!-- MEMBERS LIST -->
+                    <div class="tab-content-member-wrapper">
+                        <span class="tab-content-member-label">Members</span>
+                        <ul class="member-list">
+                            <ion-scroll direction="x" style="white-space:nowrap;" has-bouncing="true">
+                                <li
+                                ng-repeat="member in tab.members | orderBy: 'debt'" 
+                                ng-style="{ 'background-image': member.img ? 'url({{member.img}})' : 'url(img/blank-user.png)' }" 
+                                ng-class="{'member-checked': member.debt}">
+                                </li>
+                            </ion-scroll>
+                        </ul>
+                    </div>
                 </div>
 
-                <!-- BALANCE -->
-                <div class="tab-content-balance">
-                    <h4>Balance: ${{tab.total}}</h4>
-                </div>
-
-                <!-- MEMBERS LIST -->
-                <div class="tab-content-member-wrapper">
-                    <span class="tab-content-member-label">Members</span>
-                    <ul class="member-list">
-                        <ion-scroll direction="x" style="white-space:nowrap;" has-bouncing="true">
-                            <li
-                            ng-repeat="member in tab.members | orderBy: 'debt'" 
-                            ng-style="{ 'background-image': member.img ? 'url({{member.img}})' : 'url(img/blank-user.png)' }" 
-                            ng-class="{'member-checked': member.debt}">
-                            </li>
-                        </ion-scroll>
-                    </ul>
-                </div>
+                <a class="item assertive tab-button" href="#/tab/home/{{tab.id}}">
+                  View Tab
+                </a>
                 
             </div>
-
-            <!-- VIEW TAB BUTTON -->
-            <a class="button button-block button-positive tab-button" href="#/tab/home/{{tab.id}}">
-                View Tab
-            </a>
-        </div>
+        </div>        
 
     </ion-content>
 

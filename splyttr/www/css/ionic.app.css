@@ -9902,68 +9902,54 @@ ion-header-bar .buttons button {
 ion-content {
   background-color: #efefef !important; }
 
+.tab h2 {
+  margin-bottom: 10px;
+  font-size: 1.5em;
+  width: 270px;
+  text-overflow: ellipsis; }
+
+.tab a {
+  color: #0d47a1;
+  text-align: center; }
+
+.tab-list {
+  margin-top: -10px; }
+
+.tab-total {
+  position: absolute;
+  right: 19px;
+  color: green;
+  font-size: 2em; }
+
+.tab-description {
+  white-space: normal !important; }
+
 @media (min-width: 640px) and (max-width: 1023px) {
   .tab-home {
     text-align: center; } }
 
-.tab-button.button-block {
-  margin: 0;
-  border-radius: 0 0 6px 6px;
-  padding: 7px; }
-
-.tab-wrapper {
-  box-shadow: 0 0px 4px rgba(0, 0, 0, 0.6);
-  height: auto;
-  background-color: gray;
-  border-radius: 6px;
-  margin: 20px auto;
-  text-align: left; }
-  .tab-wrapper:first-of-type {
-    margin-top: 0; }
-
-@include-tablet {
-  .tab-wrapper {
-    max-width: 200px; } }
-  @media (min-width: 640px) {
-    .tab-wrapper {
-      width: 300px;
-      margin-right: 25px;
-      display: inline-block; } }
-
-.tab-content-wrapper {
-  position: relative;
-  height: 90%;
-  padding: 10px;
-  border-radius: 6px 6px 0 0;
-  background-color: #bdbdbd;
-  background-position: center center;
-  background-size: cover;
-  overflow: hidden; }
-  .tab-content-wrapper h2, .tab-content-wrapper h4 {
-    color: white; }
-
 .tab-content-member-label {
-  color: white;
-  padding-bottom: 5px;
   line-height: 2em; }
 
-.tab-content-member-wrapper {
+.tab-content-member-wrapper.modal-member {
   height: 90px; }
-  .tab-content-member-wrapper li {
-    display: inline-block;
-    border-radius: 50%;
-    background-position: center center;
-    background-size: cover;
-    height: 42px;
-    width: 42px;
-    background-color: white;
-    border: 2px solid #c5c5c5;
-    margin-right: 10px; }
-  .tab-content-member-wrapper.expense {
-    height: auto; }
-    .tab-content-member-wrapper.expense li {
-      display: block;
-      margin-bottom: 40px; }
+
+.tab-content-member-wrapper li {
+  display: inline-block;
+  border-radius: 50%;
+  background-position: center center;
+  background-size: cover;
+  height: 42px;
+  width: 42px;
+  background-color: white;
+  border: 2px solid #c5c5c5;
+  margin-right: 10px; }
+
+.tab-content-member-wrapper.expense {
+  height: auto; }
+  .tab-content-member-wrapper.expense li {
+    display: block;
+    margin-bottom: 40px; }
 
 .tab-message {
   position: absolute;

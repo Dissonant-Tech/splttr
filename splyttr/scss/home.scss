@@ -1,54 +1,39 @@
 .tab{
+	h2{
+		margin-bottom: 10px;
+		font-size: 1.5em;
+		width: 270px;
+		text-overflow: ellipsis;
+	}
+	a{
+		color: #0d47a1;
+		text-align: center;
+	}
+	&-list{
+		margin-top: -10px;
+	}
+	&-total{
+		position: absolute;
+		right: 19px;
+		color: green;
+		font-size: 2em;
+	}
+	&-description{
+		white-space: normal !important;
+	}
 	&-home{
 		@include tablet{
 			text-align: center;
 		}
 	}
-	&-button.button-block{
-		margin: 0;
-		border-radius: 0 0 6px 6px;
-		padding: 7px;
-	}
-	&-wrapper{
-		box-shadow: 0 0px 4px rgba(0, 0, 0, 0.6);
-		height: auto;
-		background-color: gray;
-		border-radius: 6px;
-		margin: 20px auto;
-		text-align: left;
-		&:first-of-type{
-			margin-top: 0;
-		}
-		@include-tablet{
-			max-width: 200px;
-		}
-		@include tablet-up{
-			width: 300px;
-			margin-right: 25px;
-			display: inline-block;
-		}
-	}
-	&-content-wrapper{
-		position: relative;
-		height: 90%;
-		padding: 10px;
-		border-radius: 6px 6px 0 0;
-		h2, h4{
-			color: white;
-		}
-		background-color: #bdbdbd;
-		background-position: center center;
-		background-size: cover;
-		overflow: hidden;
-	}
 	&-content-member{
 		&-label{
-			color: white;
-			padding-bottom: 5px;
 			line-height: 2em;
 		}
 		&-wrapper{
-			height: 90px;
+			&.modal-member{
+				height: 90px;	
+			}
 			li{
 				display: inline-block;
 				border-radius: 50%;

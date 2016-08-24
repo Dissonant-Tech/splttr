@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ion-image-search'])
+angular.module('starter.controllers', [])
 
 .controller('LoginCtrl', function($scope, $http, User) {
   
@@ -175,7 +175,7 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, User, Popups, Tabs, Events, Bills) {
+.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $stateParams, $ionicModal, User, Popups, Tabs, Events, Bills) {
   
   $scope.$on("$ionicView.beforeEnter", function(){
 
@@ -221,19 +221,12 @@ angular.module('starter.controllers', ['ion-image-search'])
       });    
   });
 
-  // Open web image search modal
-  $scope.openImageChooserModal = function(){
-    $webImageSelector.show().then(function(image){
-      Tabs.edit($scope.tab.id, "bg_img", image.image.url);
-    });
-  }
-
   // Open action sheet
   $scope.openActionSheet = function() {
     $ionicActionSheet.show({
         titleText: $scope.tab.title,
         buttons: [
-          { text: 'Add Cover Photo' }
+          
         ],
         destructiveText: 'Delete',
         cancelText: 'Cancel',
@@ -245,7 +238,7 @@ angular.module('starter.controllers', ['ion-image-search'])
           switch(index){
             case 0:
               // Add Cover Photo Chosen
-              $scope.openImageChooserModal();
+              
           }
           return true;
         },
