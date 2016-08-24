@@ -82,8 +82,6 @@ angular.module('starter.controllers', ['ion-image-search'])
 
   });
 
-  console.log("In home controller");
-
   // =======  MODAL FUNCTIONS =======
 
   // load modal
@@ -128,6 +126,8 @@ angular.module('starter.controllers', ['ion-image-search'])
   $scope.saveNewTab = function(){
     console.log("Saving new tab", $scope.newTabParams);
     Tabs.addTab($scope.newTabParams).then(function(res){
+      // init a tab with a balance of $0
+      res.data.total = 0;
       $scope.tabs.push(res.data);
       $scope.closeModal();
     })
@@ -208,14 +208,20 @@ angular.module('starter.controllers', ['ion-image-search'])
           })
         });
 
-        // Get Tab events
+        // Get Tab events and their totals
         Events.getAll($scope.tab.id).then(function(events){
           $scope.expenses = events.data;
+
+          $scope.expenses.forEach(function(expense, index, expenses){
+            Events.getRemainingBalance(expense.id).then(function(res){
+              expenses[index].total = res.data.total;
+            })
+          });
         })
       });    
   });
 
-  // Open web mage search modal
+  // Open web image search modal
   $scope.openImageChooserModal = function(){
     $webImageSelector.show().then(function(image){
       Tabs.edit($scope.tab.id, "bg_img", image.image.url);
@@ -276,7 +282,6 @@ angular.module('starter.controllers', ['ion-image-search'])
       return;
     }
     $scope.PaymentModal.show();
-    console.log("Payment Modal opened");
     $scope.newPayment = {
       member_id: 0,
       expense: "",
@@ -331,26 +336,44 @@ angular.module('starter.controllers', ['ion-image-search'])
   }
 
   $scope.addNewExpense = function() {
-    
     $scope.newExpenseParams.tab = $scope.tab.id;
 
     // Add Event to Tab via api, then add each Bill to that exent
     Events.addExpense($scope.newExpenseParams).then(function(res){
 
-      $scope.expenses.push(res.data)
+      var createdExpense = res.data;
 
-      $scope.newBillParams.event = res.data.id;
+      // Tie each new bill to the event they belong to, which is the one we just created
+      $scope.newBillParams.event = createdExpense.id;
 
-      $scope.newBillAmounts.forEach(function(bill){
+      // Create Bill for each member in expense
+      $scope.newBillAmounts.forEach(function(bill, index, bills){
 
         // Set new bill paramaters for API
         $scope.newBillParams.amount = bill.amount;
         $scope.newBillParams.debtor = bill.id;
         
-        Bills.addBill($scope.newBillParams);
+        Bills.addBill($scope.newBillParams).then(function(){
+
+          // After last bill is created, calculate total for event which was just created
+          if(bills.length-1 === index){
+
+            Events.getRemainingBalance(createdExpense.id).then(function(res){
+              createdExpense.total = res.data.total;
+              $scope.expenses.push(createdExpense)
+
+              // Get Tab remaining balance
+              Tabs.getRemainingBalance($scope.tab.id).then(function(res){
+                $scope.tab.total = res.data.total;
+              })
+
+            })
+          }
+        })
       });
 
       $scope.closeExpenseModal();
+
     })
   }
  
@@ -361,11 +384,15 @@ angular.module('starter.controllers', ['ion-image-search'])
 
   // Get expense details
   Events.get($stateParams.expenseId).then(function(res){
-    console.log(res.data);
     $scope.expense = res.data;
+
+    // Get expense total
+    Events.getRemainingBalance($scope.expense.id).then(function(res){
+      $scope.expense.total = res.data.total;
+    });
   })
   
-  // Get expense members
+
 
   // Remove Expense 
   $scope.deleteExpense = function(){

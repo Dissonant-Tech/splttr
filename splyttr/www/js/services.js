@@ -122,6 +122,19 @@ angular.module('starter.services', [])
         })
     },
 
+    // Get event remaining balance
+    getRemainingBalance: function(event_id) {
+      return $http.get("http://localhost:8000/api/events/"+event_id+"/total/")
+        .success(function(data){
+            // console.log("Getting all events for Tab ID: " + tab_id);
+            // console.log("Retrieved all events. Response: ", data);
+            return data;
+        })
+        .error(function(data){
+          // console.log("Could not get all events. Reponse: ", data);
+        })
+    },
+
     // Get specific event
     get: function(event_id) {
       return $http.get("http://localhost:8000/api/events/"+event_id+"/")
