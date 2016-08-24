@@ -44,6 +44,19 @@ angular.module('starter.services', [])
 
     },
 
+    // Get a Tab's remaining balance
+    getRemainingBalance: function(tab_id) {
+      return $http.get("http://localhost:8000/api/tabs/"+tab_id+'/total/')
+        .success(function(data){
+            // console.log("Retreived tab detail from DB. Response:", data);
+            return data;
+        })
+        .error(function(data){
+            // console.log("Could not get tab from DB. Response: ", data);
+        })
+
+    },
+
     // Add new Tab to DB
     addTab: function(tab) {
       return $http.post("http://localhost:8000/api/tabs/", tab)
@@ -99,6 +112,19 @@ angular.module('starter.services', [])
     // Get all events for a specific tab
     getAll: function(tab_id) {
       return $http.get("http://localhost:8000/api/events/?tab="+tab_id)
+        .success(function(data){
+            // console.log("Getting all events for Tab ID: " + tab_id);
+            // console.log("Retrieved all events. Response: ", data);
+            return data;
+        })
+        .error(function(data){
+          // console.log("Could not get all events. Reponse: ", data);
+        })
+    },
+
+    // Get event remaining balance
+    getRemainingBalance: function(event_id) {
+      return $http.get("http://localhost:8000/api/events/"+event_id+"/total/")
         .success(function(data){
             // console.log("Getting all events for Tab ID: " + tab_id);
             // console.log("Retrieved all events. Response: ", data);
