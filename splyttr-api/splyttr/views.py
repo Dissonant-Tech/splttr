@@ -75,11 +75,11 @@ class TabViewSet(viewsets.ModelViewSet):
     @detail_route(methods=['GET'])
     def total(self, request, pk=None):
 
-        total = 0 
+        total = 0
         bills = Bill.objects.filter(event__tab__pk=pk) # querying for all events with the same tab
 
         for bill in bills:
-            total += bill.amount 
+            total += bill.amount
 
         return Response({
             'total': total
@@ -129,6 +129,16 @@ class EventViewSet(viewsets.ModelViewSet):
             'total': total
         })
 
+    @detail_route(methods=['GET'])
+    def bills(self, request, pk=None):
+        bills = Bill.objects.filter(event__pk = pk)
+
+        serialized_bills = []
+        [serialized_bills.append(BillSerializer(bill)) for bill in bills]
+
+        json = []
+        [json.append(obj.data) for obj in serialized_bills]
+        return Response(json)
 
 class BillViewSet(viewsets.ModelViewSet):
     """
