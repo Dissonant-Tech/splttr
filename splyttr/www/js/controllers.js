@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ion-image-search'])
+angular.module('starter.controllers', [])
 
 .controller('LoginCtrl', function($scope, $http, User) {
   
@@ -81,6 +81,15 @@ angular.module('starter.controllers', ['ion-image-search'])
       }); 
 
   });
+
+  // Pull to refresh tab list
+  $scope.refreshTabList = function(){
+    Tabs.get($scope.user.id).then(function(res){
+      $scope.tabs = res.data
+      // Stop the ion-refresher from spinning
+      $scope.$broadcast('scroll.refreshComplete');
+    })
+  }
 
   // =======  MODAL FUNCTIONS =======
 
@@ -175,10 +184,9 @@ angular.module('starter.controllers', ['ion-image-search'])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $webImageSelector, $stateParams, $ionicModal, User, Popups, Tabs, Events, Bills) {
-  
-  $scope.$on("$ionicView.beforeEnter", function(){
+.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $ionicModal, $stateParams, $ionicModal, User, Popups, Tabs, Events, Bills) {
 
+  $scope.$on("$ionicView.loaded", function(){
       var tabData = {};
       $scope.tab = {
         name: '',
@@ -211,29 +219,22 @@ angular.module('starter.controllers', ['ion-image-search'])
         // Get Tab events and their totals
         Events.getAll($scope.tab.id).then(function(events){
           $scope.expenses = events.data;
-
+  
           $scope.expenses.forEach(function(expense, index, expenses){
             Events.getRemainingBalance(expense.id).then(function(res){
               expenses[index].total = res.data.total;
             })
           });
         })
-      });    
+      });
   });
-
-  // Open web image search modal
-  $scope.openImageChooserModal = function(){
-    $webImageSelector.show().then(function(image){
-      Tabs.edit($scope.tab.id, "bg_img", image.image.url);
-    });
-  }
 
   // Open action sheet
   $scope.openActionSheet = function() {
     $ionicActionSheet.show({
         titleText: $scope.tab.title,
         buttons: [
-          { text: 'Add Cover Photo' }
+          
         ],
         destructiveText: 'Delete',
         cancelText: 'Cancel',
@@ -241,12 +242,6 @@ angular.module('starter.controllers', ['ion-image-search'])
           console.log('CANCELLED');
         },
         buttonClicked: function(index) {
-          console.log('BUTTON CLICKED', index);
-          switch(index){
-            case 0:
-              // Add Cover Photo Chosen
-              $scope.openImageChooserModal();
-          }
           return true;
         },
         destructiveButtonClicked: function() {
@@ -380,7 +375,7 @@ angular.module('starter.controllers', ['ion-image-search'])
   
 })
 
-.controller('ExpenseDetailCtrl', function($scope, $ionicHistory, $stateParams, Tabs, Events, User) {
+.controller('ExpenseDetailCtrl', function($scope,$rootScope, $state, $ionicHistory, $stateParams, Tabs, Events, User) {
 
   // Get expense details
   Events.get($stateParams.expenseId).then(function(res){
@@ -392,14 +387,12 @@ angular.module('starter.controllers', ['ion-image-search'])
     });
   })
   
-
-
-  // Remove Expense 
+  // Remove Expense and go back to parent tab 
   $scope.deleteExpense = function(){
-    Events.remove($stateParams.expenseId).then(function(){
+    $ionicHistory.clearCache().then(function(){
+      console.log(data);
       $ionicHistory.goBack();
-    });
-
+    })
   }
 
 
