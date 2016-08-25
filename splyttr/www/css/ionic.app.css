@@ -10077,6 +10077,8 @@ ion-content {
   white-space: nowrap; }
   .tab-detail .detail-squad-member-content span {
     font-size: 1.5em; }
+  .tab-detail .detail-squad-member-content a {
+    text-decoration: none; }
 
 .platform-android .action-sheet * {
   text-align: center !important; }

@@ -61,12 +61,11 @@
 		<!-- TAB MEMBERS -->
 		<ion-label stacked class="tab-detail-label">Members</ion-label>
 		<ul class="detail-squad-list">
-			<div class="detail-squad-member" ng-repeat="member in tab.members | orderBy: '!debt'" ng-class="{'member-owes': !member.debt}">
+			<div class="detail-squad-member" ng-repeat="member in tab.members | orderBy: '!debt'">
 				<img ng-src="{{member.img? 'member.img' : 'img/blank-user.png'}}"  alt="Member profile profile">
 				<div class="detail-squad-member-content">
 					<span>@{{member.username}}</span>
-					<p ng-if="member.debt">Still owes: $45.34</p>
-					<p ng-if="!member.debt">Does not owe</p>
+					<p><a href="#">View profile <i class="ion-chevron-right"></i></a></p>
 				</div>
 			</div>
 		</ul>
