@@ -82,6 +82,15 @@ angular.module('starter.controllers', [])
 
   });
 
+  // Pull to refresh tab list
+  $scope.refreshTabList = function(){
+    Tabs.get($scope.user.id).then(function(res){
+      $scope.tabs = res.data
+      // Stop the ion-refresher from spinning
+      $scope.$broadcast('scroll.refreshComplete');
+    })
+  }
+
   // =======  MODAL FUNCTIONS =======
 
   // load modal
@@ -175,10 +184,9 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $stateParams, $ionicModal, User, Popups, Tabs, Events, Bills) {
-  
-  $scope.$on("$ionicView.beforeEnter", function(){
+.controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $ionicModal, $stateParams, $ionicModal, User, Popups, Tabs, Events, Bills) {
 
+  $scope.$on("$ionicView.loaded", function(){
       var tabData = {};
       $scope.tab = {
         name: '',
@@ -211,14 +219,14 @@ angular.module('starter.controllers', [])
         // Get Tab events and their totals
         Events.getAll($scope.tab.id).then(function(events){
           $scope.expenses = events.data;
-
+  
           $scope.expenses.forEach(function(expense, index, expenses){
             Events.getRemainingBalance(expense.id).then(function(res){
               expenses[index].total = res.data.total;
             })
           });
         })
-      });    
+      });
   });
 
   // Open action sheet
@@ -234,12 +242,6 @@ angular.module('starter.controllers', [])
           console.log('CANCELLED');
         },
         buttonClicked: function(index) {
-          console.log('BUTTON CLICKED', index);
-          switch(index){
-            case 0:
-              // Add Cover Photo Chosen
-              
-          }
           return true;
         },
         destructiveButtonClicked: function() {
@@ -373,7 +375,7 @@ angular.module('starter.controllers', [])
   
 })
 
-.controller('ExpenseDetailCtrl', function($scope, $ionicHistory, $stateParams, Tabs, Events, User) {
+.controller('ExpenseDetailCtrl', function($scope,$rootScope, $state, $ionicHistory, $stateParams, Tabs, Events, User) {
 
   // Get expense details
   Events.get($stateParams.expenseId).then(function(res){
@@ -385,14 +387,12 @@ angular.module('starter.controllers', [])
     });
   })
   
-
-
-  // Remove Expense 
+  // Remove Expense and go back to parent tab 
   $scope.deleteExpense = function(){
-    Events.remove($stateParams.expenseId).then(function(){
+    $ionicHistory.clearCache().then(function(){
+      console.log(data);
       $ionicHistory.goBack();
-    });
-
+    })
   }
 
 

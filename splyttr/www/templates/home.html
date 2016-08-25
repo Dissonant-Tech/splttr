@@ -1,6 +1,9 @@
 <ion-view view-title="Splyttr">
     <ion-content class="padding tab-home">
-
+        <ion-refresher
+           pulling-text="Pull to refresh..."
+           on-refresh="refreshTabList()">
+         </ion-refresher>
         <div class="tab-list">
             <div class="list card tab" ng-repeat="tab in tabs | orderBy: 'created':true">
 
