@@ -45,16 +45,24 @@ class TabSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
+
+    event_bills = serializers.SerializerMethodField()
+
+    def get_event_bills(self, event):
+        bills = Bill.objects.filter(event=event)
+        serialized = BillSerializer(bills,
+                context={'request':self.context.get('request')},
+                many=True
+        )
+        return serialized.data
+
     class Meta:
         model = Event
         fields = '__all__'
 
 
 class BillSerializer(serializers.ModelSerializer):
-
-    debtor = UserSerializer()
-    creditor = UserSerializer()
-
     class Meta:
         model = Bill
         fields = '__all__'
+
