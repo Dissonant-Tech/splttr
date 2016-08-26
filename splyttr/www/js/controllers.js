@@ -404,8 +404,9 @@ angular.module('starter.controllers', [])
   // Remove Expense and go back to parent tab 
   $scope.deleteExpense = function(){
     $ionicHistory.clearCache().then(function(){
-      console.log(data);
-      $ionicHistory.goBack();
+      Events.remove($scope.expense.id).then(function(){
+        $ionicHistory.goBack();
+      })
     })
   }
 

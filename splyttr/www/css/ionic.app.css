@@ -9912,6 +9912,12 @@ ion-content {
   color: #0d47a1;
   text-align: center; }
 
+.tab-main {
+  border-radius: 6px !important; }
+
+.tab-button {
+  border-radius: 0 0 6px 6px !important; }
+
 .tab-list {
   margin-top: -10px; }
 
@@ -10079,6 +10085,8 @@ ion-content {
     font-size: 1.5em; }
   .tab-detail .detail-squad-member-content a {
     text-decoration: none; }
+    .tab-detail .detail-squad-member-content a i {
+      font-style: 0.75em; }
 
 .platform-android .action-sheet * {
   text-align: center !important; }
