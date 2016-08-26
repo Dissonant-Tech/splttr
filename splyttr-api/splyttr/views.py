@@ -132,13 +132,8 @@ class EventViewSet(viewsets.ModelViewSet):
     @detail_route(methods=['GET'])
     def bills(self, request, pk=None):
         bills = Bill.objects.filter(event__pk = pk)
-
-        serialized_bills = []
-        [serialized_bills.append(BillSerializer(bill)) for bill in bills]
-
-        json = []
-        [json.append(obj.data) for obj in serialized_bills]
-        return Response(json)
+        serialized = BillSerializer(bills, context={'request': request}, many=True)
+        return Response(serialized.data)
 
 class BillViewSet(viewsets.ModelViewSet):
     """
