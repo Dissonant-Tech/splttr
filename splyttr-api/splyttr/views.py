@@ -129,12 +129,6 @@ class EventViewSet(viewsets.ModelViewSet):
             'total': total
         })
 
-    @detail_route(methods=['GET'])
-    def bills(self, request, pk=None):
-        bills = Bill.objects.filter(event__pk = pk)
-        serialized = BillSerializer(bills, context={'request': request}, many=True)
-        return Response(serialized.data)
-
 class BillViewSet(viewsets.ModelViewSet):
     """
     Bills are the lowest level of the Splyttr hierarchy. They represent a debt
