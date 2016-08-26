@@ -51,6 +51,10 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class BillSerializer(serializers.ModelSerializer):
+
+    debtor = UserSerializer()
+    creditor = UserSerializer()
+
     class Meta:
         model = Bill
         fields = '__all__'
