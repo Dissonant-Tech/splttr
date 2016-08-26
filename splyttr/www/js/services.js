@@ -113,6 +113,16 @@ angular.module('starter.services', [])
     getAll: function(tab_id) {
       return $http.get("http://localhost:8000/api/events/?tab="+tab_id)
         .success(function(data){
+            return data;
+        })
+        .error(function(data){
+        })
+    },
+
+    // Get all bills for a specific event
+    getBills: function(event_id) {
+      return $http.get("http://localhost:8000/api/events/"+event_id+"/bills/")
+        .success(function(data){
             // console.log("Getting all events for Tab ID: " + tab_id);
             // console.log("Retrieved all events. Response: ", data);
             return data;

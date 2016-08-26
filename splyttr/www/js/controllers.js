@@ -385,13 +385,28 @@ angular.module('starter.controllers', [])
     Events.getRemainingBalance($scope.expense.id).then(function(res){
       $scope.expense.total = res.data.total;
     });
+
+    // Get expense members and bills
+    Events.getBills($scope.expense.id).then(function(res){
+      $scope.bills = res.data;
+
+      // Get user info for each bill
+      $scope.bills.forEach(function(bill, index, bills){
+        User.getWithId(bill.debtor).then(function(res){
+          bill.username = res.data.username;
+          bill.bg_img = res.data.bg_img;
+        });
+      })
+    })
   })
+
   
   // Remove Expense and go back to parent tab 
   $scope.deleteExpense = function(){
     $ionicHistory.clearCache().then(function(){
-      console.log(data);
-      $ionicHistory.goBack();
+      Events.remove($scope.expense.id).then(function(){
+        $ionicHistory.goBack();
+      })
     })
   }
 
