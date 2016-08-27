@@ -49,7 +49,7 @@ class EventSerializer(serializers.ModelSerializer):
     event_bills = serializers.SerializerMethodField()
 
     def get_event_bills(self, event):
-        bills = Bill.objects.filter(event=event)
+        bills = Bill.objects.filter(event=event).order_by('-created_at')
         serialized = BillSerializer(bills,
                 context={'request':self.context.get('request')},
                 many=True
@@ -62,6 +62,7 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class BillSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(input_formats=None, read_only=True)
     class Meta:
         model = Bill
         fields = '__all__'

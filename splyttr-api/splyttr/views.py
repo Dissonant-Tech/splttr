@@ -52,6 +52,17 @@ class UserViewSet(viewsets.ModelViewSet):
             'user_id': User.objects.get(username=str(user)).pk
             })
 
+    @detail_route(methods=['GET'])
+    def activity(self, request, pk=None):
+        events = Event.objects.filter(tab__members=pk).order_by('-created_at')
+        serialized = EventSerializer(events, context={'request':request}, many=True)
+        total_bills = []
+        for event in serialized.data:
+            total_bills.append({
+                'event_name':event['name'],
+                'bills':event['event_bills']
+            })
+        return Response(total_bills)
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
@@ -70,7 +81,7 @@ class TabViewSet(viewsets.ModelViewSet):
     queryset = Tab.objects.all()
     serializer_class = TabSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
-    filter_fields = ('name', 'description', 'created', 'members')
+    filter_fields = ('name', 'description', 'created_at', 'members')
 
     @detail_route(methods=['GET'])
     def total(self, request, pk=None):
@@ -99,7 +110,7 @@ class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
-    filter_fields = ('name', 'description', 'created', 'tab')
+    filter_fields = ('name', 'description', 'created_at', 'tab')
 
     @detail_route(methods=['GET'])
     def members(self, request, pk=None):
@@ -141,5 +152,5 @@ class BillViewSet(viewsets.ModelViewSet):
     queryset = Bill.objects.all()
     serializer_class = BillSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
-    filter_fields = ('creditor', 'debtor', 'a_debtor', 'event', 'amount')
+    filter_fields = ('creditor', 'debtor', 'a_debtor', 'event', 'amount', 'created_at')
 
