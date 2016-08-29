@@ -63,7 +63,26 @@ class EventSerializer(serializers.ModelSerializer):
 
 class BillSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(input_formats=None, read_only=True)
+    debtor = serializers.SerializerMethodField()
+    creditor = serializers.SerializerMethodField()
+
+    def get_debtor(self, bill):
+        debtor = User.objects.filter(pk=bill.debtor.id)
+        serialized = UserSerializer(debtor,
+                context={'request' : self.context.get('request')},
+                many=True
+        )
+        return serialized.data
+
+    def get_creditor(self, bill):
+        creditor = User.objects.filter(pk=bill.creditor.id)
+        serialized = UserSerializer(creditor,
+                context={'request' : self.context.get('request')},
+                many=True
+        )
+        return serialized.data
+
     class Meta:
         model = Bill
-        fields = '__all__'
+        exclude = ('debtor', 'creditor',)
 
