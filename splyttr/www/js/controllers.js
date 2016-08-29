@@ -417,23 +417,24 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('AccountCtrl', function($scope, $stateParams, $ionicModal, $state, Popups, User) {
+.controller('AccountCtrl', function($scope, Tabs, Bills, $stateParams, $ionicModal, $state, Popups, User) {
 
   // load user data before entering home state
   $scope.$on("$ionicView.beforeEnter", function(event, data){
 
-    $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-      $scope.series = ['Series A', 'Series B'];
-
-      $scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-      ];
-
     // Get user data
     if($stateParams.userId === 'self'){
+      $scope.self = true;
       User.get().then(function(user){
         $scope.user = user.data;
+
+        // Get chart data
+        $scope.labels = [];
+        $scope.series = ['Series A'];
+        $scope.data = [];
+
+        // Alan is currently working on an endpoint which returns user analytics with tab names and totals
+        
       });   
     } else{
       User.getWithId($stateParams.userId).then(function(user){
@@ -441,7 +442,6 @@ angular.module('starter.controllers', [])
       }); 
     } 
   });
-  
 
   // Delete User from DB
   $scope.deleteAccount = function(){
