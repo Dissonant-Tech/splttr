@@ -4,9 +4,6 @@ angular.module('starter.controllers', [])
   
   $scope.$on("$ionicView.beforeEnter", function(event, data){
       
-      // get user data from API
-      console.log("In login controller");
-      
       $scope.loginParams = {
         username: "user",
         password: "rojomartin95"
@@ -420,17 +417,24 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('AccountCtrl', function($scope, $ionicModal, $state, Popups, User) {
+.controller('AccountCtrl', function($scope, $stateParams, $ionicModal, $state, Popups, User) {
 
   // load user data before entering home state
   $scope.$on("$ionicView.beforeEnter", function(event, data){
-      
-      // get user data from API
+
+    // Get current user data
+    if($stateParams.userId === 'self'){
+      console.log('getting self');
       User.get().then(function(user){
         $scope.user = user.data;
-        console.log("In account controller")
-      }); 
+      });   
+    } else{
+      console.log('not ')
+      User.getWithId($stateParams.userId).then(function(user){
 
+        $scope.user = user.data;
+      }); 
+    } 
   });
   
 
