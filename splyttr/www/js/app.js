@@ -77,6 +77,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+  .state('tab.tab-detail-view-account', {
+    url: '/home/account/:userId',
+    views: {
+      'tab-home': {
+        templateUrl: 'templates/tab-account.html',
+        controller: 'AccountCtrl'
+      }
+    }
+  })
+
   .state('tab.expense-detail-view', {
     url: '/home/:tabId/:expenseId',
     views: {

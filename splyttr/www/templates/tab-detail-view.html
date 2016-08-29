@@ -65,7 +65,7 @@
 				<img ng-src="{{member.img? 'member.img' : 'img/blank-user.png'}}"  alt="Member profile profile">
 				<div class="detail-squad-member-content">
 					<span>@{{member.username}}</span>
-					<p><a href="#">View profile <i class="ion-chevron-right"></i></a></p>
+					<p><a ng-href="#/tab/home/account/{{member.id}}">View profile <i class="ion-chevron-right"></i></a></p>
 				</div>
 			</div>
 		</ul>

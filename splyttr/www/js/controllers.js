@@ -422,16 +422,13 @@ angular.module('starter.controllers', [])
   // load user data before entering home state
   $scope.$on("$ionicView.beforeEnter", function(event, data){
 
-    // Get current user data
+    // Get user data
     if($stateParams.userId === 'self'){
-      console.log('getting self');
       User.get().then(function(user){
         $scope.user = user.data;
       });   
     } else{
-      console.log('not ')
       User.getWithId($stateParams.userId).then(function(user){
-
         $scope.user = user.data;
       }); 
     } 
@@ -462,7 +459,6 @@ angular.module('starter.controllers', [])
     animation: 'slide-in-up'
   }).then(function(modal) {
     $scope.modal = modal;
-    console.log("Edit profile modal loaded");
   });
 
   // Profile edit button clicked
@@ -488,12 +484,10 @@ angular.module('starter.controllers', [])
 
   $scope.closeModal = function() {
     $scope.modal.hide();
-    console.log("Edit profile modal closed");
   };
 
   $scope.openModal = function() {
     $scope.modal.show();
-    console.log("Edit profile modal opened");
   };
 
   $scope.signOut = function() {
