@@ -1,6 +1,6 @@
 <ion-view view-title="Account">
 	<ion-nav-buttons side="right">
-	      <button class="button button-clear button-positive" ng-click="editProfile()">
+	      <button ng-if="self" class="button button-clear button-positive" ng-click="editProfile()">
 	        Edit
 	      </button>
 	    </ion-nav-buttons>
@@ -23,18 +23,17 @@
 				</div> 
 			</div>
 
-		<!-- PROFILE SETTINGS -->
-		<div class="card">
+		<!-- Chart-->
+		<div ng-if="self" class="card">
 			<div class="item item-divider">
-				Account Settings
+				Your expenses
 			</div>
 			<div class="item item-text-wrap">
-				<ion-toggle ng-model="airplaneMode" toggle-class="toggle-balanced">Airplane Mode</ion-toggle>
-				<ion-toggle toggle-class="toggle-balanced">Setting 2</ion-toggle>
-				<ion-toggle toggle-class="toggle-balanced">Setting 3</ion-toggle>
-			</div>
+				<canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series">
+				</canvas>
+			</div>			
 		</div>
-		<button class="button button-block button-assertive" ng-click="signOut()">Sign Out</button>
+		<button ng-if="self" class="button button-block button-assertive" ng-click="signOut()">Sign Out</button>
 	</div>
   </ion-content>
 </ion-view>

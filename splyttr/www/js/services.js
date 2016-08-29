@@ -188,6 +188,17 @@ angular.module('starter.services', [])
 .factory('Bills', function($ionicPopup, $http){
   return {
 
+      // Get all bills for user
+      get: function(user_id){
+        return $http.get('http://localhost:8000/api/bills/?debtor=' + user_id)
+          .success(function(res){
+            return res.data
+          })
+          .error(function(res){
+            console.log("Could not get bills for user");
+          })
+      },
+
       // Get bills for a specific event
       getBill: function(event_id) {
         return $http.get("http://localhost:8000/api/bills/?event="+event_id)

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'chart.js'])
 
 .run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function() {
@@ -77,6 +77,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+  .state('tab.tab-detail-view-account', {
+    url: '/home/account/:userId',
+    views: {
+      'tab-home': {
+        templateUrl: 'templates/tab-account.html',
+        controller: 'AccountCtrl'
+      }
+    }
+  })
+
   .state('tab.expense-detail-view', {
     url: '/home/:tabId/:expenseId',
     views: {
@@ -98,7 +108,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     })
 
   .state('tab.account', {
-    url: '/account',
+    url: '/account/:userId',
     views: {
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
