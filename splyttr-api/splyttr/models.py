@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 from django.db import models
 
@@ -16,8 +17,9 @@ class Tab(models.Model):
     description = models.CharField(
         max_length=240
     )
-    created = models.DateField(
-        auto_now_add=True
+    created_at = models.DateTimeField(
+            '%m/%d/%Y %H:%M',
+            auto_now_add=True,
     )
     members = models.ManyToManyField(User)
 
@@ -29,14 +31,14 @@ class Event(models.Model):
     description = models.CharField(
         max_length=240
     )
-    created = models.DateField(
-        auto_now_add=True
+    created_at = models.DateTimeField(
+            '%m/%d/%Y %H:%M',
+            auto_now_add=True,
     )
     tab = models.ForeignKey(
         Tab,
         on_delete=models.CASCADE
     )
-
 
 class Bill(models.Model):
     creditor = models.ForeignKey(
@@ -58,3 +60,8 @@ class Bill(models.Model):
         on_delete=models.CASCADE
     )
     amount = models.DecimalField(max_digits=6, decimal_places=2)
+    created_at = models.DateTimeField(
+            '%m/%d/%Y %H:%M',
+            auto_now_add=True,
+    )
+    is_paid = models.BooleanField(default=False)
