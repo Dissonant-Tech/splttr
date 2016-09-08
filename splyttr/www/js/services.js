@@ -374,6 +374,16 @@ angular.module('starter.services', [])
           })
     },
 
+    // Gets User activity
+    getActivity: function(user_id) {
+        return $http.get('http://localhost:8000/api/users/'+user_id+'/activity/')
+          .success(function(data) {
+            // console.log("Successfully edited user. Response:", data);
+          })
+          .error(function(data) {
+          })
+    },    
+
     // Deletes user
     delete: function(user_id) {
         return $http.delete('http://localhost:8000/api/users/'+user_id+'/', {})

@@ -410,10 +410,21 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ActivityCtrl', function($scope, Tabs) {
+.controller('ActivityCtrl', function($scope, User) {
 
-  
-  console.log("In activity controller");
+  // Load home state from API
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+      
+      // Get user data and Tabs from DB
+      User.get().then(function(user){
+        var user = user.data;
+        User.getActivity(user.id).then(function(res){
+          console.log(res.data)
+          $scope.activities = res.data;
+        })   
+      }); 
+
+  });
 
 })
 
