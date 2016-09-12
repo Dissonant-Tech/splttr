@@ -2,6 +2,20 @@
 .activity{
 	&-amount{
 		color: green;
-		
+	}
+	&-profile-picture{
+		width: 48px;
+		height: 48px;
+		background-size: cover;
+		background-position: center;
+		border-radius: 50%;
+		float: left;
+		margin-right: 20px;
+	}
+	&-detail{
+		min-height: 60px;
+		&-wrapper{
+			padding-bottom: 0 !important;
+		}
 	}
 }
