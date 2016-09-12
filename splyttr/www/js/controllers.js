@@ -417,14 +417,23 @@ angular.module('starter.controllers', [])
       
       // Get user data and Tabs from DB
       User.get().then(function(user){
-        var user = user.data;
-        User.getActivity(user.id).then(function(res){
+        $scope.user = user.data;
+        User.getActivity($scope.user.id).then(function(res){
           console.log(res.data)
           $scope.activities = res.data;
         })   
       }); 
 
   });
+
+  // Pull to refresh tab list
+  $scope.refreshTabList = function(){
+    User.getActivity($scope.user.id).then(function(res){
+      $scope.activities = res.data
+      // Stop the ion-refresher from spinning
+      $scope.$broadcast('scroll.refreshComplete');
+    })
+  }
 
 })
 

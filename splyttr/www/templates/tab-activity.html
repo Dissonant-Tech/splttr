@@ -1,22 +1,29 @@
 <ion-view view-title="Activity">
     <ion-content class="padding">
+    <ion-refresher
+       pulling-text="Pull to refresh..."
+       on-refresh="refreshTabList()">
+     </ion-refresher>
     <div ng-repeat="activity in activities">
         <div class="card">
             <div class="item item-divider">
                 {{activity.event_name}}
             </div>
-            <div class="item item-text-wrap">
-                <ul>
-                <li ng-repeat="bill in activity.bills">
-                    @{{bill.debtor_info[0].username}} owes @{{bill.creditor_info[0].username}} ${{bill.amount}} 
-                </li>
+            <div class="item item-text-wrap activity-detail-wrapper">
+                <ul class="detail-squad-list">
+                    <div class="detail-squad-member activity-detail" ng-repeat="bill in activity.bills">
+                        <img style="background-image: url(img/blank-user.png)" class="activity-profile-picture">
+                        <div class="detail-squad-member-content">
+                            <span>@{{bill.debtor_info[0].username}}</span>
+                            <p>Owes @{{bill.creditor_info[0].username}} <span class="activity-amount">${{bill.amount}}</span></p>
+                        </div>
+                    </div>
                 </ul>
+                <a class="item assertive tab-button" href="#/tab/home/{{tab.id}}">
+                  View Tab
+                </a>
             </div>
-            
         </div>
-        <button class="button button-block button-positive">
-            View Tab
-        </button>
     </div>
 
     </ion-content>       

@@ -10196,32 +10196,22 @@ ion-content {
     .modal-expense .members-list li {
       margin-bottom: 40px; }
 
-.tab-analytics-dropdown {
-  position: relative;
-  margin-left: 10px;
-  margin-right: 10px; }
-  .tab-analytics-dropdown-button i {
-    zoom: 1.2;
-    position: absolute;
-    right: 1em; }
+.activity-amount {
+  color: green; }
 
-.tab-analytics {
-  padding-top: 0;
-  padding-bottom: 0; }
-  .tab-analytics-chart {
-    zoom: .85;
-    background-color: white;
-    border: solid #387ef5;
-    margin-left: calc(1em - 2px);
-    border-radius: 8px;
-    margin-right: calc(1em - 2px);
-    padding-left: 1em;
-    margin-top: -1.3em;
-    padding-right: 1em; }
+.activity-profile-picture {
+  width: 48px;
+  height: 48px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  float: left;
+  margin-right: 20px; }
 
-.tab-analytics .btoggle {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px; }
+.activity-detail {
+  min-height: 60px; }
+  .activity-detail-wrapper {
+    padding-bottom: 0 !important; }
 
 .expense-title {
   padding-bottom: 10px; }
