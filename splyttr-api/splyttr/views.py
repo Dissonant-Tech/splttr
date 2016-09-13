@@ -78,10 +78,16 @@ class TabViewSet(viewsets.ModelViewSet):
     API endpoint that allows tabs to be viewed or edited
     """
     permission_classes = (IsAuthenticated,)
-    queryset = Tab.objects.all()
     serializer_class = TabSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('name', 'description', 'created_at', 'members')
+
+    def get_queryset(self):
+        if self.kwargs:
+            ids = self.kwargs['members']
+            return Tab.objects.filter(members__in=ids)
+        return Tab.objects.all()
+
 
     @detail_route(methods=['GET'])
     def total(self, request, pk=None):
