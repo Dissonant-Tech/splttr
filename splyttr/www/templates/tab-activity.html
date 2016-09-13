@@ -13,9 +13,10 @@
                 <ul class="detail-squad-list">
                     <div class="detail-squad-member activity-detail" ng-repeat="bill in activity.bills">
                         <img style="background-image: url(img/blank-user.png)" class="activity-profile-picture">
+                           <i class="ion-android-done-all activity-icon activity-icon-paid"></i>
                         <div class="detail-squad-member-content">
                             <span>@{{bill.debtor_info[0].username}}</span>
-                            <p>Owes @{{bill.creditor_info[0].username}} <span class="activity-amount">${{bill.amount}}</span></p>
+                            <p>Owes <strong>@{{bill.creditor_info[0].username}}</strong> <span class="activity-amount">${{bill.amount}}</span></p>
                         </div>
                     </div>
                 </ul>

@@ -1,7 +1,16 @@
 
 .activity{
 	&-amount{
-		color: green;
+		color: green !important;
+		font-weight: 600;
+	}
+	&-icon{
+		float: right;
+		&-paid{
+			color: green !important;
+			font-size: 1.25em;
+			padding-top: 10px;
+		}
 	}
 	&-profile-picture{
 		width: 48px;
