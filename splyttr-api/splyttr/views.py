@@ -95,8 +95,8 @@ class TabViewSet(mixins.CreateModelMixin,
         tabs = Tab.objects.all()
         idstring = str(self.request.query_params.get('members', ''))
         if idstring is not '':
-            l = idstring.split(',')
-            ids = list(map(int, idli))
+            idlist = idstring.split(',')
+            ids = list(map(int, idlist))
             tabs = Tab.objects.filter(members__in=ids).distinct()
         return tabs
 
