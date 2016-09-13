@@ -222,6 +222,19 @@ angular.module('starter.services', [])
           .error(function(data){
             // console.log("Could not add bill to DB. Response: ", data);
           })
+      },
+
+      // Pay a bill
+      payBill: function(bill_id, params){
+        console.log('bill_id', bill_id);
+        console.log('params', params);
+        return $http.patch('http://localhost:8000/api/bills/' + bill_id + "/", params)
+          .success(function(res){
+            return res.data
+          })
+          .error(function(res){
+            console.log("Could not get bills for user");
+          })
       }
 
   };

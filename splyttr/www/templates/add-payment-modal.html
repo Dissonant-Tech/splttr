@@ -5,67 +5,45 @@
 		    <button class="button button-clear button-positive" ng-click="closePaymentModal()">Close</button>
 		  </div>
 	</ion-header-bar>
-	<ion-content>
-		<form name="newPaymentForm" novalidate>
-			<div class="list">
+	<ion-content class="payment" scroll="false">
+		<div class="payment-wrapper">
+			<form name="newPaymentForm" novalidate>
+				<div class="list">
 
-				<!-- MODAL MEMBER SEARCH -->
-				<div class="modal-members-list item">
-					<span class="input-label">Add to expense</span>
-					<label class="item item-input search">
-					  <i class="icon ion-search placeholder-icon"></i>
-					  <input type="search" placeholder="Search">
-					</label>
-					<ion-scroll class="member-list-scroll" zooming="false" direction="x" style="width: 2000px;">
-					    <div class="tab-content-member-wrapper">
-					                <ul class="member-list">
-					                    <li style="background-image: url(./img/max.png);" on-tap="addMemberToTab()"></li>
-					                    <li style="background-image: url(./img/adam.jpg);" on-tap="addMemberToTab()"></li>
-					                    <li style="background-image: url(./img/ben.png);" on-tap="addMemberToTab()"></li>
-					                    <li style="background-image: url(./img/perry.png);" on-tap="addMemberToTab()"></li>
-					                    <li style="background-image: url(./img/mike.png);" on-tap="addMemberToTab()"></li>
-					                    <li style="background-image: url(./img/max.png);" on-tap="addMemberToTab()"></li>
-					                    <li style="background-image: url(./img/max.png);" on-tap="addMemberToTab()"></li>
-					                    <li style="background-image: url(./img/max.png);" on-tap="addMemberToTab()"></li>
-					                </ul>
-					            </div>
-					</ion-scroll>
-					<div class="modal-tip-wrapper">
-						<span class="modal-tip">Add member who made the payment</span>
-					</div>
-				</div>
+					<!-- Select expense-->
+					<div class="modal-input padding">
+						<label class="item item-input item-select modal-label">
+						    <div class="input-label">
+						      Expense
+						    </div>
+						    <select ng-model="newPayment.expense" ng-change="newPaymentExpenseSelected()" ng-options="expense as expense.name for expense in expenses" required>
+						    </select>
+					  	</label>
 
-				<!-- MODAL INPUT FIELDS -->
-				<div class="modal-input padding">
+				  	<!-- Select Member -->
+				  		<label class="item item-input item-select modal-label" ng-class="{incomplete: newPayment.expense === ''}">
+				  		    <div class="input-label">
+				  		      Member
+				  		    </div>
+				  		    <select ng-disabled="newPayment.expense === ''" ng-change="newPaymentMemberSelected()" ng-options="member as member.debtor_info[0].username for member in newPaymentMembers" ng-model="newPayment.member" required>
+				  		    </select>
+				  	  	</label>
 
-					<label class="item item-input item-select modal-label">
-					    <div class="input-label">
-					      Expense
-					    </div>
-					    <select ng-model="newPayment.expense" required>
-					      <option ng-repeat="expense in tab.expenses">{{expense.title}}</option>
-					    </select>
-					  </label>
+						<div class="modal-tip-wrapper" ng-if="newPayment.member">
+							<span class="modal-tip"><strong>@{{newPayment.member.debtor_info[0].username}}</strong> owes you <strong><span class="balanced">${{newPaymentAmount}}</span></strong> for <strong>Hotel</strong></span>
+						</div>
 
-					<label class="item item-input item-floating-label modal-label">
-						<span class="input-label">Amount</span>
-						<input type="number" placeholder="Amount" ng-model="newPayment.ammount_paid" required>
-					</label>
+				  	</div>
 
-					<div class="modal-tip-wrapper" ng-if="newPayment.expense">
-						<span class="modal-tip">Martin owes you <span class="balanced">$400</span> for <strong>Hotel</strong></span>
+				  	<!-- MODAL BUTTON -->
+					<div class="padding">
+						<button type="button" class="button button-block button-balanced" ng-disabled="newPayment.member === ''" ng-click="addPayment()">
+						  	Add Payment
+						</button>
 					</div>
 
-			  	</div>
-
-			  	<!-- MODAL BUTTON -->
-				<div class="padding">
-					<button type="button" class="button button-block button-balanced" ng-disabled="newPaymentForm.$invalid" ng-click="addPayment()">
-					  	Add Payment
-					</button>
 				</div>
-
-			</div>
-		</form>
+			</form>
+		</div>
 	</ion-content>
 </ion-modal-view>

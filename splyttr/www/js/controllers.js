@@ -277,9 +277,8 @@ angular.module('starter.controllers', [])
     }
     $scope.PaymentModal.show();
     $scope.newPayment = {
-      member_id: 0,
+      member: "",
       expense: "",
-      ammount_paid: ""
     }
   };
 
@@ -308,6 +307,23 @@ angular.module('starter.controllers', [])
   $scope.closeExpenseModal = function() {
     $scope.expenseModal.hide();
   };
+
+  $scope.newPaymentExpenseSelected = function(){
+    Events.get($scope.newPayment.expense.id).then(function(res){
+    $scope.newPaymentMembers = res.data.event_bills;
+    })
+  }
+
+  $scope.newPaymentMemberSelected = function(){
+    $scope.newPaymentAmount = $scope.newPayment.member.amount;
+  }
+
+  $scope.addPayment = function(){
+    console.log($scope.newPayment);
+     Bills.payBill($scope.newPayment.member.id, {is_paid: true}).then(function(res){
+      console.log(res);
+     })
+  }
 
   /* =========================
 
