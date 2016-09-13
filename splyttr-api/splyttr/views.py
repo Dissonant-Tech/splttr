@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.decorators import detail_route
+from rest_framework import mixins
 
 from django.contrib.auth.models import User, Group
 from django.views.generic import RedirectView
@@ -13,6 +14,9 @@ from django.core import serializers
 
 from splyttr.serializers import UserSerializer, GroupSerializer, TabSerializer, EventSerializer, BillSerializer
 from splyttr.models import Tab, Event, Bill, Profile
+from splyttr.mixins import CustomListModelMixin
+
+import ipdb
 
 
 @api_view(['GET'])
@@ -73,7 +77,12 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 
-class TabViewSet(viewsets.ModelViewSet):
+class TabViewSet(mixins.CreateModelMixin,
+               mixins.RetrieveModelMixin,
+               mixins.UpdateModelMixin,
+               mixins.DestroyModelMixin,
+               CustomListModelMixin,
+               viewsets.GenericViewSet):
     """
     API endpoint that allows tabs to be viewed or edited
     """
@@ -83,10 +92,13 @@ class TabViewSet(viewsets.ModelViewSet):
     filter_fields = ('name', 'description', 'created_at', 'members')
 
     def get_queryset(self):
-        if self.kwargs:
-            ids = self.kwargs['members']
-            return Tab.objects.filter(members__in=ids)
-        return Tab.objects.all()
+        tabs = Tab.objects.all()
+        idstring = str(self.request.query_params.get('members', ''))
+        if idstring is not '':
+            l = idstring.split(',')
+            ids = list(map(int, idli))
+            tabs = Tab.objects.filter(members__in=ids).distinct()
+        return tabs
 
 
     @detail_route(methods=['GET'])
