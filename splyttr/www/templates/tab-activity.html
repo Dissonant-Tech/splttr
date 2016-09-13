@@ -1,16 +1,33 @@
 <ion-view view-title="Activity">
     <ion-content class="padding">
-        <div ng-repeat="tab in tabs">
-            <div class="list">
-                <div class="card analytics-card">
-                    <div class="item item-divider analytics-header" style="background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url({{tab.bg_img}})">
-                        <span>{{tab.title}}</span>
-                    </div>
-                    <div class="item item-text-wrap">
-                        <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true" chart-series="series" chart-options="{showTooltips: false}"></canvas>
-                    </div>
-                </div>
+    <ion-refresher
+       pulling-text="Pull to refresh..."
+       on-refresh="refreshTabList()">
+     </ion-refresher>
+    <div ng-repeat="activity in activities">
+        <div class="card">
+            <div class="item item-divider">
+                <span class="activity-tab-title">Tab Name</h2> <span class="activity-title"> - {{activity.event_name}}</span>
+                <p>by @{{activity.bills[0].creditor_info[0].username}}</p>
             </div>
+            <div class="item item-text-wrap activity-detail-wrapper">
+                <ul class="detail-squad-list">
+                    <div class="detail-squad-member activity-detail" ng-repeat="bill in activity.bills">
+                        <img style="background-image: url(img/blank-user.png)" class="activity-profile-picture">
+                           <i class="ion-android-done-all activity-icon activity-icon-paid"></i>
+                        <div class="detail-squad-member-content">
+                            <span>@{{bill.debtor_info[0].username}}</span>
+                            <p>Owes <span class="activity-amount">${{bill.amount}}</span></p>
+                        </div>
+                    </div>
+                </ul>
+                <a class="item assertive tab-button" href="#/tab/home/{{tab.id}}">
+                  View Tab
+                </a>
+            </div>
+        </div>
+    </div>
+
     </ion-content>       
     
     <!-- NO TABS LABEL -->

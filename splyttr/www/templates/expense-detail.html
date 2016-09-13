@@ -14,23 +14,19 @@
 				Members
 			</div>
 			<div class="item item-text-wrap">
-				<p>These members belong to this expense</p>
 				<div class="tab-detail">
-				<ul class="detail-squad-list">
-					<div class="detail-squad-member" ng-repeat="bill in bills">
-						<img ng-src="{{bill.bg_img? 'bill.bg_img' : 'img/blank-user.png'}}">
-						<div class="detail-squad-member-content">
-							<p><span>@{{bill.username}}</span></p>
-							<p class="bill-owes">${{bill.amount}}</p>
+					<ul class="detail-squad-list">
+						<div class="detail-squad-member" ng-repeat="bill in expense.event_bills">
+							<img ng-src="{{bill.bg_img? 'bill.bg_img' : 'img/blank-user.png'}}">
+							<div class="detail-squad-member-content">
+								<p><span>@{{bill.debtor_info[0].username}}</span></p>
+								<p class="activity-amount">${{bill.amount}}</p>
+							</div>
 						</div>
-					</div>
-				</ul>
+					</ul>
 				</div>
 			</div>
 		</div>
-
-
-
 		<button class="button button-block button-assertive" ng-click="deleteExpense()">
 			Delete Expense
 		</button>		

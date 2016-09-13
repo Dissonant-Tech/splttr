@@ -223,6 +223,8 @@ angular.module('starter.controllers', [])
             })
           });
         })
+
+
       });
   });
 
@@ -297,13 +299,7 @@ angular.module('starter.controllers', [])
     }
 
     User.get().then(function(res){
-      $scope.newBillParams = {
-        a_debtor: false,
-        amount: 0,
-        creditor: res.data.id,
-        debtor: 0,
-        event: 0
-      }
+      $scope.newCreditor = res.data.id;
     });
 
   };
@@ -323,8 +319,10 @@ angular.module('starter.controllers', [])
   $scope.search = '';
   $scope.newBillAmounts = [];
 
-  $scope.addUserBill = function(index, userID) {
-      $scope.newBillAmounts[index].id = userID;
+  $scope.addUserBill = function(index, user) {
+      $scope.newBillAmounts[index].debtor = user.id;
+      $scope.newBillAmounts[index].a_debtor = false;
+      $scope.newBillAmounts[index].creditor = $scope.newCreditor;
   }
 
   $scope.addNewExpense = function() {
@@ -335,18 +333,15 @@ angular.module('starter.controllers', [])
 
       var createdExpense = res.data;
 
-      // Tie each new bill to the event they belong to, which is the one we just created
-      $scope.newBillParams.event = createdExpense.id;
+      // Add event ID to each new bill
+      for(var i = 0; i < $scope.newBillAmounts.length; i++){
+        $scope.newBillAmounts[i].event = createdExpense.id;
+      }
 
-      // Create Bill for each member in expense
+      //Create Bill for each member in expense
       $scope.newBillAmounts.forEach(function(bill, index, bills){
-
-        // Set new bill paramaters for API
-        $scope.newBillParams.amount = bill.amount;
-        $scope.newBillParams.debtor = bill.id;
         
-        Bills.addBill($scope.newBillParams).then(function(){
-
+        Bills.addBill(bill).then(function(res){
           // After last bill is created, calculate total for event which was just created
           if(bills.length-1 === index){
 
@@ -361,7 +356,7 @@ angular.module('starter.controllers', [])
 
             })
           }
-        })
+        });
       });
 
       $scope.closeExpenseModal();
@@ -382,19 +377,6 @@ angular.module('starter.controllers', [])
     Events.getRemainingBalance($scope.expense.id).then(function(res){
       $scope.expense.total = res.data.total;
     });
-
-    // Get expense members and bills
-    Events.getBills($scope.expense.id).then(function(res){
-      $scope.bills = res.data;
-
-      // Get user info for each bill
-      $scope.bills.forEach(function(bill, index, bills){
-        User.getWithId(bill.debtor).then(function(res){
-          bill.username = res.data.username;
-          bill.bg_img = res.data.bg_img;
-        });
-      })
-    })
   })
 
   
@@ -410,10 +392,30 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ActivityCtrl', function($scope, Tabs) {
+.controller('ActivityCtrl', function($scope, User) {
 
-  
-  console.log("In activity controller");
+  // Load home state from API
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+      
+      // Get user data and Tabs from DB
+      User.get().then(function(user){
+        $scope.user = user.data;
+        User.getActivity($scope.user.id).then(function(res){
+          console.log(res.data)
+          $scope.activities = res.data;
+        })   
+      }); 
+
+  });
+
+  // Pull to refresh tab list
+  $scope.refreshTabList = function(){
+    User.getActivity($scope.user.id).then(function(res){
+      $scope.activities = res.data
+      // Stop the ion-refresher from spinning
+      $scope.$broadcast('scroll.refreshComplete');
+    })
+  }
 
 })
 

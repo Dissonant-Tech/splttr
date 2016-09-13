@@ -9902,15 +9902,15 @@ ion-header-bar .buttons button {
 ion-content {
   background-color: #efefef !important; }
 
+.tab-button {
+  color: #0d47a1 !important;
+  text-align: center; }
+
 .tab h2 {
   margin-bottom: 10px;
   font-size: 1.5em;
   width: 270px;
   text-overflow: ellipsis; }
-
-.tab a {
-  color: #0d47a1;
-  text-align: center; }
 
 .tab-main {
   border-radius: 6px !important; }
@@ -10145,7 +10145,10 @@ ion-content {
     position: absolute;
     top: 72%;
     left: 50%;
-    transform: translate(-50%, -50%); }
+    transform: translate(-50%, -50%);
+    width: 300px;
+    white-space: normal;
+    text-align: center; }
   .modal-members-list li {
     height: 60px;
     width: 60px;
@@ -10196,32 +10199,30 @@ ion-content {
     .modal-expense .members-list li {
       margin-bottom: 40px; }
 
-.tab-analytics-dropdown {
-  position: relative;
-  margin-left: 10px;
-  margin-right: 10px; }
-  .tab-analytics-dropdown-button i {
-    zoom: 1.2;
-    position: absolute;
-    right: 1em; }
+.activity-amount {
+  color: green !important;
+  font-weight: 600; }
 
-.tab-analytics {
-  padding-top: 0;
-  padding-bottom: 0; }
-  .tab-analytics-chart {
-    zoom: .85;
-    background-color: white;
-    border: solid #387ef5;
-    margin-left: calc(1em - 2px);
-    border-radius: 8px;
-    margin-right: calc(1em - 2px);
-    padding-left: 1em;
-    margin-top: -1.3em;
-    padding-right: 1em; }
+.activity-icon {
+  float: right; }
+  .activity-icon-paid {
+    color: green !important;
+    font-size: 1.25em;
+    padding-top: 10px; }
 
-.tab-analytics .btoggle {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px; }
+.activity-profile-picture {
+  width: 48px;
+  height: 48px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  float: left;
+  margin-right: 20px; }
+
+.activity-detail {
+  min-height: 60px; }
+  .activity-detail-wrapper {
+    padding-bottom: 0 !important; }
 
 .expense-title {
   padding-bottom: 10px; }

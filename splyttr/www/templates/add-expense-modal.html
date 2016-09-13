@@ -42,7 +42,7 @@
 									<div class="member-info">
 										<label class="item item-input item-floating-label">
 											<span class="input-label">Owes you:</span>
-											<input type="number" placeholder="How much do they owe you?" ng-model="newBillAmounts[$index].amount" ng-change="addUserBill($index, '{{member.id}}')">
+											<input type="number" placeholder="How much do they owe you?" ng-model="newBillAmounts[$index].amount" ng-change="addUserBill($index, {{member}})">
 										</label>
 									</div>
 								</li>
