@@ -9902,15 +9902,15 @@ ion-header-bar .buttons button {
 ion-content {
   background-color: #efefef !important; }
 
+.tab-button {
+  color: #0d47a1 !important;
+  text-align: center; }
+
 .tab h2 {
   margin-bottom: 10px;
   font-size: 1.5em;
   width: 270px;
   text-overflow: ellipsis; }
-
-.tab a {
-  color: #0d47a1;
-  text-align: center; }
 
 .tab-main {
   border-radius: 6px !important; }
@@ -10145,7 +10145,10 @@ ion-content {
     position: absolute;
     top: 72%;
     left: 50%;
-    transform: translate(-50%, -50%); }
+    transform: translate(-50%, -50%);
+    width: 300px;
+    white-space: normal;
+    text-align: center; }
   .modal-members-list li {
     height: 60px;
     width: 60px;

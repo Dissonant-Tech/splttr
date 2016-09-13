@@ -33,6 +33,17 @@
 				</canvas>
 			</div>			
 		</div>
+
+		<!-- Tabs in common -->
+		<div ng-if="!self" class="card">
+			<div class="item item-divider">
+				Tabs you share in common
+			</div>
+			<div class="item item-text-wrap">
+				<p>Nada</p>
+			</div>			
+		</div>
+
 		<button ng-if="self" class="button button-block button-assertive" ng-click="signOut()">Sign Out</button>
 	</div>
   </ion-content>
