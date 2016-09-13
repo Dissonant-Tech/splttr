@@ -7,7 +7,8 @@
     <div ng-repeat="activity in activities">
         <div class="card">
             <div class="item item-divider">
-                {{activity.event_name}}
+                <span class="activity-tab-title">Tab Name</h2> <span class="activity-title"> - {{activity.event_name}}</span>
+                <p>by @{{activity.bills[0].creditor_info[0].username}}</p>
             </div>
             <div class="item item-text-wrap activity-detail-wrapper">
                 <ul class="detail-squad-list">
@@ -16,7 +17,7 @@
                            <i class="ion-android-done-all activity-icon activity-icon-paid"></i>
                         <div class="detail-squad-member-content">
                             <span>@{{bill.debtor_info[0].username}}</span>
-                            <p>Owes <strong>@{{bill.creditor_info[0].username}}</strong> <span class="activity-amount">${{bill.amount}}</span></p>
+                            <p>Owes <span class="activity-amount">${{bill.amount}}</span></p>
                         </div>
                     </div>
                 </ul>

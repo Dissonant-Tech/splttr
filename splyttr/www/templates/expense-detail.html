@@ -19,7 +19,7 @@
 						<div class="detail-squad-member" ng-repeat="bill in expense.event_bills">
 							<img ng-src="{{bill.bg_img? 'bill.bg_img' : 'img/blank-user.png'}}">
 							<div class="detail-squad-member-content">
-								<p><span>@{{bill.creditor_info[0].username}}</span></p>
+								<p><span>@{{bill.debtor_info[0].username}}</span></p>
 								<p class="activity-amount">${{bill.amount}}</p>
 							</div>
 						</div>
