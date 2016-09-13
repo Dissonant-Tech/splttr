@@ -9906,6 +9906,16 @@ ion-content {
   color: #0d47a1 !important;
   text-align: center; }
 
+.payment-wrapper {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%; }
+
+.incomplete {
+  opacity: 0.5; }
+
 .tab h2 {
   margin-bottom: 10px;
   font-size: 1.5em;
