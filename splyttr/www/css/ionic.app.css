@@ -10197,7 +10197,15 @@ ion-content {
       margin-bottom: 40px; }
 
 .activity-amount {
-  color: green; }
+  color: green !important;
+  font-weight: 600; }
+
+.activity-icon {
+  float: right; }
+  .activity-icon-paid {
+    color: green !important;
+    font-size: 1.25em;
+    padding-top: 10px; }
 
 .activity-profile-picture {
   width: 48px;
