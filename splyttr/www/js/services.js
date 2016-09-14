@@ -68,29 +68,38 @@ angular.module('starter.services', [])
           // console.log("sdlkjf", tab);
           Popups.showPopup("Could not add tab", "Sorry, you cannot currently add a tab.");
         })
+    },
+
+
+    // Get tabs in common between two users
+    getCommon: function(id1, id2) {
+      return $http.get("http://localhost:8000/api/tabs/?members=" + id1 + "," + id2)
+        .success(function(data) {
+          // console.log("Successfully added tab to DB", data);
+          return data;
+        })
+        .error(function(data) {
+          // console.log("sdlkjf", tab);
+          Popups.showPopup("Could not add tab", "Sorry, you cannot currently add a tab.");
+        })
       
     },
-    addExpense: function(tabId, expense) {
-      for (var i = 0; i < tabs.length; i++) {
-        if (tabs[i].id === parseInt(tabId)) {
-          var tab = tabs[i];
-        }
-      }
 
-      tab.expenses.push(expense);
+
+    // Add new Tab to DB
+    addTab: function(tab) {
+      return $http.post("http://localhost:8000/api/tabs/", tab)
+        .success(function(data) {
+          // console.log("Successfully added tab to DB", data);
+          return data;
+        })
+        .error(function(data) {
+          // console.log("sdlkjf", tab);
+          Popups.showPopup("Could not add tab", "Sorry, you cannot currently add a tab.");
+        })
+      
     },
-    getTotalBalance: function(tabId) {
-      for (var i = 0; i < tabs.length; i++) {
-        if (tabs[i].id === parseInt(tabId)) {
-          var tab = tabs[i];
-          var totalBalance = 0;
-          tab.expenses.forEach(function(expense) {
-            totalBalance += expense.balance;
-          });
-          tab.balance = totalBalance;
-        }
-      }
-    },
+
     edit: function(tabId, attr, newValue) {
       for (var i = 0; i < tabs.length; i++) {
         if (tabs[i].id === parseInt(tabId)) {
