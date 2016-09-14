@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
-import ipdb
+
 class CustomListModelMixin(object):
     """
     List a queryset.
