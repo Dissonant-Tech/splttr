@@ -16,8 +16,6 @@ from splyttr.serializers import UserSerializer, GroupSerializer, TabSerializer, 
 from splyttr.models import Tab, Event, Bill, Profile
 from splyttr.mixins import CustomListModelMixin
 
-import ipdb
-
 
 @api_view(['GET'])
 def get_ocr_view(request):
