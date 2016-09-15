@@ -9916,6 +9916,12 @@ ion-content {
 .incomplete {
   opacity: 0.5; }
 
+.splyttr-header-wrapper {
+  background: #3f81e6;
+  color: white !important; }
+  .splyttr-header-wrapper * {
+    color: white !important; }
+
 .tab h2 {
   margin-bottom: 10px;
   font-size: 1.5em;
@@ -9996,7 +10002,7 @@ ion-content {
 
 .user-profile-image {
   border-radius: 50%;
-  max-width: 40%;
+  max-width: 30%;
   border: 2px solid #c5c5c5;
   margin: 10px auto 10px auto;
   display: block; }
@@ -10011,7 +10017,9 @@ ion-content {
     color: white; }
 
 .user-name-wrapper {
-  padding-top: 5px; }
+  padding-top: 5px;
+  font-size: 20px;
+  margin-top: 22px; }
   .user-name-wrapper h2 {
     margin: 0; }
 

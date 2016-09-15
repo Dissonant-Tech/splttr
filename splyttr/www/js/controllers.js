@@ -440,23 +440,42 @@ angular.module('starter.controllers', [])
   // load user data before entering home state
   $scope.$on("$ionicView.beforeEnter", function(event, data){
 
-    // Get user data
+    // Case 0: Current user account 
     if($stateParams.userId === 'self'){
       $scope.self = true;
       User.get().then(function(user){
         $scope.user = user.data;
+        return Tabs.get($scope.user.id)
+      }).then(function(res){
 
-        // Get chart data
+        // Calculate chart data (tab name & total)
+
         $scope.labels = [];
-        $scope.series = ['Series A'];
         $scope.data = [];
 
-        // Alan is currently working on an endpoint which returns user analytics with tab names and totals
+        $scope.labels = res.data.map((tab) => {
+          return tab.name.slice(0, 12);
+        })
         
+        res.data.forEach(function(tab){
+          Tabs.getRemainingBalance(tab.id).then(function(res){
+            $scope.data.push(res.data.total);
+          })       
+        })
       });   
-    } else{
+    } 
+
+    // Case 1: Not current user account
+    else{
       User.getWithId($stateParams.userId).then(function(user){
         $scope.user = user.data;
+        return User.get();
+      }).then(function(user){
+        $scope.currentUser = user.data;
+
+        return Tabs.getCommon($scope.user.id, $scope.currentUser.id);
+      }).then(function(commonData){
+        $scope.commonTabs = commonData.data;
       }); 
     } 
   });
