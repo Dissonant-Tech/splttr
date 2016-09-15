@@ -62,6 +62,7 @@ class UserViewSet(viewsets.ModelViewSet):
         for event in serialized.data:
             total_bills.append({
                 'event_name':event['name'],
+                'tab':event['tab'],
                 'bills':event['event_bills']
             })
         return Response(total_bills)

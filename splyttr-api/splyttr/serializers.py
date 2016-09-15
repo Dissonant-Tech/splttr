@@ -46,6 +46,7 @@ class TabSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
 
+    tab = TabSerializer(many=False, read_only=True)
     event_bills = serializers.SerializerMethodField()
 
     def get_event_bills(self, event):
