@@ -13,7 +13,7 @@
 	}
 	&-profile-image{
 		border-radius: 50%;
-		max-width: 40%;
+		max-width: 30%;
 		border: 2px solid #c5c5c5;
 		margin: 10px auto 10px auto;
 		display: block;
@@ -31,6 +31,8 @@
 	}
 	&-name-wrapper{
 		padding-top: 5px;
+		font-size: 20px;
+		margin-top: 22px;
 		h2{
 			margin: 0;
 		}

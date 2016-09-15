@@ -8,7 +8,7 @@
 	<div class="user-profile">
 		<!-- PROFILE DETAILS -->
 			<div class="card user-profile-details-wrapper">
-				<div class="item item-divider">
+				<div class="item item-divider splyttr-header-wrapper">
 					Profile
 				</div>
 				<div class="user-profile-details">
@@ -25,7 +25,7 @@
 
 		<!-- Chart-->
 		<div ng-if="self" class="card">
-			<div class="item item-divider">
+			<div class="item item-divider splyttr-header-wrapper">
 				Your expenses
 			</div>
 			<div class="item item-text-wrap">
@@ -39,7 +39,7 @@
 			<ion-label stacked class="tab-detail-label">Tabs you share in common</ion-label>
 				<div class="tab-detail-expense-wrapper">
 				<ion-list>
-					<ion-item class="item-remove-animate item-icon-right tab-detail-expense" ng-repeat="tab in commonTabs" type="item-text-wrap" href="#/tab/home/{{tab.id}}/">
+					<ion-item class="item-remove-animate item-icon-right tab-detail-expense" ng-repeat="tab in commonTabs" type="item-text-wrap" href="#/tab/home/{{tab.id}}">
 						<h2>{{tab.name}}</h2>
 						<p>{{tab.description}}</p>
 						<i class="icon ion-chevron-right icon-accessory"></i>

@@ -446,12 +446,14 @@ angular.module('starter.controllers', [])
       User.get().then(function(user){
         $scope.user = user.data;
 
-        // Get chart data
-        $scope.labels = [];
-        $scope.series = ['Series A'];
-        $scope.data = [];
 
-        // Alan is currently working on an endpoint which returns user analytics with tab names and totals
+        var arr = ['Cancun', 'Lunch with the team', 'Road Trip to Tampa!', 'Team Lunch', 'Dog Park']
+
+        // Get chart data
+        $scope.labels = arr.map((title) => {
+          return title.slice(0, 12);
+        });
+        $scope.data = [45.42, 29.01, 54.33, 38.12, 55.77];
         
       });   
     } 

@@ -1,12 +1,12 @@
 <ion-view view-title="Activity">
-    <ion-content class="padding">
+    <ion-content>
     <ion-refresher
        pulling-text="Pull to refresh..."
        on-refresh="refreshTabList()">
      </ion-refresher>
     <div ng-repeat="activity in activities">
         <div class="card">
-            <div class="item item-divider">
+            <div class="item item-divider splyttr-header-wrapper">
                 <span class="activity-tab-title">Tab Name</h2> <span class="activity-title"> - {{activity.event_name}}</span>
                 <p>by @{{activity.bills[0].creditor_info[0].username}}</p>
             </div>
