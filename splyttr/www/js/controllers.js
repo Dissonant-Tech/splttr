@@ -445,16 +445,23 @@ angular.module('starter.controllers', [])
       $scope.self = true;
       User.get().then(function(user){
         $scope.user = user.data;
+        return Tabs.get($scope.user.id)
+      }).then(function(res){
 
+        // Calculate chart data (tab name & total)
 
-        var arr = ['Cancun', 'Lunch with the team', 'Road Trip to Tampa!', 'Team Lunch', 'Dog Park']
+        $scope.labels = [];
+        $scope.data = [];
 
-        // Get chart data
-        $scope.labels = arr.map((title) => {
-          return title.slice(0, 12);
-        });
-        $scope.data = [45.42, 29.01, 54.33, 38.12, 55.77];
+        $scope.labels = res.data.map((tab) => {
+          return tab.name.slice(0, 12);
+        })
         
+        res.data.forEach(function(tab){
+          Tabs.getRemainingBalance(tab.id).then(function(res){
+            $scope.data.push(res.data.total);
+          })       
+        })
       });   
     } 
 
