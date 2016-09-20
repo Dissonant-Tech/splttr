@@ -7,12 +7,31 @@
         <div class="tab-list">
             <div class="list card tab" ng-repeat="tab in tabs | orderBy: 'created':true">
 
-                <div class="item tab-main">
+
+                <span class="tab-title">{{tab.name}}</span>
+                <span class="tab-balance">Balance:</span> <span class="tab-total">${{tab.total}}</span>
+                <p>{{tab.description}}</p>
+
+                <div class="tab-content-member-wrapper">
+                    <span class="tab-content-member-label">Members</span>
+                    <ul class="member-list">
+                        <ion-scroll direction="x" style="white-space:nowrap;" has-bouncing="true">
+                            <li
+                            ng-repeat="member in tab.members | orderBy: 'debt'" 
+                            ng-style="{ 'background-image': member.img ? 'url({{member.img}})' : 'url(img/blank-user.png)' }" 
+                            ng-class="{'member-checked': member.debt}">
+                            </li>
+                        </ion-scroll>
+                    </ul>
+                </div>
+
+
+                <!-- <div class="item tab-main">
                   <span class="tab-total">${{tab.total}}</span>  
                   <h2>{{tab.name}}</h2>
                   <p class="tab-description">{{tab.description}}</p>
 
-                    <!-- MEMBERS LIST -->
+        
                     <div class="tab-content-member-wrapper">
                         <span class="tab-content-member-label">Members</span>
                         <ul class="member-list">
@@ -24,12 +43,12 @@
                                 </li>
                             </ion-scroll>
                         </ul>
-                    </div>
-                </div>
+                    </div> -->
+            </div>
 
-                <a class="item assertive tab-button" href="#/tab/home/{{tab.id}}">
-                  View Tab
-                </a>
+            <a class="item assertive tab-button" href="#/tab/home/{{tab.id}}">
+              View Tab
+            </a>
                 
             </div>
         </div>        
