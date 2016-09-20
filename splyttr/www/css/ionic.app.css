@@ -9876,6 +9876,7 @@ ion-header-bar .buttons button {
   color: white !important; }
 
 .FAB {
+  z-index: 9999;
   height: 52px;
   width: 52px;
   border-radius: 50%;
@@ -9902,9 +9903,10 @@ ion-header-bar .buttons button {
 ion-content {
   background-color: #efefef !important; }
 
-.tab-button {
+.card-button {
   color: #0d47a1 !important;
-  text-align: center; }
+  text-align: center;
+  border: none; }
 
 .payment-wrapper {
   position: absolute;
@@ -9928,6 +9930,15 @@ ion-content {
   width: 270px;
   text-overflow: ellipsis; }
 
+.tab-header-title {
+  font-size: 25px !important; }
+
+.tab-content {
+  padding-bottom: 0;
+  border: none; }
+  .tab-content-description {
+    margin-top: 5px; }
+
 .tab-main {
   border-radius: 6px !important; }
 
@@ -9938,10 +9949,8 @@ ion-content {
   margin-top: -10px; }
 
 .tab-total {
-  position: absolute;
-  right: 19px;
   color: green;
-  font-size: 2em; }
+  font-weight: 600; }
 
 .tab-description {
   white-space: normal !important; }
@@ -9949,6 +9958,10 @@ ion-content {
 @media (min-width: 640px) and (max-width: 1023px) {
   .tab-home {
     text-align: center; } }
+
+.tab-card-members {
+  padding-bottom: 8px;
+  border-bottom: 2px solid #d0cfcf; }
 
 .tab-content-member-label {
   line-height: 2em; }
@@ -10240,7 +10253,11 @@ ion-content {
 .activity-detail {
   min-height: 60px; }
   .activity-detail-wrapper {
-    padding-bottom: 0 !important; }
+    padding-bottom: 0 !important;
+    border: none; }
+
+.activity-members {
+  border-bottom: 2px solid #d0cfcf; }
 
 .expense-title {
   padding-bottom: 10px; }

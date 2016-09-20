@@ -1,19 +1,16 @@
 <ion-view view-title="Splyttr">
     <ion-content class="padding tab-home">
-        <ion-refresher
-           pulling-text="Pull to refresh..."
-           on-refresh="refreshTabList()">
-         </ion-refresher>
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="refreshTabList()"></ion-refresher>
         <div class="tab-list">
-            <div class="list card tab" ng-repeat="tab in tabs | orderBy: 'created':true">
-
-                <div class="item tab-main">
-                  <span class="tab-total">${{tab.total}}</span>  
-                  <h2>{{tab.name}}</h2>
-                  <p class="tab-description">{{tab.description}}</p>
-
-                    <!-- MEMBERS LIST -->
-                    <div class="tab-content-member-wrapper">
+            <!-- TABS -->
+            <div class="card" ng-repeat="tab in tabs | orderBy: 'created':true">
+              <div class="item item-divider splyttr-header-wrapper">
+                <h2 class="tab-header-title">{{tab.name}}</h2>
+                </div>
+                <div class="item item-text-wrap tab-content">
+                    Balance: <span class="tab-total">${{tab.total}}</span>
+                    <p class="tab-content-description">{{tab.description}}</p>
+                    <div class="tab-content-member-wrapper tab-card-members">
                         <span class="tab-content-member-label">Members</span>
                         <ul class="member-list">
                             <ion-scroll direction="x" style="white-space:nowrap;" has-bouncing="true">
@@ -26,21 +23,22 @@
                         </ul>
                     </div>
                 </div>
-
-                <a class="item assertive tab-button" href="#/tab/home/{{tab.id}}">
+                <a class="item assertive card-button" href="#/tab/home/{{tab.id}}">
                   View Tab
                 </a>
-                
             </div>
-        </div>        
-
+            <!-- END TABS -->
+        </div>
     </ion-content>
 
-        <!-- NO TABS LABEL -->
-        <span ng-if="tabs.length == 0" class="tab-message" >No tabs</span>            
-        
-        <!-- FAB -->
-        <div class="FAB" ng-click="openModal()">
-            <i class="icon ion-plus-round"></i>
-        </div>
+    <!-- FAB -->
+    <div class="FAB" ng-click="openModal()">
+        <i class="icon ion-plus-round"></i>
+    </div>
+  
+
+    <!-- NO TABS LABEL -->
+    <span ng-if="tabs.length == 0" class="tab-message" >No tabs</span>            
+
+    
 </ion-view>
