@@ -104,7 +104,7 @@ angular.module('starter.controllers', [])
     $scope.newTabParams = {
         name: "",
         description: "",
-        members: [JSON.stringify($scope.user.id)]
+        members: [$scope.user.id]
     }
     $scope.addedMembers = ['You'];
     console.log($scope.addedMembers);
@@ -134,6 +134,7 @@ angular.module('starter.controllers', [])
   $scope.saveNewTab = function(){
     console.log("Saving new tab", $scope.newTabParams);
     Tabs.addTab($scope.newTabParams).then(function(res){
+      console.log(res);
       // init a tab with a balance of $0
       res.data.total = 0;
       $scope.tabs.push(res.data);
@@ -196,41 +197,49 @@ angular.module('starter.controllers', [])
         id: 0
       };
 
-      // Get Tab details
-      console.log($stateParams)
-      Tabs.getWithId($stateParams.tabId).then(function(res){
-        var tabData = res.data;
-        
-        $scope.tab.name = tabData.name;
-        $scope.tab.description = tabData.description;
-        $scope.tab.id = tabData.id; 
+      User.get().then(function(res){
+         return res.data;
+      }).then(function(currentUser){
+          // Get Tab details
+          Tabs.getWithId($stateParams.tabId).then(function(res){
+            var tabData = res.data;
+            
+            $scope.tab.name = tabData.name;
+            $scope.tab.description = tabData.description;
+            $scope.tab.id = tabData.id;
+            $scope.tab.owner = tabData.owner;
+             
+            console.log('Current user: ' + '@'+currentUser.username + ' ---> ' + currentUser.id)
+            console.log('Tab owner: ' + $scope.tab.owner);
+            console.log($scope.tab.owner === currentUserID);
 
-        // Get Tab remaining balance
-        Tabs.getRemainingBalance($scope.tab.id).then(function(res){
-          $scope.tab.total = res.data.total;
-        })
-
-        // Get User info for each member
-        tabData.members.forEach(function(userID){
-          User.getWithId(userID).then(function(res){
-            var user = res.data;
-            $scope.tab.members.push(user);
-          })
-        });
-
-        // Get Tab events and their totals
-        Events.getAll($scope.tab.id).then(function(events){
-          $scope.expenses = events.data;
-  
-          $scope.expenses.forEach(function(expense, index, expenses){
-            Events.getRemainingBalance(expense.id).then(function(res){
-              expenses[index].total = res.data.total;
+            // Get Tab remaining balance
+            Tabs.getRemainingBalance($scope.tab.id).then(function(res){
+              $scope.tab.total = res.data.total;
             })
+
+            // Get User info for each member
+            tabData.members.forEach(function(userID){
+              User.getWithId(userID).then(function(res){
+                var user = res.data;
+                $scope.tab.members.push(user);
+              })
+            });
+
+            // Get Tab events and their totals
+            Events.getAll($scope.tab.id).then(function(events){
+              $scope.expenses = events.data;
+          
+              $scope.expenses.forEach(function(expense, index, expenses){
+                Events.getRemainingBalance(expense.id).then(function(res){
+                  expenses[index].total = res.data.total;
+                })
+              });
+            })
+
           });
-        })
+      })
 
-
-      });
   });
 
   // Open action sheet
