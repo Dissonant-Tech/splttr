@@ -16,17 +16,15 @@
 						<img ng-src="{{user.img? user.img : 'img/blank-user.png'}}" alt="profile-picture" class="user-profile-image" id="user-profile-image">
 						<!-- <i class="ion-ios-cloud-upload-outline user-profile-image-edit-icon"></i> -->
 					</div>
-					<div class="user-name-wrapper">
-						<h2>{{user.name}}</h2>
-						<span>@{{user.username}}</span>
-					</div>
+					<span class="user-info">@{{user.username}}</span>
+					<span class="user-info">{{user.email}}</span>
 				</div> 
 			</div>
 
 		<!-- Chart-->
 		<div ng-if="self" class="card">
 			<div class="item item-divider splyttr-header-wrapper">
-				Your expenses
+				Your most recent tabs
 			</div>
 			<div class="item item-text-wrap">
 				<canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series">

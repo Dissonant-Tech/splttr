@@ -106,6 +106,8 @@ angular.module('starter.controllers', [])
         description: "",
         members: [JSON.stringify($scope.user.id)]
     }
+    $scope.addedMembers = ['You'];
+    console.log($scope.addedMembers);
   };
 
   $scope.closeModal = function() {
@@ -119,13 +121,13 @@ angular.module('starter.controllers', [])
       $event.target.classList.remove('added');
       var members = $scope.newTabParams.members;
       members.splice(members.indexOf(this.result.id), 1);
-      console.log(this.result.username + ' removed from tab');
       return;
     }
 
     $event.target.classList.add('added');
     $scope.newTabParams.members.push(this.result.id);
-    console.log(this.result.username + ' added to tab');
+    $scope.addedMembers.push(this.result.username)
+    console.log($scope.addedMembers)
   }
 
   // Add new Tab to DB
@@ -136,6 +138,8 @@ angular.module('starter.controllers', [])
       res.data.total = 0;
       $scope.tabs.push(res.data);
       $scope.closeModal();
+      $scope.search.text = '';
+      $scope.searchResults = [];
     })
   }
 
@@ -193,6 +197,7 @@ angular.module('starter.controllers', [])
       };
 
       // Get Tab details
+      console.log($stateParams)
       Tabs.getWithId($stateParams.tabId).then(function(res){
         var tabData = res.data;
         
@@ -322,6 +327,7 @@ angular.module('starter.controllers', [])
     console.log($scope.newPayment);
      Bills.payBill($scope.newPayment.member.id, {is_paid: true}).then(function(res){
       console.log(res);
+      $scope.closePaymentModal();
      })
   }
 
@@ -388,6 +394,7 @@ angular.module('starter.controllers', [])
   // Get expense details
   Events.get($stateParams.expenseId).then(function(res){
     $scope.expense = res.data;
+    console.log(res.data)
 
     // Get expense total
     Events.getRemainingBalance($scope.expense.id).then(function(res){
@@ -449,15 +456,15 @@ angular.module('starter.controllers', [])
       }).then(function(res){
 
         // Calculate chart data (tab name & total)
-
+        var recentTabs = res.data.splice(0, 4);
         $scope.labels = [];
         $scope.data = [];
 
-        $scope.labels = res.data.map((tab) => {
-          return tab.name.slice(0, 12);
+        $scope.labels = recentTabs.map(function(tab) {
+          return tab.name.slice(0, 10);
         })
         
-        res.data.forEach(function(tab){
+        recentTabs.forEach(function(tab){
           Tabs.getRemainingBalance(tab.id).then(function(res){
             $scope.data.push(res.data.total);
           })       

@@ -107,6 +107,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
 
+  .state('tab.activity-view-tab', {
+    url: '/activity/home/:tabId',
+    views: {
+      'tab-home': {
+        templateUrl: 'templates/tab-detail-view.html',
+        controller: 'TabDetailViewCtrl'
+      }
+    }
+  })
+
   .state('tab.account', {
     url: '/account/:userId',
     views: {
@@ -116,6 +126,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   });
+
 
   // If none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');

@@ -9886,7 +9886,7 @@ ion-header-bar .buttons button {
   color: white;
   position: fixed;
   bottom: 63px;
-  right: 15px;
+  right: 24px;
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.16), 0 4px 10px 0 rgba(0, 0, 0, 0.12); }
   .FAB i {
     display: table-cell;
@@ -9915,8 +9915,11 @@ ion-content {
   transform: translate(-50%, -50%);
   left: 50%; }
 
-.incomplete {
+.paid {
   opacity: 0.5; }
+
+.strikethrough {
+  text-decoration: line-through; }
 
 .splyttr-header-wrapper {
   background: #3f81e6;
@@ -10020,7 +10023,8 @@ ion-content {
   margin: 10px auto 10px auto;
   display: block; }
   .user-profile-image-wrapper {
-    position: relative; }
+    position: relative;
+    margin-bottom: 19px; }
   .user-profile-image-edit-icon {
     position: absolute;
     top: 50%;
@@ -10029,12 +10033,11 @@ ion-content {
     font-size: 7em;
     color: white; }
 
-.user-name-wrapper {
-  padding-top: 5px;
-  font-size: 20px;
-  margin-top: 22px; }
-  .user-name-wrapper h2 {
-    margin: 0; }
+.user-info {
+  display: block;
+  color: #5a5a5a;
+  font-size: 16px;
+  padding-bottom: 6px; }
 
 .modal-profile {
   padding-top: 20px;

@@ -18,7 +18,10 @@
 					</label>
 
 					<!-- SEARCH RESULTS -->
-					<span class="modal-tip" ng-hide="searchResults.length">Start searching to add people to the tab. If they're not on Splyttr, don't worry, you can still add them.</span>	
+					<span class="modal-tip" ng-hide="newTabParams.members.length > 1 || search.text.length > 0">Start searching to add people to the tab. If they're not on Splyttr, don't worry, you can still add them.</span>
+
+					<span class="modal-tip" ng-show="newTabParams.members.length > 1">{{addedMembers}}</span>
+
 					<ion-scroll class="member-list-scroll" zooming="false" direction="x" style="width: 2000px;">
 					    <div class="tab-content-member-wrapper modal-member">
 			                <ul class="member-list">
