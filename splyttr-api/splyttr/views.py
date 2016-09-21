@@ -70,7 +70,12 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @detail_route(methods=['GET'])
     def debt(self, request, pk=None):
-        tab = request.query_params.get('tab_id', '')
+        pass
+        #tab = request.query_params.get('tab_id', '')
+        #bills = Bills.objects.filter()
+
+
+
 
 
 class GroupViewSet(viewsets.ModelViewSet):
