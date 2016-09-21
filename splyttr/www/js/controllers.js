@@ -460,14 +460,12 @@ angular.module('starter.controllers', [])
         $scope.labels = [];
         $scope.data = [];
 
-        $scope.labels = recentTabs.map(function(tab) {
-          return tab.name.slice(0, 10);
-        })
-        
-        recentTabs.forEach(function(tab){
+        recentTabs.forEach(function(tab, index, recentTabs){
           Tabs.getRemainingBalance(tab.id).then(function(res){
-            $scope.data.push(res.data.total);
-          })       
+            recentTabs[index].total = res.data.total;
+            $scope.labels.push(recentTabs[index].name)
+            $scope.data.push(recentTabs[index].total);
+          })  
         })
       });   
     } 
