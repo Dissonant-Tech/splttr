@@ -27,7 +27,6 @@ from splyttr.router import HybridRouter
 router = HybridRouter()
 router.register(r'users', views.UserViewSet, 'user')
 router.register(r'tabs', views.TabViewSet, 'tab')
-router.register(r'tabs/(?P<members>d+,*)', views.TabViewSet, 'tab')
 router.register(r'events', views.EventViewSet, 'event')
 router.register(r'bills', views.BillViewSet, 'bill')
 router.register_include(url(r'^auth/', include('rest_auth.urls', namespace='auth')))
