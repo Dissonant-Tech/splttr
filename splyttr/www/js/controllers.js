@@ -105,7 +105,7 @@ angular.module('starter.controllers', [])
         name: "",
         description: "",
         members: [$scope.user.id],
-        owner: [$scope.user.id]
+        owner: $scope.user.id
     }
     $scope.addedMembers = [{username: 'You', bg_img: null}];
     
@@ -118,17 +118,24 @@ angular.module('starter.controllers', [])
   // Add members to new Tab. If they have already been added, they will be removed
   $scope.addMemberToTab = function($event) {
 
-    if($event.target.classList.contains('added')){
-      $event.target.classList.remove('added');
-      var members = $scope.newTabParams.members;
-      members.splice(members.indexOf(this.result.id), 1);
-      $scope.addedMembers.splice($scope.addedMembers.indexOf(this.result), 1);
+    // Case 0: member is already added to tab
+    if($scope.newTabParams.members.indexOf(this.result.id) > 0){
       return;
     }
 
-    $event.target.classList.add('added');
+    // Case 1: member is not yet added to tab
     $scope.newTabParams.members.push(this.result.id);
     $scope.addedMembers.push(this.result); 
+  }
+
+  $scope.removeMemberFromTab = function($index){
+    if($index !== 0){
+      $scope.addedMembers.splice($index, 1);
+      $scope.newTabParams.members.splice($index, 1);
+    }
+    // $scope.newTabParams.members.splice($scope.newTabParams.members.indexOf(this.member.id), 1);
+    // $scope.addedMembers.splice($scope.addedMembers.indexOf(this.member.id), 1);
+    // console.log($scope.newTabParams.members);
   }
 
   // Add new Tab to DB

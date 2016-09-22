@@ -33,7 +33,7 @@
 			}
 		}
 		li.added{
-			border: 4px solid #33CD60;
+			border: 2px solid #29c136;
 		}
 	}
 	ion-scroll{
@@ -80,9 +80,12 @@
 	}
 
 }
-.addedMembersList li{
+.addedMembersList {
+	padding-top: 10px;
+	li{
 	    display: inline-block;
 	    margin-right: 10px;
 	    border-radius: 50%;
 	    background-size: cover;
+    }
 }
