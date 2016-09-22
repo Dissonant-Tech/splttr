@@ -10233,6 +10233,12 @@ ion-content {
     .modal-expense .members-list li {
       margin-bottom: 40px; }
 
+.addedMembersList li {
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-size: cover; }
+
 .activity-amount {
   color: green !important;
   font-weight: 600; }

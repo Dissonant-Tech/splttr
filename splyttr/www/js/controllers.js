@@ -104,10 +104,11 @@ angular.module('starter.controllers', [])
     $scope.newTabParams = {
         name: "",
         description: "",
-        members: [$scope.user.id]
+        members: [$scope.user.id],
+        owner: [$scope.user.id]
     }
-    $scope.addedMembers = ['You'];
-    console.log($scope.addedMembers);
+    $scope.addedMembers = [{username: 'You', bg_img: null}];
+    
   };
 
   $scope.closeModal = function() {
@@ -121,13 +122,13 @@ angular.module('starter.controllers', [])
       $event.target.classList.remove('added');
       var members = $scope.newTabParams.members;
       members.splice(members.indexOf(this.result.id), 1);
+      $scope.addedMembers.splice($scope.addedMembers.indexOf(this.result), 1);
       return;
     }
 
     $event.target.classList.add('added');
     $scope.newTabParams.members.push(this.result.id);
-    $scope.addedMembers.push(this.result.username)
-    console.log($scope.addedMembers)
+    $scope.addedMembers.push(this.result); 
   }
 
   // Add new Tab to DB
