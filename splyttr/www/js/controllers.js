@@ -221,9 +221,13 @@ angular.module('starter.controllers', [])
             $scope.tab.description = tabData.description;
             $scope.tab.id = tabData.id;
             $scope.tab.owner = tabData.owner;
+            $scope.tab.owner_name = tabData.owner_name;
 
-            console.log('Current user: ' + '@'+currentUser.username + ' ---> ' + currentUser.id)
-            console.log('Tab owner: ' + $scope.tab.owner);
+            if(currentUser.id === $scope.tab.owner){
+              $scope.self = true;
+            } else {
+              $scope.self = false;
+            }
 
             // Get Tab remaining balance
             Tabs.getRemainingBalance($scope.tab.id).then(function(res){
@@ -251,7 +255,6 @@ angular.module('starter.controllers', [])
 
           });
       })
-
   });
 
   // Open action sheet

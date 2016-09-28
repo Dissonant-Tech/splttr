@@ -3,7 +3,7 @@
 	<ion-nav-title>{{tab.name}}</ion-nav-title>
 
 	<ion-nav-buttons side="right">
-		<button class="button button-icon ion-more" ng-click="openActionSheet()"></button>
+		<button ng-if="self" class="button button-icon ion-more" ng-click="openActionSheet()"></button>
 	</ion-nav-buttons>
 
 
@@ -20,18 +20,22 @@
 		<div class="tab-detail-header" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)), url(http://ultimatestorytellingblueprint.com/wp-content/uploads/2014/07/Blueprint-Background1.jpg);">
 			<div class="tab-detail-title">
 				<h1>${{tab.total}}</h1>
-				<span style="color: white;">Created by @</span>
+				<span style="color: white;">Created by @{{tab.owner_name}}</span>
 			</div>
 		</div>
 
 		<!-- TAB BUTTONS -->
-		<div class="tab-detail-button-wrapper">
+		<div ng-if="self" class="tab-detail-button-wrapper">
 			<button class="button button-positive tab-detail-button" ng-click="openExpenseModal()">
 				Add Expense
 			</button>
 			<button class="button button-balanced tab-detail-button" ng-click="openPaymentModal()">
 				Add Payment
 			</button>
+		</div>
+
+		<div ng-if="!self" style="text-align: center; padding-top: 25px;">
+			<span ng-if="self === false" class="modal-tip">Only the tab owner can add or remove expenses</span>
 		</div>
 
 	<!-- TAB CONTENT -->
