@@ -87,7 +87,7 @@ angular.module('starter.controllers', [])
     Tabs.get($scope.user.id).then(function(res){
       $scope.tabs = res.data
       calculateTabTotal($scope.tabs);
-      
+
       // Stop the ion-refresher from spinning
       $scope.$broadcast('scroll.refreshComplete');
     })
@@ -224,7 +224,6 @@ angular.module('starter.controllers', [])
 
             console.log('Current user: ' + '@'+currentUser.username + ' ---> ' + currentUser.id)
             console.log('Tab owner: ' + $scope.tab.owner);
-            console.log($scope.tab.owner === currentUserID);
 
             // Get Tab remaining balance
             Tabs.getRemainingBalance($scope.tab.id).then(function(res){
