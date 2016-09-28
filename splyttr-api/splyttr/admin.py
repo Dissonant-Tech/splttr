@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Bill, Event, Tab, Profile
+from .models import Bill, Event, Tab, Profile
 
 
 class BillAdmin(admin.ModelAdmin):
