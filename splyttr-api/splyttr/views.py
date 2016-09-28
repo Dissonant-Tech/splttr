@@ -62,10 +62,21 @@ class UserViewSet(viewsets.ModelViewSet):
         for event in serialized.data:
             total_bills.append({
                 'event_name':event['name'],
+                'event_id':event['id'],
                 'tab':event['tab'],
                 'bills':event['event_bills']
             })
         return Response(total_bills)
+
+    @detail_route(methods=['GET'])
+    def debt(self, request, pk=None):
+        pass
+        #tab = request.query_params.get('tab_id', '')
+        #bills = Bills.objects.filter()
+
+
+
+
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
@@ -106,7 +117,7 @@ class TabViewSet(mixins.CreateModelMixin,
     def total(self, request, pk=None):
 
         total = 0
-        bills = Bill.objects.filter(event__tab__pk=pk) # querying for all events with the same tab
+        bills = Bill.objects.filter(event__tab__pk=pk, is_paid=False) # querying for all events with the same tab
 
         for bill in bills:
             total += bill.amount
