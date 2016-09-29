@@ -211,6 +211,7 @@ angular.module('starter.controllers', [])
       };
 
       User.get().then(function(res){
+        $scope.currentUser = res.data;
          return res.data;
       }).then(function(currentUser){
           // Get Tab details
@@ -319,7 +320,9 @@ angular.module('starter.controllers', [])
   // Open Expense Modal
   $scope.openExpenseModal = function() {
     $scope.expenseModal.show();
-
+    $scope.search = {
+      text: ''
+    }
     $scope.newExpenseParams = {
       name: "",
       description: "",
@@ -335,6 +338,7 @@ angular.module('starter.controllers', [])
   // Close Expense Modal
   $scope.closeExpenseModal = function() {
     $scope.expenseModal.hide();
+    $scope.search.text = "";
   };
 
   $scope.newPaymentExpenseSelected = function(){
@@ -373,9 +377,11 @@ angular.module('starter.controllers', [])
 
   $scope.addNewExpense = function() {
     $scope.newExpenseParams.tab = $scope.tab.id;
-
+    $scope.newExpenseParams.owner = $scope.currentUser.id;
+    console.log($scope.newExpenseParams)
     // Add Event to Tab via api, then add each Bill to that exent
     Events.addExpense($scope.newExpenseParams).then(function(res){
+      console.log(res);
 
       var createdExpense = res.data;
 
@@ -484,10 +490,12 @@ angular.module('starter.controllers', [])
         $scope.labels = [];
         $scope.data = [];
 
+        console.log('Recent tabs:', recentTabs);
+
         recentTabs.forEach(function(tab, index, recentTabs){
           Tabs.getRemainingBalance(tab.id).then(function(res){
             recentTabs[index].total = res.data.total;
-            $scope.labels.push(recentTabs[index].name)
+            $scope.labels.push(recentTabs[index].name);
             $scope.data.push(recentTabs[index].total);
           })
         })
