@@ -211,6 +211,7 @@ angular.module('starter.controllers', [])
       };
 
       User.get().then(function(res){
+        $scope.currentUser = res.data;
          return res.data;
       }).then(function(currentUser){
           // Get Tab details
@@ -319,7 +320,9 @@ angular.module('starter.controllers', [])
   // Open Expense Modal
   $scope.openExpenseModal = function() {
     $scope.expenseModal.show();
-
+    $scope.search = {
+      text: ''
+    }
     $scope.newExpenseParams = {
       name: "",
       description: "",
@@ -335,6 +338,7 @@ angular.module('starter.controllers', [])
   // Close Expense Modal
   $scope.closeExpenseModal = function() {
     $scope.expenseModal.hide();
+    $scope.search.text = "";
   };
 
   $scope.newPaymentExpenseSelected = function(){
@@ -487,7 +491,7 @@ angular.module('starter.controllers', [])
         recentTabs.forEach(function(tab, index, recentTabs){
           Tabs.getRemainingBalance(tab.id).then(function(res){
             recentTabs[index].total = res.data.total;
-            $scope.labels.push(recentTabs[index].name)
+            $scope.labels.push(recentTabs[index].name);
             $scope.data.push(recentTabs[index].total);
           })
         })
