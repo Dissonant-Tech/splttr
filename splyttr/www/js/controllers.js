@@ -339,11 +339,19 @@ angular.module('starter.controllers', [])
   $scope.closeExpenseModal = function() {
     $scope.expenseModal.hide();
     $scope.search.text = "";
+    $scope.newExpenseParams = {
+      name: "",
+      description: "",
+      tab: $scope.tab.id
+    }
+    $scope.newBillAmounts = [];
   };
 
   $scope.newPaymentExpenseSelected = function(){
     Events.get($scope.newPayment.expense.id).then(function(res){
-    $scope.newPaymentMembers = res.data.event_bills;
+      $scope.newPaymentMembers = res.data.event_bills.filter((bill) => {
+        return !bill.is_paid
+      })
     })
   }
 
@@ -370,6 +378,7 @@ angular.module('starter.controllers', [])
   $scope.newBillAmounts = [];
 
   $scope.addUserBill = function(index, user) {
+
       $scope.newBillAmounts[index].debtor = user.id;
       $scope.newBillAmounts[index].a_debtor = false;
       $scope.newBillAmounts[index].creditor = $scope.newCreditor;
@@ -378,15 +387,16 @@ angular.module('starter.controllers', [])
   $scope.addNewExpense = function() {
     $scope.newExpenseParams.tab = $scope.tab.id;
     $scope.newExpenseParams.owner = $scope.currentUser.id;
-    console.log($scope.newExpenseParams)
+
     // Add Event to Tab via api, then add each Bill to that exent
     Events.addExpense($scope.newExpenseParams).then(function(res){
-      console.log(res);
-
       var createdExpense = res.data;
 
+      console.log('newBillAmounts', $scope.newBillAmounts);
+
+
       // Add event ID to each new bill
-      for(var i = 0; i < $scope.newBillAmounts.length; i++){
+      for(var i = 1; i < $scope.newBillAmounts.length; i++){
         $scope.newBillAmounts[i].event = createdExpense.id;
       }
 
@@ -495,7 +505,7 @@ angular.module('starter.controllers', [])
         recentTabs.forEach(function(tab, index, recentTabs){
           Tabs.getRemainingBalance(tab.id).then(function(res){
             recentTabs[index].total = res.data.total;
-            $scope.labels.push(recentTabs[index].name);
+            $scope.labels.push(recentTabs[index].name.slice(0, 10));
             $scope.data.push(recentTabs[index].total);
           })
         })
