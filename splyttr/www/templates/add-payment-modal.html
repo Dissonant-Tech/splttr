@@ -30,7 +30,7 @@
 				  	  	</label>
 
 						<div class="modal-tip-wrapper" ng-if="newPayment.member">
-							<span class="modal-tip"><strong>@{{newPayment.member.debtor_info[0].username}}</strong> owes you <strong><span class="balanced">${{newPaymentAmount}}</span></strong> for <strong>Hotel</strong></span>
+							<span class="modal-tip"><strong>@{{newPayment.member.debtor_info[0].username}}</strong> owes you <strong><span class="balanced">${{newPaymentAmount}}</span></strong> for <strong>{{newPayment.expense.name}}</strong></span>
 						</div>
 
 				  	</div>

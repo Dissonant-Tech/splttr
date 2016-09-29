@@ -225,11 +225,11 @@ angular.module('starter.services', [])
       addBill: function(bill){
         return $http.post("http://localhost:8000/api/bills/", bill)
           .success(function(data){
-            // console.log("Added bill to event in DB. Response: ", data);
+            console.log("Added bill to event in DB. Response: ", data);
             return data;
           })
           .error(function(data){
-            // console.log("Could not add bill to DB. Response: ", data);
+            console.log("Could not add bill to DB. Response: ", data);
           })
       },
 

@@ -349,7 +349,9 @@ angular.module('starter.controllers', [])
 
   $scope.newPaymentExpenseSelected = function(){
     Events.get($scope.newPayment.expense.id).then(function(res){
-    $scope.newPaymentMembers = res.data.event_bills;
+      $scope.newPaymentMembers = res.data.event_bills.filter((bill) => {
+        return !bill.is_paid
+      })
     })
   }
 
@@ -503,7 +505,7 @@ angular.module('starter.controllers', [])
         recentTabs.forEach(function(tab, index, recentTabs){
           Tabs.getRemainingBalance(tab.id).then(function(res){
             recentTabs[index].total = res.data.total;
-            $scope.labels.push(recentTabs[index].name);
+            $scope.labels.push(recentTabs[index].name.slice(0, 10));
             $scope.data.push(recentTabs[index].total);
           })
         })
