@@ -339,6 +339,12 @@ angular.module('starter.controllers', [])
   $scope.closeExpenseModal = function() {
     $scope.expenseModal.hide();
     $scope.search.text = "";
+    $scope.newExpenseParams = {
+      name: "",
+      description: "",
+      tab: $scope.tab.id
+    }
+    $scope.newBillAmounts = [];
   };
 
   $scope.newPaymentExpenseSelected = function(){
@@ -370,6 +376,7 @@ angular.module('starter.controllers', [])
   $scope.newBillAmounts = [];
 
   $scope.addUserBill = function(index, user) {
+
       $scope.newBillAmounts[index].debtor = user.id;
       $scope.newBillAmounts[index].a_debtor = false;
       $scope.newBillAmounts[index].creditor = $scope.newCreditor;
@@ -378,15 +385,16 @@ angular.module('starter.controllers', [])
   $scope.addNewExpense = function() {
     $scope.newExpenseParams.tab = $scope.tab.id;
     $scope.newExpenseParams.owner = $scope.currentUser.id;
-    console.log($scope.newExpenseParams)
+
     // Add Event to Tab via api, then add each Bill to that exent
     Events.addExpense($scope.newExpenseParams).then(function(res){
-      console.log(res);
-
       var createdExpense = res.data;
 
+      console.log('newBillAmounts', $scope.newBillAmounts);
+
+
       // Add event ID to each new bill
-      for(var i = 0; i < $scope.newBillAmounts.length; i++){
+      for(var i = 1; i < $scope.newBillAmounts.length; i++){
         $scope.newBillAmounts[i].event = createdExpense.id;
       }
 
