@@ -17,7 +17,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
-    
+
       StatusBar.style(1);
 
     }
@@ -107,15 +107,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
 
-  .state('tab.activity-view-tab', {
-    url: '/activity/home/:tabId',
-    views: {
-      'tab-home': {
-        templateUrl: 'templates/tab-detail-view.html',
-        controller: 'TabDetailViewCtrl'
+    .state('tab.activity-expense-detail-view', {
+      url: '/activity/:tabId/:expenseId',
+      views: {
+        'tab-activity': {
+          templateUrl: 'templates/expense-detail.html',
+          controller: 'ExpenseDetailCtrl'
+        }
       }
-    }
-  })
+    })
 
   .state('tab.account', {
     url: '/account/:userId',

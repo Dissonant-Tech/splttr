@@ -22,13 +22,13 @@
                     </div>
                 </ul>
             </div>
-            <a class="item assertive card-button" href="#/tab/activity/home/{{activity.tab.id}}">
+            <a class="item assertive card-button" href="#/tab/activity/{{activity.tab.id}}/{{activity.event_id}}">
                 View Expense
             </a>
         </div>
     </div>
-    </ion-content>       
-    
+    </ion-content>
+
     <!-- NO TABS LABEL -->
-    <span ng-if="tabs.length == 0" class="tab-message" >No tabs</span>   
+    <span ng-if="tabs.length == 0" class="tab-message" >No tabs</span>
 </ion-view>

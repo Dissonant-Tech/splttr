@@ -377,9 +377,11 @@ angular.module('starter.controllers', [])
 
   $scope.addNewExpense = function() {
     $scope.newExpenseParams.tab = $scope.tab.id;
-
+    $scope.newExpenseParams.owner = $scope.currentUser.id;
+    console.log($scope.newExpenseParams)
     // Add Event to Tab via api, then add each Bill to that exent
     Events.addExpense($scope.newExpenseParams).then(function(res){
+      console.log(res);
 
       var createdExpense = res.data;
 
@@ -487,6 +489,8 @@ angular.module('starter.controllers', [])
         var recentTabs = res.data.splice(0, 4);
         $scope.labels = [];
         $scope.data = [];
+
+        console.log('Recent tabs:', recentTabs);
 
         recentTabs.forEach(function(tab, index, recentTabs){
           Tabs.getRemainingBalance(tab.id).then(function(res){
