@@ -66,7 +66,7 @@
 		<!-- TAB MEMBERS -->
 		<ion-label stacked class="tab-detail-label">Members</ion-label>
 		<ul class="detail-squad-list">
-			<div class="detail-squad-member" ng-repeat="member in tab.members | orderBy: '!debt'">
+			<div class="detail-squad-member" ng-if="member.id !== currentUser.id" ng-repeat="member in tab.members | orderBy: '!debt'">
 				<img ng-src="{{member.img? 'member.img' : 'img/blank-user.png'}}"  alt="Member profile profile">
 				<div class="detail-squad-member-content">
 					<span>@{{member.username}}</span>
