@@ -9876,6 +9876,7 @@ ion-header-bar .buttons button {
   color: white !important; }
 
 .FAB {
+  z-index: 9999;
   height: 52px;
   width: 52px;
   border-radius: 50%;
@@ -9885,7 +9886,7 @@ ion-header-bar .buttons button {
   color: white;
   position: fixed;
   bottom: 63px;
-  right: 15px;
+  right: 24px;
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.16), 0 4px 10px 0 rgba(0, 0, 0, 0.12); }
   .FAB i {
     display: table-cell;
@@ -9902,15 +9903,44 @@ ion-header-bar .buttons button {
 ion-content {
   background-color: #efefef !important; }
 
+.card-button {
+  color: #0d47a1 !important;
+  text-align: center;
+  border: none; }
+
+.payment-wrapper {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%; }
+
+.paid {
+  opacity: 0.5; }
+
+.strikethrough {
+  text-decoration: line-through; }
+
+.splyttr-header-wrapper {
+  background: #3f81e6;
+  color: white !important; }
+  .splyttr-header-wrapper * {
+    color: white !important; }
+
 .tab h2 {
   margin-bottom: 10px;
   font-size: 1.5em;
   width: 270px;
   text-overflow: ellipsis; }
 
-.tab a {
-  color: #0d47a1;
-  text-align: center; }
+.tab-header-title {
+  font-size: 25px !important; }
+
+.tab-content {
+  padding-bottom: 0;
+  border: none; }
+  .tab-content-description {
+    margin-top: 5px; }
 
 .tab-main {
   border-radius: 6px !important; }
@@ -9922,10 +9952,8 @@ ion-content {
   margin-top: -10px; }
 
 .tab-total {
-  position: absolute;
-  right: 19px;
   color: green;
-  font-size: 2em; }
+  font-weight: 600; }
 
 .tab-description {
   white-space: normal !important; }
@@ -9933,6 +9961,10 @@ ion-content {
 @media (min-width: 640px) and (max-width: 1023px) {
   .tab-home {
     text-align: center; } }
+
+.tab-card-members {
+  padding-bottom: 8px;
+  border-bottom: 2px solid #d0cfcf; }
 
 .tab-content-member-label {
   line-height: 2em; }
@@ -9986,12 +10018,13 @@ ion-content {
 
 .user-profile-image {
   border-radius: 50%;
-  max-width: 40%;
+  max-width: 30%;
   border: 2px solid #c5c5c5;
   margin: 10px auto 10px auto;
   display: block; }
   .user-profile-image-wrapper {
-    position: relative; }
+    position: relative;
+    margin-bottom: 19px; }
   .user-profile-image-edit-icon {
     position: absolute;
     top: 50%;
@@ -10000,10 +10033,11 @@ ion-content {
     font-size: 7em;
     color: white; }
 
-.user-name-wrapper {
-  padding-top: 5px; }
-  .user-name-wrapper h2 {
-    margin: 0; }
+.user-info {
+  display: block;
+  color: #5a5a5a;
+  font-size: 16px;
+  padding-bottom: 6px; }
 
 .modal-profile {
   padding-top: 20px;
@@ -10145,7 +10179,10 @@ ion-content {
     position: absolute;
     top: 72%;
     left: 50%;
-    transform: translate(-50%, -50%); }
+    transform: translate(-50%, -50%);
+    width: 300px;
+    white-space: normal;
+    text-align: center; }
   .modal-members-list li {
     height: 60px;
     width: 60px;
@@ -10157,7 +10194,7 @@ ion-content {
       left: 50%;
       transform: translateX(-50%); }
   .modal-members-list li.added {
-    border: 4px solid #33CD60; }
+    border: 2px solid #29c136; }
 
 .modal ion-scroll {
   padding-bottom: 10px; }
@@ -10196,32 +10233,42 @@ ion-content {
     .modal-expense .members-list li {
       margin-bottom: 40px; }
 
-.tab-analytics-dropdown {
-  position: relative;
-  margin-left: 10px;
-  margin-right: 10px; }
-  .tab-analytics-dropdown-button i {
-    zoom: 1.2;
-    position: absolute;
-    right: 1em; }
+.addedMembersList {
+  padding-top: 10px; }
+  .addedMembersList li {
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 50%;
+    background-size: cover; }
 
-.tab-analytics {
-  padding-top: 0;
-  padding-bottom: 0; }
-  .tab-analytics-chart {
-    zoom: .85;
-    background-color: white;
-    border: solid #387ef5;
-    margin-left: calc(1em - 2px);
-    border-radius: 8px;
-    margin-right: calc(1em - 2px);
-    padding-left: 1em;
-    margin-top: -1.3em;
-    padding-right: 1em; }
+.activity-amount {
+  color: green !important;
+  font-weight: 600; }
 
-.tab-analytics .btoggle {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px; }
+.activity-icon {
+  float: right; }
+  .activity-icon-paid {
+    color: green !important;
+    font-size: 1.25em;
+    padding-top: 10px; }
+
+.activity-profile-picture {
+  width: 48px;
+  height: 48px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  float: left;
+  margin-right: 20px; }
+
+.activity-detail {
+  min-height: 60px; }
+  .activity-detail-wrapper {
+    padding-bottom: 0 !important;
+    border: none; }
+
+.activity-members {
+  border-bottom: 2px solid #d0cfcf; }
 
 .expense-title {
   padding-bottom: 10px; }

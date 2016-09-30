@@ -27,7 +27,7 @@ angular.module('starter.services', [])
           // console.log("No tabs returned from DB. Response:", data);
           return null;
         })
-      
+
     },
 
     // Get specific Tab by its ID
@@ -68,29 +68,38 @@ angular.module('starter.services', [])
           // console.log("sdlkjf", tab);
           Popups.showPopup("Could not add tab", "Sorry, you cannot currently add a tab.");
         })
-      
     },
-    addExpense: function(tabId, expense) {
-      for (var i = 0; i < tabs.length; i++) {
-        if (tabs[i].id === parseInt(tabId)) {
-          var tab = tabs[i];
-        }
-      }
 
-      tab.expenses.push(expense);
+
+    // Get tabs in common between two users
+    getCommon: function(id1, id2) {
+      return $http.get("http://localhost:8000/api/tabs/?members=" + id1 + "," + id2)
+        .success(function(data) {
+          // console.log("Successfully added tab to DB", data);
+          return data;
+        })
+        .error(function(data) {
+          // console.log("sdlkjf", tab);
+          Popups.showPopup("Could not add tab", "Sorry, you cannot currently add a tab.");
+        })
+
     },
-    getTotalBalance: function(tabId) {
-      for (var i = 0; i < tabs.length; i++) {
-        if (tabs[i].id === parseInt(tabId)) {
-          var tab = tabs[i];
-          var totalBalance = 0;
-          tab.expenses.forEach(function(expense) {
-            totalBalance += expense.balance;
-          });
-          tab.balance = totalBalance;
-        }
-      }
+
+
+    // Add new Tab to DB
+    addTab: function(tab) {
+      return $http.post("http://localhost:8000/api/tabs/", tab)
+        .success(function(data) {
+          // console.log("Successfully added tab to DB", data);
+          return data;
+        })
+        .error(function(data) {
+          // console.log("sdlkjf", tab);
+          Popups.showPopup("Could not add tab", "Sorry, you cannot currently add a tab.");
+        })
+
     },
+
     edit: function(tabId, attr, newValue) {
       for (var i = 0; i < tabs.length; i++) {
         if (tabs[i].id === parseInt(tabId)) {
@@ -162,11 +171,11 @@ angular.module('starter.services', [])
     addExpense: function(event){
       return $http.post("http://localhost:8000/api/events/", event)
         .success(function(data){
-          // console.log("Added events to tab. Response: ", data);
+          console.log("Added events to tab. Response: ", data);
           return data;
         })
         .error(function(data){
-          // console.log("Could not add events to DB. Response: ", data);
+          console.log("Could not add events to DB. Response: ", data);
         })
     },
 
@@ -210,17 +219,30 @@ angular.module('starter.services', [])
           .error(function(data){
             // console.log("Could not get bill. Reponse: ", data);
           })
-      }, 
+      },
 
       // Add bill to event
       addBill: function(bill){
         return $http.post("http://localhost:8000/api/bills/", bill)
           .success(function(data){
-            // console.log("Added bill to event in DB. Response: ", data);
+            console.log("Added bill to event in DB. Response: ", data);
             return data;
           })
           .error(function(data){
-            // console.log("Could not add bill to DB. Response: ", data);
+            console.log("Could not add bill to DB. Response: ", data);
+          })
+      },
+
+      // Pay a bill
+      payBill: function(bill_id, params){
+        console.log('bill_id', bill_id);
+        console.log('params', params);
+        return $http.patch('http://localhost:8000/api/bills/' + bill_id + "/", params)
+          .success(function(res){
+            return res.data
+          })
+          .error(function(res){
+            console.log("Could not get bills for user");
           })
       }
 
@@ -253,7 +275,7 @@ angular.module('starter.services', [])
         }
       });
     },
-    
+
     // Display OK/Cancel Popup modal
     showConfirm: function(title, message, confirmCallback, cancellCallback) {
        var confirmPopup = $ionicPopup.confirm({
@@ -284,7 +306,7 @@ angular.module('starter.services', [])
 	return {
 
     // Returns current User
-		get: function() {  
+		get: function() {
         return $http.get('http://localhost:8000/api/auth/user/')
           .success(function(data) {
             // console.log("Got user from api. Response:", data);
@@ -344,7 +366,7 @@ angular.module('starter.services', [])
            // console.log("Could not sign up. Repsonse: ", data);
            var err = Object.keys(data)[0];
            Popups.showPopup("Error", data[err]);
-         }) 
+         })
     },
 
     // Creates anonymous User
@@ -358,7 +380,7 @@ angular.module('starter.services', [])
           })
           .error(function(data) {
             // console.log("Could not create anonymous user. Repsonse: ", data);
-          }) 
+          })
     },
 
     // Edits User properties
@@ -382,7 +404,7 @@ angular.module('starter.services', [])
           })
           .error(function(data) {
           })
-    },    
+    },
 
     // Deletes user
     delete: function(user_id) {
@@ -408,7 +430,7 @@ angular.module('starter.services', [])
         .error(function(data){
           // console.log("Could not logout", data);
           Popups.showPopup("Error", "Sorry, there seems to be a problem. Try again later")
-        })      
+        })
     }
 
 	};

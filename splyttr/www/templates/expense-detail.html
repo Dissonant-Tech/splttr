@@ -3,36 +3,34 @@
 	<ion-content class="padding">
 
 		<div class="card">
-			<div class="item item-divider">
+			<div class="item item-divider splyttr-header-wrapper">
 				Expense details
 			</div>
 			<div class="item item-text-wrap">
 				<h2 class="expense-title">Remaining balance: ${{expense.total}}</h2>
 				<p>{{expense.description}}</p>
 			</div>
-			<div class="item item-divider">
+		</div>
+		<div class="card">
+			<div class="item item-divider splyttr-header-wrapper">
 				Members
 			</div>
 			<div class="item item-text-wrap">
-				<p>These members belong to this expense</p>
 				<div class="tab-detail">
-				<ul class="detail-squad-list">
-					<div class="detail-squad-member" ng-repeat="bill in bills">
-						<img ng-src="{{bill.bg_img? 'bill.bg_img' : 'img/blank-user.png'}}">
-						<div class="detail-squad-member-content">
-							<p><span>@{{bill.username}}</span></p>
-							<p class="bill-owes">${{bill.amount}}</p>
+					<ul class="detail-squad-list">
+						<div class="detail-squad-member" ng-repeat="bill in expense.event_bills | orderBy: 'is_paid'">
+							<img ng-src="{{bill.bg_img? 'bill.bg_img' : 'img/blank-user.png'}}">
+							<div class="detail-squad-member-content" ng-class="{'paid': bill.is_paid, 'strikethrough': bill.is_paid}">
+								<p><span>@{{bill.debtor_info[0].username}}</span></p>
+								<p class="activity-amount" ng-class="{'strikethrough': bill.is_paid}">${{bill.amount}}</p>
+							</div>
 						</div>
-					</div>
-				</ul>
+					</ul>
 				</div>
 			</div>
 		</div>
-
-
-
 		<button class="button button-block button-assertive" ng-click="deleteExpense()">
 			Delete Expense
-		</button>		
+		</button>
 	</ion-content>
 </ion-view>

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.decorators import detail_route
+from rest_framework import mixins
 
 from django.contrib.auth.models import User, Group
 from django.views.generic import RedirectView
@@ -13,6 +14,7 @@ from django.core import serializers
 
 from splyttr.serializers import UserSerializer, GroupSerializer, TabSerializer, EventSerializer, BillSerializer
 from splyttr.models import Tab, Event, Bill, Profile
+from splyttr.mixins import CustomListModelMixin
 
 
 @api_view(['GET'])
@@ -60,9 +62,21 @@ class UserViewSet(viewsets.ModelViewSet):
         for event in serialized.data:
             total_bills.append({
                 'event_name':event['name'],
+                'event_id':event['id'],
+                'tab':event['tab'],
                 'bills':event['event_bills']
             })
         return Response(total_bills)
+
+    @detail_route(methods=['GET'])
+    def debt(self, request, pk=None):
+        pass
+        #tab = request.query_params.get('tab_id', '')
+        #bills = Bills.objects.filter()
+
+
+
+
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
@@ -73,21 +87,37 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 
-class TabViewSet(viewsets.ModelViewSet):
+class TabViewSet(mixins.CreateModelMixin,
+               mixins.RetrieveModelMixin,
+               mixins.UpdateModelMixin,
+               mixins.DestroyModelMixin,
+               CustomListModelMixin,
+               viewsets.GenericViewSet):
     """
     API endpoint that allows tabs to be viewed or edited
     """
     permission_classes = (IsAuthenticated,)
-    queryset = Tab.objects.all()
     serializer_class = TabSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('name', 'description', 'created_at', 'members')
+
+    def get_queryset(self):
+        tabs = Tab.objects.all()
+        idstring = str(self.request.query_params.get('members', ''))
+        if idstring is not '':
+            idlist = idstring.split(',')
+            ids = list(map(int, idlist))
+            tabs = Tab.objects.filter(members__in=ids).distinct()
+            for _id in ids:
+                tabs = tabs.filter(members=_id)
+        return tabs
+
 
     @detail_route(methods=['GET'])
     def total(self, request, pk=None):
 
         total = 0
-        bills = Bill.objects.filter(event__tab__pk=pk) # querying for all events with the same tab
+        bills = Bill.objects.filter(event__tab__pk=pk, is_paid=False) # querying for all events with the same tab
 
         for bill in bills:
             total += bill.amount

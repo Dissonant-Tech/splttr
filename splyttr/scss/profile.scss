@@ -13,12 +13,13 @@
 	}
 	&-profile-image{
 		border-radius: 50%;
-		max-width: 40%;
+		max-width: 30%;
 		border: 2px solid #c5c5c5;
 		margin: 10px auto 10px auto;
 		display: block;
 		&-wrapper{
 			position: relative;
+			margin-bottom: 19px;
 		}
 		&-edit-icon{
 			position: absolute;
@@ -29,11 +30,11 @@
 		    color: white;
 		}
 	}
-	&-name-wrapper{
-		padding-top: 5px;
-		h2{
-			margin: 0;
-		}
+	&-info{
+		display: block;
+		color: #5a5a5a;
+		font-size: 16px;
+		padding-bottom: 6px;
 	}
 }
 .modal-profile{

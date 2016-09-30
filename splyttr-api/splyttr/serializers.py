@@ -39,6 +39,13 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class TabSerializer(serializers.ModelSerializer):
+
+    owner_name = serializers.SerializerMethodField()
+
+    def get_owner_name(self, tab):
+        user = User.objects.get(pk=tab.owner.pk)
+        return user.username
+
     class Meta:
         model = Tab
         fields = '__all__'
@@ -46,6 +53,7 @@ class TabSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
 
+    tab_data = TabSerializer(many=False, read_only=True)
     event_bills = serializers.SerializerMethodField()
 
     def get_event_bills(self, event):

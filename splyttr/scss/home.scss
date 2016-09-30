@@ -5,9 +5,15 @@
 		width: 270px;
 		text-overflow: ellipsis;
 	}
-	a{
-		color: #0d47a1;
-		text-align: center;
+	&-header-title{
+		font-size: 25px !important;
+	}
+	&-content{
+		padding-bottom: 0;
+		border: none;
+		&-description{
+			margin-top: 5px;
+		}
 	}
 	&-main{
 		border-radius: 6px !important;
@@ -19,10 +25,8 @@
 		margin-top: -10px;
 	}
 	&-total{
-		position: absolute;
-		right: 19px;
 		color: green;
-		font-size: 2em;
+		font-weight: 600;
 	}
 	&-description{
 		white-space: normal !important;
@@ -32,11 +36,15 @@
 			text-align: center;
 		}
 	}
+	&-card-members{
+		padding-bottom: 8px;
+		border-bottom: 2px solid #d0cfcf;
+	}
 	&-content-member{
 		&-label{
 			line-height: 2em;
 		}
-		&-wrapper{
+		&-wrapper{	
 			&.modal-member{
 				height: 90px;	
 			}

@@ -16,6 +16,9 @@
 			top: 72%;
 			left: 50%;
 			transform: translate(-50%, -50%);
+			width: 300px;
+		    white-space: normal;
+		    text-align: center;
 		}
 		li{
 			height: 60px;
@@ -30,7 +33,7 @@
 			}
 		}
 		li.added{
-			border: 4px solid #33CD60;
+			border: 2px solid #29c136;
 		}
 	}
 	ion-scroll{
@@ -76,4 +79,13 @@
 		}
 	}
 
+}
+.addedMembersList {
+	padding-top: 10px;
+	li{
+	    display: inline-block;
+	    margin-right: 10px;
+	    border-radius: 50%;
+	    background-size: cover;
+    }
 }

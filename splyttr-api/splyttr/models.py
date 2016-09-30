@@ -11,6 +11,11 @@ class Profile(models.Model):
 
 
 class Tab(models.Model):
+    owner = models.ForeignKey(
+            User,
+            on_delete=models.CASCADE,
+            related_name="tabowner",
+    )
     name = models.CharField(
         max_length=60
     )
@@ -25,6 +30,11 @@ class Tab(models.Model):
 
 
 class Event(models.Model):
+    owner = models.ForeignKey(
+            User,
+            on_delete=models.CASCADE,
+            related_name="eventowner",
+    )
     name = models.CharField(
         max_length=60
     )
@@ -49,11 +59,13 @@ class Bill(models.Model):
     debtor = models.ForeignKey(
         User,
         on_delete=models.DO_NOTHING,
-        null=True
+        null=True,
+        blank=True,
     )
     a_debtor = models.CharField(
         max_length=60,
-        null=True
+        null=True,
+        blank=True,
     )
     event = models.ForeignKey(
         Event,

@@ -18,14 +18,21 @@
 					</label>
 
 					<!-- SEARCH RESULTS -->
-					<span class="modal-tip" ng-hide="searchResults.length">Start searching to add people to the tab</span>	
+					<span class="modal-tip" ng-hide="newTabParams.members.length > 1 || search.text.length > 0">Start searching to add people to the tab. If they're not on Splyttr, don't worry, you can still add them.</span>
+
 					<ion-scroll class="member-list-scroll" zooming="false" direction="x" style="width: 2000px;">
-					    <div class="tab-content-member-wrapper modal-member">
+					    <div class="tab-content-member-wrapper modal-member" ng-style="{'height': (search.text.length === 0 && newTabParams.members.length > 1) ? '0' : '90px'}">
 			                <ul class="member-list">
 			                    <li  ng-repeat="result in searchResults | orderBy: 'anonymous':true" on-tap="addMemberToTab($event)" style="background-image: url(img/blank-user.png);"><span>{{result.username}}</span></li>
 			                </ul>
 			            </div>		
 					</ion-scroll>
+
+					<!-- List of added members -->
+					<div ng-show="newTabParams.members.length > 1" style="margin-bottom: 26px;">
+						<span class="input-label" style="display: inline">Added members</span><span style="font-size: 12px;color: #5a5959;right: 0;">(Tap to remove)</span>
+						<ul class="addedMembersList"><li on-tap="removeMemberFromTab($index)"class="added" ng-repeat="member in addedMembers" style="background-image: url(img/blank-user.png);"><span>{{member.username}}</span></li></ul>
+					</div>
 				</label>
 
 				<!-- TAB DETAILS -->

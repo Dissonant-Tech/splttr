@@ -1,13 +1,13 @@
 angular.module('starter.controllers', [])
 
 .controller('LoginCtrl', function($scope, $http, User) {
-  
+
   $scope.$on("$ionicView.beforeEnter", function(event, data){
-      
+
       $scope.loginParams = {
         username: "user",
         password: "rojomartin95"
-      }   
+      }
 
   });
 
@@ -18,7 +18,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('SignupCtrl', function($scope, User, $http) {
-  
+
   console.log("In signup controller");
 
   $scope.signupPostParams = {
@@ -44,7 +44,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ForgotPasswordCtrl', function($scope, $http) {
-  
+
   console.log("In forgot password controller");
 
   $scope.user = {
@@ -61,28 +61,33 @@ angular.module('starter.controllers', [])
 
   // Load home state from API
   $scope.$on("$ionicView.beforeEnter", function(event, data){
-      
+
       // Get user data and Tabs from DB
       User.get().then(function(user){
         $scope.user = user.data;
         Tabs.get($scope.user.id).then(function(res){
           $scope.tabs = res.data;
-
-          // Get balance for each tab
-          $scope.tabs.forEach(function(tab, index, tabs){
-            Tabs.getRemainingBalance(tab.id).then(function(res){
-              tabs[index].total = res.data.total;
-            })       
-          })
+          calculateTabTotal($scope.tabs);
         })
-      }); 
+      });
 
   });
 
-  // Pull to refresh tab list
+  // Get balance for each tab
+  function calculateTabTotal(tabList){
+    tabList.forEach(function(tab, index, tabs){
+      Tabs.getRemainingBalance(tab.id).then(function(res){
+        tabs[index].total = res.data.total;
+      })
+    })
+  }
+
+  // Pull to refresh
   $scope.refreshTabList = function(){
     Tabs.get($scope.user.id).then(function(res){
       $scope.tabs = res.data
+      calculateTabTotal($scope.tabs);
+
       // Stop the ion-refresher from spinning
       $scope.$broadcast('scroll.refreshComplete');
     })
@@ -104,8 +109,11 @@ angular.module('starter.controllers', [])
     $scope.newTabParams = {
         name: "",
         description: "",
-        members: [JSON.stringify($scope.user.id)]
+        members: [$scope.user.id],
+        owner: $scope.user.id
     }
+    $scope.addedMembers = [{username: 'You', bg_img: null}];
+
   };
 
   $scope.closeModal = function() {
@@ -115,27 +123,37 @@ angular.module('starter.controllers', [])
   // Add members to new Tab. If they have already been added, they will be removed
   $scope.addMemberToTab = function($event) {
 
-    if($event.target.classList.contains('added')){
-      $event.target.classList.remove('added');
-      var members = $scope.newTabParams.members;
-      members.splice(members.indexOf(this.result.id), 1);
-      console.log(this.result.username + ' removed from tab');
+    // Case 0: member is already added to tab
+    if($scope.newTabParams.members.indexOf(this.result.id) > 0){
       return;
     }
 
-    $event.target.classList.add('added');
+    // Case 1: member is not yet added to tab
     $scope.newTabParams.members.push(this.result.id);
-    console.log(this.result.username + ' added to tab');
+    $scope.addedMembers.push(this.result);
+  }
+
+  $scope.removeMemberFromTab = function($index){
+    if($index !== 0){
+      $scope.addedMembers.splice($index, 1);
+      $scope.newTabParams.members.splice($index, 1);
+    }
+    // $scope.newTabParams.members.splice($scope.newTabParams.members.indexOf(this.member.id), 1);
+    // $scope.addedMembers.splice($scope.addedMembers.indexOf(this.member.id), 1);
+    // console.log($scope.newTabParams.members);
   }
 
   // Add new Tab to DB
   $scope.saveNewTab = function(){
     console.log("Saving new tab", $scope.newTabParams);
     Tabs.addTab($scope.newTabParams).then(function(res){
+      console.log(res);
       // init a tab with a balance of $0
       res.data.total = 0;
       $scope.tabs.push(res.data);
       $scope.closeModal();
+      $scope.search.text = '';
+      $scope.searchResults = [];
     })
   }
 
@@ -147,7 +165,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.searchUser = function(query) {
-    
+
     // If user has erased search, remove search results from view
     if(query === ''){
       $scope.searchResults = [];
@@ -192,38 +210,52 @@ angular.module('starter.controllers', [])
         id: 0
       };
 
-      // Get Tab details
-      Tabs.getWithId($stateParams.tabId).then(function(res){
-        var tabData = res.data;
-        
-        $scope.tab.name = tabData.name;
-        $scope.tab.description = tabData.description;
-        $scope.tab.id = tabData.id; 
+      User.get().then(function(res){
+        $scope.currentUser = res.data;
+         return res.data;
+      }).then(function(currentUser){
+          // Get Tab details
+          Tabs.getWithId($stateParams.tabId).then(function(res){
+            var tabData = res.data;
 
-        // Get Tab remaining balance
-        Tabs.getRemainingBalance($scope.tab.id).then(function(res){
-          $scope.tab.total = res.data.total;
-        })
+            $scope.tab.name = tabData.name;
+            $scope.tab.description = tabData.description;
+            $scope.tab.id = tabData.id;
+            $scope.tab.owner = tabData.owner;
+            $scope.tab.owner_name = tabData.owner_name;
 
-        // Get User info for each member
-        tabData.members.forEach(function(userID){
-          User.getWithId(userID).then(function(res){
-            var user = res.data;
-            $scope.tab.members.push(user);
-          })
-        });
+            if(currentUser.id === $scope.tab.owner){
+              $scope.self = true;
+            } else {
+              $scope.self = false;
+            }
 
-        // Get Tab events and their totals
-        Events.getAll($scope.tab.id).then(function(events){
-          $scope.expenses = events.data;
-  
-          $scope.expenses.forEach(function(expense, index, expenses){
-            Events.getRemainingBalance(expense.id).then(function(res){
-              expenses[index].total = res.data.total;
+            // Get Tab remaining balance
+            Tabs.getRemainingBalance($scope.tab.id).then(function(res){
+              $scope.tab.total = res.data.total;
             })
+
+            // Get User info for each member
+            tabData.members.forEach(function(userID){
+              User.getWithId(userID).then(function(res){
+                var user = res.data;
+                $scope.tab.members.push(user);
+              })
+            });
+
+            // Get Tab events and their totals
+            Events.getAll($scope.tab.id).then(function(events){
+              $scope.expenses = events.data;
+
+              $scope.expenses.forEach(function(expense, index, expenses){
+                Events.getRemainingBalance(expense.id).then(function(res){
+                  expenses[index].total = res.data.total;
+                })
+              });
+            })
+
           });
-        })
-      });
+      })
   });
 
   // Open action sheet
@@ -231,7 +263,7 @@ angular.module('starter.controllers', [])
     $ionicActionSheet.show({
         titleText: $scope.tab.title,
         buttons: [
-          
+
         ],
         destructiveText: 'Delete',
         cancelText: 'Cancel',
@@ -248,7 +280,7 @@ angular.module('starter.controllers', [])
           })
           return true;
         }
-      });    
+      });
   }
 
   // Load expense modal
@@ -275,9 +307,8 @@ angular.module('starter.controllers', [])
     }
     $scope.PaymentModal.show();
     $scope.newPayment = {
-      member_id: 0,
+      member: "",
       expense: "",
-      ammount_paid: ""
     }
   };
 
@@ -289,7 +320,9 @@ angular.module('starter.controllers', [])
   // Open Expense Modal
   $scope.openExpenseModal = function() {
     $scope.expenseModal.show();
-
+    $scope.search = {
+      text: ''
+    }
     $scope.newExpenseParams = {
       name: "",
       description: "",
@@ -297,13 +330,7 @@ angular.module('starter.controllers', [])
     }
 
     User.get().then(function(res){
-      $scope.newBillParams = {
-        a_debtor: false,
-        amount: 0,
-        creditor: res.data.id,
-        debtor: 0,
-        event: 0
-      }
+      $scope.newCreditor = res.data.id;
     });
 
   };
@@ -311,7 +338,34 @@ angular.module('starter.controllers', [])
   // Close Expense Modal
   $scope.closeExpenseModal = function() {
     $scope.expenseModal.hide();
+    $scope.search.text = "";
+    $scope.newExpenseParams = {
+      name: "",
+      description: "",
+      tab: $scope.tab.id
+    }
+    $scope.newBillAmounts = [];
   };
+
+  $scope.newPaymentExpenseSelected = function(){
+    Events.get($scope.newPayment.expense.id).then(function(res){
+      $scope.newPaymentMembers = res.data.event_bills.filter((bill) => {
+        return !bill.is_paid
+      })
+    })
+  }
+
+  $scope.newPaymentMemberSelected = function(){
+    $scope.newPaymentAmount = $scope.newPayment.member.amount;
+  }
+
+  $scope.addPayment = function(){
+    console.log($scope.newPayment);
+     Bills.payBill($scope.newPayment.member.id, {is_paid: true}).then(function(res){
+      console.log(res);
+      $scope.closePaymentModal();
+     })
+  }
 
   /* =========================
 
@@ -323,30 +377,33 @@ angular.module('starter.controllers', [])
   $scope.search = '';
   $scope.newBillAmounts = [];
 
-  $scope.addUserBill = function(index, userID) {
-      $scope.newBillAmounts[index].id = userID;
+  $scope.addUserBill = function(index, user) {
+
+      $scope.newBillAmounts[index].debtor = user.id;
+      $scope.newBillAmounts[index].a_debtor = false;
+      $scope.newBillAmounts[index].creditor = $scope.newCreditor;
   }
 
   $scope.addNewExpense = function() {
     $scope.newExpenseParams.tab = $scope.tab.id;
+    $scope.newExpenseParams.owner = $scope.currentUser.id;
 
     // Add Event to Tab via api, then add each Bill to that exent
     Events.addExpense($scope.newExpenseParams).then(function(res){
-
       var createdExpense = res.data;
 
-      // Tie each new bill to the event they belong to, which is the one we just created
-      $scope.newBillParams.event = createdExpense.id;
+      console.log('newBillAmounts', $scope.newBillAmounts);
 
-      // Create Bill for each member in expense
+
+      // Add event ID to each new bill
+      for(var i = 1; i < $scope.newBillAmounts.length; i++){
+        $scope.newBillAmounts[i].event = createdExpense.id;
+      }
+
+      //Create Bill for each member in expense
       $scope.newBillAmounts.forEach(function(bill, index, bills){
 
-        // Set new bill paramaters for API
-        $scope.newBillParams.amount = bill.amount;
-        $scope.newBillParams.debtor = bill.id;
-        
-        Bills.addBill($scope.newBillParams).then(function(){
-
+        Bills.addBill(bill).then(function(res){
           // After last bill is created, calculate total for event which was just created
           if(bills.length-1 === index){
 
@@ -361,15 +418,15 @@ angular.module('starter.controllers', [])
 
             })
           }
-        })
+        });
       });
 
       $scope.closeExpenseModal();
 
     })
   }
- 
-  
+
+
 })
 
 .controller('ExpenseDetailCtrl', function($scope,$rootScope, $state, $ionicHistory, $stateParams, Tabs, Events, User) {
@@ -377,28 +434,16 @@ angular.module('starter.controllers', [])
   // Get expense details
   Events.get($stateParams.expenseId).then(function(res){
     $scope.expense = res.data;
+    console.log(res.data)
 
     // Get expense total
     Events.getRemainingBalance($scope.expense.id).then(function(res){
       $scope.expense.total = res.data.total;
     });
-
-    // Get expense members and bills
-    Events.getBills($scope.expense.id).then(function(res){
-      $scope.bills = res.data;
-
-      // Get user info for each bill
-      $scope.bills.forEach(function(bill, index, bills){
-        User.getWithId(bill.debtor).then(function(res){
-          bill.username = res.data.username;
-          bill.bg_img = res.data.bg_img;
-        });
-      })
-    })
   })
 
-  
-  // Remove Expense and go back to parent tab 
+
+  // Remove Expense and go back to parent tab
   $scope.deleteExpense = function(){
     $ionicHistory.clearCache().then(function(){
       Events.remove($scope.expense.id).then(function(){
@@ -414,17 +459,26 @@ angular.module('starter.controllers', [])
 
   // Load home state from API
   $scope.$on("$ionicView.beforeEnter", function(event, data){
-      
+
       // Get user data and Tabs from DB
       User.get().then(function(user){
-        var user = user.data;
-        User.getActivity(user.id).then(function(res){
+        $scope.user = user.data;
+        User.getActivity($scope.user.id).then(function(res){
           console.log(res.data)
           $scope.activities = res.data;
-        })   
-      }); 
+        })
+      });
 
   });
+
+  // Pull to refresh tab list
+  $scope.refreshTabList = function(){
+    User.getActivity($scope.user.id).then(function(res){
+      $scope.activities = res.data
+      // Stop the ion-refresher from spinning
+      $scope.$broadcast('scroll.refreshComplete');
+    })
+  }
 
 })
 
@@ -433,31 +487,50 @@ angular.module('starter.controllers', [])
   // load user data before entering home state
   $scope.$on("$ionicView.beforeEnter", function(event, data){
 
-    // Get user data
+    // Case 0: Current user account
     if($stateParams.userId === 'self'){
       $scope.self = true;
       User.get().then(function(user){
         $scope.user = user.data;
+        return Tabs.get($scope.user.id)
+      }).then(function(res){
 
-        // Get chart data
+        // Calculate chart data (tab name & total)
+        var recentTabs = res.data.splice(0, 4);
         $scope.labels = [];
-        $scope.series = ['Series A'];
         $scope.data = [];
 
-        // Alan is currently working on an endpoint which returns user analytics with tab names and totals
-        
-      });   
-    } else{
+        console.log('Recent tabs:', recentTabs);
+
+        recentTabs.forEach(function(tab, index, recentTabs){
+          Tabs.getRemainingBalance(tab.id).then(function(res){
+            recentTabs[index].total = res.data.total;
+            $scope.labels.push(recentTabs[index].name.slice(0, 10));
+            $scope.data.push(recentTabs[index].total);
+          })
+        })
+      });
+    }
+
+    // Case 1: Not current user account
+    else{
       User.getWithId($stateParams.userId).then(function(user){
         $scope.user = user.data;
-      }); 
-    } 
+        return User.get();
+      }).then(function(user){
+        $scope.currentUser = user.data;
+
+        return Tabs.getCommon($scope.user.id, $scope.currentUser.id);
+      }).then(function(commonData){
+        $scope.commonTabs = commonData.data;
+      });
+    }
   });
 
   // Delete User from DB
   $scope.deleteAccount = function(){
     Popups.showConfirm("Delete Account", "Are you sure you want to delete your account?", function(){
-      
+
       // user clicked "OK"
       User.delete($scope.user.id);
       $scope.closeModal();
@@ -491,7 +564,7 @@ angular.module('starter.controllers', [])
 
   // Edit User data in DB
   $scope.saveProfileEdits = function() {
-    
+
     console.log("saving edits", $scope.newProfileDetails)
     User.edit($scope.user.id, $scope.newProfileDetails).then(function(){
       User.get().then(function(user){
