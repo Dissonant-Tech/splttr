@@ -138,9 +138,6 @@ angular.module('starter.controllers', [])
       $scope.addedMembers.splice($index, 1);
       $scope.newTabParams.members.splice($index, 1);
     }
-    // $scope.newTabParams.members.splice($scope.newTabParams.members.indexOf(this.member.id), 1);
-    // $scope.addedMembers.splice($scope.addedMembers.indexOf(this.member.id), 1);
-    // console.log($scope.newTabParams.members);
   }
 
   // Add new Tab to DB
@@ -164,6 +161,8 @@ angular.module('starter.controllers', [])
     text: ''
   };
 
+  var usersList = [];
+
   $scope.searchUser = function(query) {
 
     // If user has erased search, remove search results from view
@@ -172,12 +171,10 @@ angular.module('starter.controllers', [])
       return
     }
 
-    var usersList = [];
-
     $scope.searchResults = [
       {
         username: query,
-        bg_img: 'img/black-user.png',
+        bg_img: 'img/anonymous-user.png',
         anonymous: true
       }
     ];
@@ -190,6 +187,7 @@ angular.module('starter.controllers', [])
       for(i in usersList){
         if (usersList[i].username.indexOf(query) !== -1) {
           $scope.searchResults.push(usersList[i]);
+          console.log($scope.searchResults)
         }
       }
 
@@ -432,14 +430,23 @@ angular.module('starter.controllers', [])
 .controller('ExpenseDetailCtrl', function($scope,$rootScope, $state, $ionicHistory, $stateParams, Tabs, Events, User) {
 
   // Get expense details
-  Events.get($stateParams.expenseId).then(function(res){
-    $scope.expense = res.data;
-    console.log(res.data)
+  User.get().then(function(res){
+    return res.data;
+  }).then(function(currentUser){
+    Events.get($stateParams.expenseId).then(function(res){
+      $scope.expense = res.data;
+      console.log($scope.expense)
+      if(currentUser.id === $scope.expense.owner){
+        $scope.self = true;
+      } else {
+        $scope.self = false;
+      }
 
-    // Get expense total
-    Events.getRemainingBalance($scope.expense.id).then(function(res){
-      $scope.expense.total = res.data.total;
-    });
+      // Get expense total
+      Events.getRemainingBalance($scope.expense.id).then(function(res){
+        $scope.expense.total = res.data.total;
+      });
+    })
   })
 
 

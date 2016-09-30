@@ -7,15 +7,15 @@
     <div ng-repeat="activity in activities">
         <div class="card">
             <div class="item item-divider splyttr-header-wrapper">
-                <span class="activity-tab-title">{{activity.tab.name}}</h2> <span class="activity-title"> - {{activity.event_name}}</span>
+                <span class="activity-tab-title">{{activity.tab_name}}</h2> <span class="activity-title"> - {{activity.event_name}}</span>
                 <p>by @{{activity.bills[0].creditor_info[0].username}}</p>
             </div>
             <div class="item item-text-wrap activity-detail-wrapper">
                 <ul class="activity-members">
                     <div class="detail-squad-member activity-detail" ng-repeat="bill in activity.bills">
-                        <img style="background-image: url(img/blank-user.png)" class="activity-profile-picture">
-                           <i class="ion-android-done-all activity-icon activity-icon-paid"></i>
-                        <div class="detail-squad-member-content">
+                           <i ng-if="bill.is_paid" class="ion-android-done-all activity-icon activity-icon-paid"></i>
+                        <div class="detail-squad-member-content" ng-class="{'paid strikethrough': bill.is_paid}">
+                            <img style="background-image: url(img/blank-user.png)" class="activity-profile-picture">
                             <span>@{{bill.debtor_info[0].username}}</span>
                             <p>Owes <span class="activity-amount">${{bill.amount}}</span></p>
                         </div>
