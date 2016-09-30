@@ -61,6 +61,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     controller: 'SignupCtrl'
   })
 
+  .state('profile-picture', {
+    url: '/profile-picture',
+    templateUrl: 'templates/profile-picture.html',
+    controller: 'ProfilePictureCtrl',
+    params: { signupInfo: null }
+  })
+
   .state('forgot-password', {
     url: '/forgot-password',
     templateUrl: 'templates/forgot-password.html',

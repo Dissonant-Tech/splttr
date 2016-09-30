@@ -343,7 +343,7 @@ angular.module('starter.services', [])
     login: function(params) {
       $http.post("http://localhost:8000/api/auth/login/", params)
         .success(function(token, status, some, config) {
-          // console.log("Successfully logged in. Response:", token);
+          console.log("Successfully logged in. Response:", token);
 
           // Set global header auth token for each subsequent request
           $http.defaults.headers.common.Authorization = 'Token ' + token.key;

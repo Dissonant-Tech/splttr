@@ -54,7 +54,7 @@
 			</div>
 
 			<ion-list>
-				<ion-item ng-class="{'paid': expense.total === 0}" class="item-remove-animate item-icon-right tab-detail-expense" ng-repeat="expense in expenses" type="item-text-wrap" href="#/tab/home/{{tab.id}}/{{expense.id}}">
+				<ion-item ng-class="{'paid strikethrough': expense.total === 0}" class="item-remove-animate item-icon-right tab-detail-expense" ng-repeat="expense in expenses" type="item-text-wrap" href="#/tab/home/{{tab.id}}/{{expense.id}}">
 					<h2>{{expense.name}}</h2>
 					<p>{{expense.description}}</p>
 					<p class="expense-total">${{expense.total}}</p>

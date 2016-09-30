@@ -17,9 +17,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SignupCtrl', function($scope, User, $http) {
-
-  console.log("In signup controller");
+.controller('SignupCtrl', function($scope, $http, $state) {
 
   $scope.signupPostParams = {
       password1: "",
@@ -28,18 +26,33 @@ angular.module('starter.controllers', [])
       email: ""
   }
 
+  // Redirect to image upload tool
+  $scope.uploadImage = function() {
+    $state.go('profile-picture', {signupInfo: $scope.signupPostParams});
+  }
+
+})
+
+.controller('ProfilePictureCtrl', function($scope, $http, User, $stateParams) {
+
+  var signupPostParams = $stateParams.signupInfo;
+  console.log(signupPostParams)
+
+  // Register user and login
   $scope.signupUser = function() {
-    User.signup($scope.signupPostParams).then(function(){
+    console.log("Signing up..")
+    User.signup(signupPostParams).then(function(){
 
       // if signup was successful, log in user
       var loginParams = {
-        username: $scope.signupPostParams.username,
-        password: $scope.signupPostParams.password1
+        username: signupPostParams.username,
+        password: signupPostParams.password1
       }
 
       User.login(loginParams);
     })
   };
+
 
 })
 
