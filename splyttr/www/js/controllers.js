@@ -212,6 +212,7 @@ angular.module('starter.controllers', [])
 
 .controller('TabDetailViewCtrl', function($scope, $state, $ionicActionSheet, $ionicModal, $stateParams, $ionicModal, User, Popups, Tabs, Events, Bills) {
 
+  // Load tab information
   $scope.$on("$ionicView.loaded", function(){
       var tabData = {};
       $scope.tab = {
@@ -340,6 +341,10 @@ angular.module('starter.controllers', [])
       tab: $scope.tab.id
     }
 
+    $scope.newBillMembers = $scope.tab.members.filter((member) => {
+      return member.id !== $scope.currentUser.id;
+    });
+
     User.get().then(function(res){
       $scope.newCreditor = res.data.id;
     });
@@ -389,10 +394,11 @@ angular.module('starter.controllers', [])
   $scope.newBillAmounts = [];
 
   $scope.addUserBill = function(index, user) {
-
+      console.log(index);
       $scope.newBillAmounts[index].debtor = user.id;
       $scope.newBillAmounts[index].a_debtor = false;
       $scope.newBillAmounts[index].creditor = $scope.newCreditor;
+
   }
 
   $scope.addNewExpense = function() {
@@ -403,11 +409,8 @@ angular.module('starter.controllers', [])
     Events.addExpense($scope.newExpenseParams).then(function(res){
       var createdExpense = res.data;
 
-      console.log('newBillAmounts', $scope.newBillAmounts);
-
-
       // Add event ID to each new bill
-      for(var i = 1; i < $scope.newBillAmounts.length; i++){
+      for(var i = 0; i < $scope.newBillAmounts.length; i++){
         $scope.newBillAmounts[i].event = createdExpense.id;
       }
 

@@ -34,7 +34,7 @@
 
 							<!-- MEMBERS -->
 							<ul class="members-list">
-								<li ng-if="member.id !== currentUser.id" ng-repeat="member in tab.members | filter:search.text" on-tap="addMemberToTab()">
+								<li ng-repeat="member in newBillMembers | filter:search.text" on-tap="addMemberToTab()">
 									<div class="member-image-wrapper">
 										<img src="img/blank-user.png" class="member-image">
 										<span>@{{member.username}}</span>
