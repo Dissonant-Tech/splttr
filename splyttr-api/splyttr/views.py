@@ -115,7 +115,6 @@ class TabViewSet(mixins.CreateModelMixin,
 
     @detail_route(methods=['GET'])
     def total(self, request, pk=None):
-
         total = 0
         bills = Bill.objects.filter(event__tab__pk=pk, is_paid=False) # querying for all events with the same tab
 
@@ -161,8 +160,7 @@ class EventViewSet(viewsets.ModelViewSet):
     @detail_route(methods=['GET'])
     def total(self, request, pk=None):
         total = 0
-
-        bills = Bill.objects.filter(event__pk = pk) # Separate all bill of this event
+        bills = Bill.objects.filter(event__pk = pk, is_paid=False) # Separate all bill of this event
         for bill in bills:
             total += bill.amount
 
