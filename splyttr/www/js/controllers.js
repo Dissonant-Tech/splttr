@@ -435,6 +435,7 @@ angular.module('starter.controllers', [])
   }).then(function(currentUser){
     Events.get($stateParams.expenseId).then(function(res){
       $scope.expense = res.data;
+      console.log($scope.expense)
       if(currentUser.id === $scope.expense.owner){
         $scope.self = true;
       } else {

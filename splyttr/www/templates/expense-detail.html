@@ -19,8 +19,8 @@
 				<div class="tab-detail">
 					<ul class="detail-squad-list">
 						<div class="detail-squad-member" ng-repeat="bill in expense.event_bills | orderBy: 'is_paid'">
-							<img ng-src="{{bill.bg_img? 'bill.bg_img' : 'img/blank-user.png'}}">
 							<div class="detail-squad-member-content" ng-class="{'paid': bill.is_paid, 'strikethrough': bill.is_paid}">
+								<img ng-src="{{bill.bg_img? 'bill.bg_img' : 'img/blank-user.png'}}">
 								<p><span>@{{bill.debtor_info[0].username}}</span></p>
 								<p class="activity-amount" ng-class="{'strikethrough': bill.is_paid}">${{bill.amount}}</p>
 							</div>
