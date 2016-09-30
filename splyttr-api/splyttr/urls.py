@@ -34,7 +34,7 @@ router.register_include(url(r'^auth/registration/', include('rest_auth.registrat
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
-    url(r'^admin', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^api/auth/', include('rest_auth.urls')),
     url(r'^api/auth/registration/', include('rest_auth.registration.urls')),
 ]
