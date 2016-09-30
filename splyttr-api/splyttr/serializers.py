@@ -53,8 +53,14 @@ class TabSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
 
-    tab_data = TabSerializer(many=False, read_only=True)
+    tab_name = serializers.SerializerMethodField()
     event_bills = serializers.SerializerMethodField()
+
+    def get_tab_name(self, event):
+        tab = Tab.objects.get(pk=event.tab.pk)
+        return tab.name
+
+
 
     def get_event_bills(self, event):
         bills = Bill.objects.filter(event=event).order_by('-created_at')

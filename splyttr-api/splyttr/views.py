@@ -63,7 +63,7 @@ class UserViewSet(viewsets.ModelViewSet):
             total_bills.append({
                 'event_name':event['name'],
                 'event_id':event['id'],
-                'tab':event['tab'],
+                'tab':event['tab_data'],
                 'bills':event['event_bills']
             })
         return Response(total_bills)
