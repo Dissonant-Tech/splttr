@@ -432,14 +432,22 @@ angular.module('starter.controllers', [])
 .controller('ExpenseDetailCtrl', function($scope,$rootScope, $state, $ionicHistory, $stateParams, Tabs, Events, User) {
 
   // Get expense details
-  Events.get($stateParams.expenseId).then(function(res){
-    $scope.expense = res.data;
-    console.log(res.data)
+  User.get().then(function(res){
+    return res.data;
+  }).then(function(currentUser){
+    Events.get($stateParams.expenseId).then(function(res){
+      $scope.expense = res.data;
+      if(currentUser.id === $scope.expense.owner){
+        $scope.self = true;
+      } else {
+        $scope.self = false;
+      }
 
-    // Get expense total
-    Events.getRemainingBalance($scope.expense.id).then(function(res){
-      $scope.expense.total = res.data.total;
-    });
+      // Get expense total
+      Events.getRemainingBalance($scope.expense.id).then(function(res){
+        $scope.expense.total = res.data.total;
+      });
+    })
   })
 
 
