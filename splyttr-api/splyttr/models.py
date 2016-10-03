@@ -12,7 +12,7 @@ class Profile(models.Model):
 
 class Tab(models.Model):
     owner = models.ForeignKey(
-            User,
+            Profile,
             on_delete=models.CASCADE,
             related_name="tabowner",
     )
@@ -31,7 +31,7 @@ class Tab(models.Model):
 
 class Event(models.Model):
     owner = models.ForeignKey(
-            User,
+            Profile,
             on_delete=models.CASCADE,
             related_name="eventowner",
     )
@@ -52,12 +52,12 @@ class Event(models.Model):
 
 class Bill(models.Model):
     creditor = models.ForeignKey(
-        User,
+        Profile,
         related_name='+',
         on_delete=models.DO_NOTHING
     )
     debtor = models.ForeignKey(
-        User,
+        Profile,
         on_delete=models.DO_NOTHING,
         null=True,
         blank=True,
